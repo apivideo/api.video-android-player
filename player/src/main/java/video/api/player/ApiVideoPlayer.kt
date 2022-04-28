@@ -5,6 +5,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import video.api.player.models.PlayerJson
 import video.api.player.models.VideoType
@@ -20,7 +21,11 @@ class ApiVideoPlayer(
         start()
     }
     private lateinit var playerJson: PlayerJson
-    private val exoplayer = ExoPlayer.Builder(context).build()
+    private val exoplayerListener = object : Player.Listener {
+    }
+    private val exoplayer = ExoPlayer.Builder(context).build().apply {
+        addListener(exoplayerListener)
+    }
 
     init {
         getPlayerJson({
@@ -30,6 +35,25 @@ class ApiVideoPlayer(
             listener.onError(it)
         })
     }
+
+    var currentTime: Float
+        /**
+         * Get current video position in seconds
+         *
+         * @return current video position in seconds
+         */
+        get() = exoplayer.currentPosition.toFloat() / 1000.0f
+        set(value) {
+            exoplayer.seekTo((value * 1000.0).toLong())
+        }
+
+    val duration: Float
+        /**
+         * Get video duration in seconds
+         *
+         * @return video duration in seconds
+         */
+        get() = exoplayer.duration / 1000.0f
 
     fun play() {
         exoplayer.play()

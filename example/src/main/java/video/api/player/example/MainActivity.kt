@@ -54,6 +54,14 @@ class MainActivity : AppCompatActivity() {
             showMenu(view)
         }
 
+        binding.currentTime.setLabelFormatter { value: Float ->
+            val newCurrentTime = value * player.duration / 100
+            "${String.format("%.3f", newCurrentTime)}/${player.duration}"
+        }
+        binding.currentTime.addOnChangeListener { _, value, _ ->
+            player.currentTime = value * player.duration / 100
+        }
+
         binding.play.setOnClickListener { player.play() }
         binding.pause.setOnClickListener { player.pause() }
         binding.stop.setOnClickListener { player.stop() }
