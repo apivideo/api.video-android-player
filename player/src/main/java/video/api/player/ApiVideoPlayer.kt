@@ -47,6 +47,23 @@ class ApiVideoPlayer(
         exoplayer.release()
     }
 
+    var volume: Float
+        /**
+         * Get audio volume
+         *
+         * @return volume between 0 and 1.0
+         */
+        get() = exoplayer.deviceVolume.toFloat() / (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) - exoplayer.deviceInfo.minVolume
+        /**
+         * Set audio volume
+         *
+         * @param value volume between 0 and 1.0
+         */
+        set(value) {
+            exoplayer.deviceVolume =
+                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
+        }
+
     fun mute() {
         exoplayer.isDeviceMuted = true
     }

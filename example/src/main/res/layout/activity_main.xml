@@ -50,7 +50,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
@@ -60,6 +60,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_volume_off_24" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/volume"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:value="100.0"
+                android:valueFrom="0.0"
+                android:valueTo="100.0" />
 
             <ImageButton
                 android:id="@+id/unmute"

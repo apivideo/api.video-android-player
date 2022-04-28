@@ -59,6 +59,9 @@ class MainActivity : AppCompatActivity() {
         binding.stop.setOnClickListener { player.stop() }
 
         binding.mute.setOnClickListener { player.mute() }
+        binding.volume.addOnChangeListener { _, volume, _ ->
+            player.volume = (volume / 100f)
+        }
         binding.unmute.setOnClickListener { player.unmute() }
     }
 
