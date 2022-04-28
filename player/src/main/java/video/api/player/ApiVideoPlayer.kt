@@ -30,7 +30,7 @@ class ApiVideoPlayer(
     init {
         getPlayerJson({
             playerJson = it
-            preparePlayer(playerJson.video.src)
+            preparePlayer(playerJson)
         }, {
             listener.onError(it)
         })
@@ -96,11 +96,19 @@ class ApiVideoPlayer(
         exoplayer.isDeviceMuted = false
     }
 
-    private fun preparePlayer(videoUrl: String) {
-        val mediaItem = MediaItem.fromUri(videoUrl)
+    private fun preparePlayer(playerJson: PlayerJson) {
+        val mediaItem = MediaItem.fromUri(playerJson.video.src)
+
+        if (playerJson.loop) {
+            exoplayer.repeatMode = Player.REPEAT_MODE_ALL
+        }
+        exoplayer.playWhenReady = playerJson.autoplay
+
         exoplayer.setMediaItem(mediaItem)
         exoplayer.prepare()
         playerView.player = exoplayer
+
+        playerView.useController = playerJson.`visible-controls`
     }
 
     private fun getPlayerJson(onSuccess: (PlayerJson) -> Unit, onError: (String) -> Unit) {
