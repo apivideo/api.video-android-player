@@ -49,6 +49,25 @@
                 android:src="@drawable/ic_baseline_stop_24" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/mute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_volume_off_24" />
+
+            <ImageButton
+                android:id="@+id/unmute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_volume_up_24" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

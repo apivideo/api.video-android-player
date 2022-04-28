@@ -47,6 +47,14 @@ class ApiVideoPlayer(
         exoplayer.release()
     }
 
+    fun mute() {
+        exoplayer.isDeviceMuted = true
+    }
+
+    fun unmute() {
+        exoplayer.isDeviceMuted = false
+    }
+
     private fun preparePlayer(videoUrl: String) {
         val mediaItem = MediaItem.fromUri(videoUrl)
         exoplayer.setMediaItem(mediaItem)

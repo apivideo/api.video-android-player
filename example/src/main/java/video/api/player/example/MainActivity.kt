@@ -57,6 +57,9 @@ class MainActivity : AppCompatActivity() {
         binding.play.setOnClickListener { player.play() }
         binding.pause.setOnClickListener { player.pause() }
         binding.stop.setOnClickListener { player.stop() }
+
+        binding.mute.setOnClickListener { player.mute() }
+        binding.unmute.setOnClickListener { player.unmute() }
     }
 
     override fun onResume() {
