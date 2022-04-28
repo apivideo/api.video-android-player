@@ -14,9 +14,42 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@drawable/ic_baseline_more_vert_24" />
 
-    <com.google.android.exoplayer2.ui.StyledPlayerView
-        android:id="@+id/playerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/playerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_play_arrow_24" />
+
+            <ImageButton
+                android:id="@+id/pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_pause_24" />
+
+            <ImageButton
+                android:id="@+id/stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_stop_24" />
+
+        </LinearLayout>
+    </LinearLayout>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

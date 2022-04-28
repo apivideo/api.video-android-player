@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             showMenu(view)
         }
+
+        binding.play.setOnClickListener { player.play() }
+        binding.pause.setOnClickListener { player.pause() }
+        binding.stop.setOnClickListener { player.stop() }
     }
 
     override fun onResume() {
