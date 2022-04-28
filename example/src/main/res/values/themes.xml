@@ -19,7 +19,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.ApiVideoPlayer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="Theme.ApiVideoPlayer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

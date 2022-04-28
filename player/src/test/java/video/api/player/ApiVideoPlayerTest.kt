@@ -1,13 +1,14 @@
 package video.api.player
 
+import android.content.Context
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HttpResponse
 import com.android.volley.toolbox.NoCache
 import com.android.volley.toolbox.Volley
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkStatic
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ui.StyledPlayerView
+import io.mockk.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -19,7 +20,10 @@ import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
 class ApiVideoPlayerTest {
+    private val context = mockk<Context>(relaxed = true)
     private val mockHttpStack = MockHttpStack()
+    private val playerView =  mockk<StyledPlayerView>(relaxed = true)
+    private val exoplayer = spyk<ExoPlayer>()
 
     @Before
     fun setUp() {
@@ -29,6 +33,9 @@ class ApiVideoPlayerTest {
 
         mockkStatic(Volley::class)
         every { Volley.newRequestQueue(any()) } returns queue
+
+        mockkConstructor(ExoPlayer.Builder::class)
+        every { anyConstructed<ExoPlayer.Builder>().build() } returns exoplayer
     }
 
     @Test
@@ -43,13 +50,13 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayerListener {
+        val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: String) {
                 lock.countDown()
             }
         }
 
-        ApiVideoPlayer(mockk(relaxed = true), "test", VideoType.LIVE, listener)
+        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(1, lock.count) // OnError not called
@@ -67,13 +74,13 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayerListener {
+        val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: String) {
                 lock.countDown()
             }
         }
 
-        ApiVideoPlayer(mockk(relaxed = true), "test", VideoType.LIVE, listener)
+        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -85,15 +92,63 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayerListener {
+        val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: String) {
                 lock.countDown()
             }
         }
 
-        ApiVideoPlayer(mockk(relaxed = true), "test", VideoType.LIVE, listener)
+        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
+    }
+
+    @Test
+    fun `play test`() {
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: String) {
+            }
+        }
+
+        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        player.play()
+        verify { exoplayer.play() }
+    }
+
+    @Test
+    fun `pause test`() {
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: String) {
+            }
+        }
+
+        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        player.pause()
+        verify { exoplayer.pause() }
+    }
+
+    @Test
+    fun `stop test`() {
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: String) {
+            }
+        }
+
+        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        player.stop()
+        verify { exoplayer.stop() }
+    }
+
+    @Test
+    fun `release test`() {
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: String) {
+            }
+        }
+
+        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        player.release()
+        verify { exoplayer.release() }
     }
 }
