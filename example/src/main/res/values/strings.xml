@@ -10,4 +10,6 @@
     <string name="video_type_vod">VOD</string>
     <string name="video_type_live">Live</string>
     <string name="endpoint_type">Video type</string>
+    <string name="show_controls">ShowControls</string>
+    <string name="hide_controls">HideControls</string>
 </resources>

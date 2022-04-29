@@ -71,6 +71,9 @@ class MainActivity : AppCompatActivity() {
             player.volume = (volume / 100f)
         }
         binding.unmute.setOnClickListener { player.unmute() }
+
+        binding.showControls.setOnClickListener { player.showControls() }
+        binding.hideControls.setOnClickListener { player.hideControls() }
     }
 
     override fun onResume() {

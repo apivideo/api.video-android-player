@@ -96,6 +96,15 @@ class ApiVideoPlayer(
         exoplayer.isDeviceMuted = false
     }
 
+    fun hideControls() {
+        playerView.useController = false
+    }
+
+    fun showControls() {
+        playerView.useController = true
+        playerView.showController()
+    }
+
     private fun preparePlayer(playerJson: PlayerJson) {
         val mediaItem = MediaItem.fromUri(playerJson.video.src)
 

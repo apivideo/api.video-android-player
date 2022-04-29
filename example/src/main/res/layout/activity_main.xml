@@ -93,6 +93,25 @@
                 android:src="@drawable/ic_baseline_volume_up_24" />
 
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/showControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_controls" />
+
+        <Button
+            android:id="@+id/hideControls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hide_controls" />
+    </LinearLayout>
     </LinearLayout>
 
 
