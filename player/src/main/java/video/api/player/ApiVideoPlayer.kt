@@ -1,6 +1,12 @@
 package video.api.player
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.util.Log
+import android.widget.ImageView
+import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
@@ -11,7 +17,7 @@ import video.api.player.models.PlayerJson
 import video.api.player.models.VideoType
 
 class ApiVideoPlayer(
-    context: Context,
+    private val context: Context,
     private val videoId: String,
     private val videoType: VideoType,
     private val listener: Listener,
@@ -117,7 +123,32 @@ class ApiVideoPlayer(
         exoplayer.prepare()
         playerView.player = exoplayer
 
+        if (playerJson.video.poster != null) {
+            loadPoster(playerJson.video.poster) { }
+        }
         playerView.useController = playerJson.`visible-controls`
+    }
+
+    private fun loadPoster(posterUrl: String, callback: (Drawable) -> Unit) {
+        val imageRequest = ImageRequest(
+            posterUrl,
+            { bitmap ->
+                try {
+                    callback(BitmapDrawable(context.resources, bitmap))
+                } catch (e: Exception) {
+                    Log.e(TAG, e.message ?: "Failed to transform poster to drawable")
+                }
+            },
+            0,
+            0,
+            ImageView.ScaleType.CENTER,
+            Bitmap.Config.ARGB_8888,
+            { error ->
+                Log.e(TAG, error.message ?: "Failed to get poster")
+            }
+        )
+
+        queue.add(imageRequest)
     }
 
     private fun getPlayerJson(onSuccess: (PlayerJson) -> Unit, onError: (String) -> Unit) {
@@ -139,6 +170,8 @@ class ApiVideoPlayer(
     }
 
     companion object {
+        private val TAG = "ApiVideoPlayer"
+
         private fun getPlayerJsonUrl(videoId: String, videoType: VideoType) =
             videoType.baseUrl + videoId + "/player.json"
     }
