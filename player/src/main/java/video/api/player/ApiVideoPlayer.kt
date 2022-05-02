@@ -16,12 +16,16 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import video.api.player.models.PlayerJson
 import video.api.player.models.VideoType
 
+/**
+ * @param showFullScreenButton show ([Boolean.true]) or hide full screen button
+ */
 class ApiVideoPlayer(
     private val context: Context,
     private val videoId: String,
     private val videoType: VideoType,
     private val listener: Listener,
-    private val playerView: StyledPlayerView
+    private val playerView: StyledPlayerView,
+    private val showFullScreenButton: Boolean = false
 ) {
     private val queue = Volley.newRequestQueue(context).apply {
         start()
@@ -121,12 +125,20 @@ class ApiVideoPlayer(
 
         exoplayer.setMediaItem(mediaItem)
         exoplayer.prepare()
-        playerView.player = exoplayer
 
-        if (playerJson.video.poster != null) {
-            loadPoster(playerJson.video.poster) { }
-        }
+        preparePlayerView(playerJson)
+    }
+
+    private fun preparePlayerView(playerJson: PlayerJson) {
+        playerView.player = exoplayer
         playerView.useController = playerJson.`visible-controls`
+        if (showFullScreenButton) {
+            playerView.setControllerOnFullScreenModeChangedListener {
+                listener.onFullScreenModeChanged(
+                    it
+                )
+            }
+        }
     }
 
     private fun loadPoster(posterUrl: String, callback: (Drawable) -> Unit) {
@@ -177,6 +189,13 @@ class ApiVideoPlayer(
     }
 
     interface Listener {
-        fun onError(error: String)
+        fun onError(error: String) {}
+
+        /**
+         * Called when the full screen button has been clicked
+         *
+         * @param isFullScreen true if the player is in fullscreen mode
+         */
+        fun onFullScreenModeChanged(isFullScreen: Boolean) {}
     }
 }

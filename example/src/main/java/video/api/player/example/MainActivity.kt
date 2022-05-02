@@ -2,11 +2,16 @@ package video.api.player.example
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import video.api.player.ApiVideoPlayer
@@ -40,9 +45,44 @@ class MainActivity : AppCompatActivity() {
         override fun onError(error: String) {
             Snackbar.make(binding.root, error, Snackbar.LENGTH_LONG).show()
         }
+
+        override fun onFullScreenModeChanged(isFullScreen: Boolean) {
+            if (isFullScreen) {
+                supportActionBar?.hide()
+                hideSystemUI()
+                binding.fab.hide()
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                binding.playerView.layoutParams.apply {
+                    width = ViewGroup.LayoutParams.MATCH_PARENT
+                    height = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+            } else {
+                supportActionBar?.show()
+                showSystemUI()
+                binding.fab.show()
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                binding.playerView.layoutParams.apply {
+                    width = ViewGroup.LayoutParams.WRAP_CONTENT
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                }
+            }
+        }
     }
 
     private lateinit var player: ApiVideoPlayer
+
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.systemBars())
+            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    private fun showSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPlayer() {
-        player = ApiVideoPlayer(this, videoId, videoType, playerListener, binding.playerView)
+        player = ApiVideoPlayer(this, videoId, videoType, playerListener, binding.playerView, showFullScreenButton = true)
     }
 
     private fun showMenu(anchor: View) {
