@@ -12,7 +12,12 @@ import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.Player.*
+import com.google.android.exoplayer2.analytics.AnalyticsListener
+import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import video.api.player.analytics.ApiVideoPlayerAnalytics
+import video.api.player.analytics.Options
 import video.api.player.models.PlayerJson
 import video.api.player.models.VideoType
 
@@ -31,15 +36,63 @@ class ApiVideoPlayer(
         start()
     }
     private lateinit var playerJson: PlayerJson
+    private lateinit var analytics: ApiVideoPlayerAnalytics
+    private var firstPlay = true
+    private var isReady = false
     private val exoplayerListener = object : Player.Listener {
+    }
+    private val exoPlayerAnalyticsListener = object : AnalyticsListener {
+        override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
+            if (isPlaying) {
+                if (firstPlay) {
+                    analytics.play(eventTime.toSeconds())
+                    firstPlay = false
+                } else {
+                    analytics.resume(eventTime.toSeconds())
+                }
+            } else {
+                analytics.pause(eventTime.toSeconds())
+            }
+        }
+
+        override fun onPlaybackStateChanged(eventTime: EventTime, state: Int) {
+            if (state == STATE_READY) {
+                if (!isReady) {
+                    analytics.ready(eventTime.toSeconds())
+                    isReady = true
+                }
+            } else if (state == STATE_ENDED) {
+                analytics.end(eventTime.toSeconds())
+            }
+        }
+
+        override fun onPositionDiscontinuity(
+            eventTime: EventTime,
+            oldPosition: PositionInfo,
+            newPosition: PositionInfo,
+            reason: Int
+        ) {
+            if (reason == DISCONTINUITY_REASON_SEEK) {
+                analytics.seek(
+                    oldPosition.positionMs.toSeconds(),
+                    newPosition.positionMs.toSeconds()
+                )
+            }
+        }
+
+        override fun onPlayerReleased(eventTime: EventTime) {
+            analytics.destroy(eventTime.toSeconds())
+        }
     }
     private val exoplayer = ExoPlayer.Builder(context).build().apply {
         addListener(exoplayerListener)
+        addAnalyticsListener(exoPlayerAnalyticsListener)
     }
 
     init {
         getPlayerJson({
             playerJson = it
+            analytics = ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerJson.video.src))
             preparePlayer(playerJson)
         }, {
             listener.onError(it)
