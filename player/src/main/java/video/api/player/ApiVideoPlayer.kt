@@ -15,11 +15,14 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
+import com.google.android.exoplayer2.source.LoadEventInfo
+import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import video.api.player.analytics.ApiVideoPlayerAnalytics
 import video.api.player.analytics.Options
 import video.api.player.models.PlayerJson
 import video.api.player.models.VideoType
+import java.io.IOException
 
 /**
  * @param showFullScreenButton show ([Boolean.true]) or hide full screen button
@@ -39,9 +42,26 @@ class ApiVideoPlayer(
     private lateinit var analytics: ApiVideoPlayerAnalytics
     private var firstPlay = true
     private var isReady = false
+    private var hasTryFallback = false
     private val exoplayerListener = object : Player.Listener {
     }
     private val exoPlayerAnalyticsListener = object : AnalyticsListener {
+        override fun onLoadError(
+            eventTime: EventTime,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData,
+            error: IOException,
+            wasCanceled: Boolean
+        ) {
+            if (!hasTryFallback) {
+                this@ApiVideoPlayer.playerJson.video.mp4?.let {
+                    Log.w(TAG, "Failed to load video. Fallback to mp4")
+                    setPlayerUri(it)
+                } ?: listener.onError(error.message ?: "Failed to load video")
+                hasTryFallback = true
+            }
+        }
+
         override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
             if (isPlaying) {
                 if (firstPlay) {
@@ -93,6 +113,7 @@ class ApiVideoPlayer(
         getPlayerJson({
             playerJson = it
             analytics = ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerJson.video.src))
+            setPlayerUri(playerJson.video.src)
             preparePlayer(playerJson)
         }, {
             listener.onError(it)
@@ -168,15 +189,16 @@ class ApiVideoPlayer(
         playerView.showController()
     }
 
-    private fun preparePlayer(playerJson: PlayerJson) {
-        val mediaItem = MediaItem.fromUri(playerJson.video.src)
+    private fun setPlayerUri(uri: String) {
+        val mediaItem = MediaItem.fromUri(uri)
+        exoplayer.setMediaItem(mediaItem)
+    }
 
+    private fun preparePlayer(playerJson: PlayerJson) {
         if (playerJson.loop) {
             exoplayer.repeatMode = Player.REPEAT_MODE_ALL
         }
         exoplayer.playWhenReady = playerJson.autoplay
-
-        exoplayer.setMediaItem(mediaItem)
         exoplayer.prepare()
 
         preparePlayerView(playerJson)
