@@ -215,7 +215,7 @@ class ApiVideoPlayer(
 
     private fun preparePlayer(playerJson: PlayerJson) {
         if (playerJson.loop) {
-            exoplayer.repeatMode = Player.REPEAT_MODE_ALL
+            exoplayer.repeatMode = REPEAT_MODE_ALL
         }
         exoplayer.playWhenReady = playerJson.autoplay
         exoplayer.prepare()
