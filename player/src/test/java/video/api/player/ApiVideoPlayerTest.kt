@@ -51,7 +51,7 @@ class ApiVideoPlayerTest {
         val lock = CountDownLatch(1)
 
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
+            override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
@@ -75,7 +75,7 @@ class ApiVideoPlayerTest {
         val lock = CountDownLatch(1)
 
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
+            override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
@@ -93,7 +93,7 @@ class ApiVideoPlayerTest {
         val lock = CountDownLatch(1)
 
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
+            override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
@@ -107,8 +107,6 @@ class ApiVideoPlayerTest {
     @Test
     fun `play test`() {
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
-            }
         }
 
         val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
@@ -119,8 +117,6 @@ class ApiVideoPlayerTest {
     @Test
     fun `pause test`() {
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
-            }
         }
 
         val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
@@ -131,8 +127,6 @@ class ApiVideoPlayerTest {
     @Test
     fun `stop test`() {
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
-            }
         }
 
         val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
@@ -143,8 +137,6 @@ class ApiVideoPlayerTest {
     @Test
     fun `release test`() {
         val listener = object : ApiVideoPlayer.Listener {
-            override fun onError(error: String) {
-            }
         }
 
         val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)

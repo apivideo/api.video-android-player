@@ -5,12 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.util.Size
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
@@ -18,6 +20,7 @@ import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
 import com.google.android.exoplayer2.source.LoadEventInfo
 import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.android.exoplayer2.video.VideoSize
 import video.api.player.analytics.ApiVideoPlayerAnalytics
 import video.api.player.analytics.Options
 import video.api.player.models.PlayerJson
@@ -46,6 +49,10 @@ class ApiVideoPlayer(
     private val exoplayerListener = object : Player.Listener {
     }
     private val exoPlayerAnalyticsListener = object : AnalyticsListener {
+        override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
+            listener.onError(error)
+        }
+
         override fun onLoadError(
             eventTime: EventTime,
             loadEventInfo: LoadEventInfo,
@@ -57,8 +64,10 @@ class ApiVideoPlayer(
                 this@ApiVideoPlayer.playerJson.video.mp4?.let {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
                     setPlayerUri(it)
-                } ?: listener.onError(error.message ?: "Failed to load video")
+                } ?: listener.onError(error)
                 hasTryFallback = true
+            } else {
+                listener.onError(error)
             }
         }
 
@@ -67,11 +76,14 @@ class ApiVideoPlayer(
                 if (firstPlay) {
                     analytics.play(eventTime.toSeconds())
                     firstPlay = false
+                    listener.onFirstPlay()
                 } else {
                     analytics.resume(eventTime.toSeconds())
                 }
+                listener.onPlay()
             } else {
                 analytics.pause(eventTime.toSeconds())
+                listener.onPause()
             }
         }
 
@@ -80,9 +92,11 @@ class ApiVideoPlayer(
                 if (!isReady) {
                     analytics.ready(eventTime.toSeconds())
                     isReady = true
+                    listener.onReady()
                 }
             } else if (state == STATE_ENDED) {
                 analytics.end(eventTime.toSeconds())
+                listener.onEnd()
             }
         }
 
@@ -97,13 +111,19 @@ class ApiVideoPlayer(
                     oldPosition.positionMs.toSeconds(),
                     newPosition.positionMs.toSeconds()
                 )
+                listener.onSeek()
             }
         }
 
         override fun onPlayerReleased(eventTime: EventTime) {
             analytics.destroy(eventTime.toSeconds())
         }
+
+        override fun onVideoSizeChanged(eventTime: EventTime, videoSize: VideoSize) {
+            listener.onVideoSizeChanged(Size(videoSize.width, videoSize.height))
+        }
     }
+
     private val exoplayer = ExoPlayer.Builder(context).build().apply {
         addListener(exoplayerListener)
         addAnalyticsListener(exoPlayerAnalyticsListener)
@@ -238,18 +258,18 @@ class ApiVideoPlayer(
         queue.add(imageRequest)
     }
 
-    private fun getPlayerJson(onSuccess: (PlayerJson) -> Unit, onError: (String) -> Unit) {
+    private fun getPlayerJson(onSuccess: (PlayerJson) -> Unit, onError: (Exception) -> Unit) {
         val stringRequest = StringRequest(
             getPlayerJsonUrl(videoId, videoType),
             { response ->
                 try {
                     onSuccess(PlayerJson.from(response))
                 } catch (e: Exception) {
-                    onError(e.message ?: "Failed to deserialized player.json")
+                    onError(e)
                 }
             },
             { error ->
-                onError(error.message ?: "Failed to get player.json")
+                onError(error)
             }
         )
 
@@ -264,7 +284,40 @@ class ApiVideoPlayer(
     }
 
     interface Listener {
-        fun onError(error: String) {}
+        /**
+         * An error occurred
+         */
+        fun onError(error: Exception) {}
+
+        /**
+         * The video is ready to play
+         */
+        fun onReady() {}
+
+        /**
+         * The video started to play for the first time
+         */
+        fun onFirstPlay() {}
+
+        /**
+         * The video started to play (for the first time or after having been paused)
+         */
+        fun onPlay() {}
+
+        /**
+         * The video has been paused
+         */
+        fun onPause() {}
+
+        /**
+         * The player is seeking
+         */
+        fun onSeek() {}
+
+        /**
+         * The playback as reached the ended of the video
+         */
+        fun onEnd() {}
 
         /**
          * Called when the full screen button has been clicked
@@ -272,5 +325,12 @@ class ApiVideoPlayer(
          * @param isFullScreen true if the player is in fullscreen mode
          */
         fun onFullScreenModeChanged(isFullScreen: Boolean) {}
+
+        /**
+         * Called when the video resolution has changed
+         *
+         * @param resolution the new video resolution
+         */
+        fun onVideoSizeChanged(resolution: Size) {}
     }
 }

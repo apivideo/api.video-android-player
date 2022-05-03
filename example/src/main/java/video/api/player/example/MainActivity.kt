@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
@@ -42,8 +43,32 @@ class MainActivity : AppCompatActivity() {
         }
 
     private val playerListener = object : ApiVideoPlayer.Listener {
-        override fun onError(error: String) {
-            Snackbar.make(binding.root, error, Snackbar.LENGTH_LONG).show()
+        override fun onError(error: Exception) {
+            displayMessage(error.message ?: "Unknown error")
+        }
+
+        override fun onReady() {
+            displayMessage("onReady")
+        }
+
+        override fun onFirstPlay() {
+            displayMessage("onFirstPlay")
+        }
+
+        override fun onPlay() {
+     //       displayMessage("onPlay")
+        }
+
+        override fun onPause() {
+     //       displayMessage("onPause")
+        }
+
+        override fun onSeek() {
+            displayMessage("onSeek")
+        }
+
+        override fun onEnd() {
+            displayMessage("onEnd")
         }
 
         override fun onFullScreenModeChanged(isFullScreen: Boolean) {
@@ -67,21 +92,33 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        override fun onVideoSizeChanged(resolution: Size) {
+            displayMessage("onVideoSizeChanged: $resolution")
+        }
     }
 
     private lateinit var player: ApiVideoPlayer
+
+    private fun displayMessage(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    }
 
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, window.decorView).let { controller ->
             controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
 
     private fun showSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
+        WindowInsetsControllerCompat(
+            window,
+            window.decorView
+        ).show(WindowInsetsCompat.Type.systemBars())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -123,7 +160,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPlayer() {
-        player = ApiVideoPlayer(this, videoId, videoType, playerListener, binding.playerView, showFullScreenButton = true)
+        player = ApiVideoPlayer(
+            this,
+            videoId,
+            videoType,
+            playerListener,
+            binding.playerView,
+            showFullScreenButton = true
+        )
     }
 
     private fun showMenu(anchor: View) {
