@@ -45,7 +45,6 @@ class ApiVideoPlayer(
     private lateinit var analytics: ApiVideoPlayerAnalytics
     private var firstPlay = true
     private var isReady = false
-    private var hasTryFallback = false
     private val exoplayerListener = object : Player.Listener {
     }
     private val exoPlayerAnalyticsListener = object : AnalyticsListener {
@@ -60,15 +59,14 @@ class ApiVideoPlayer(
             error: IOException,
             wasCanceled: Boolean
         ) {
-            if (!hasTryFallback) {
-                this@ApiVideoPlayer.playerJson.video.mp4?.let {
+            this@ApiVideoPlayer.playerJson.video.mp4?.let {
+                if (loadEventInfo.uri.toString() != it) {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
                     setPlayerUri(it)
-                } ?: listener.onError(error)
-                hasTryFallback = true
-            } else {
-                listener.onError(error)
-            }
+                } else {
+                    listener.onError(error)
+                }
+            } ?: listener.onError(error)
         }
 
         override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
@@ -210,7 +208,8 @@ class ApiVideoPlayer(
     }
 
     private fun setPlayerUri(uri: String) {
-        val mediaItem = MediaItem.fromUri(uri)
+        val mediaItem =
+            MediaItem.fromUri(uri)
         exoplayer.setMediaItem(mediaItem)
     }
 
