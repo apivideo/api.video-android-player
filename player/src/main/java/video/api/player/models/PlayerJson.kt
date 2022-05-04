@@ -12,7 +12,7 @@ data class PlayerJson(
     val chapters: Map<String, String> = emptyMap(),
     val panoramic: Boolean = false,
     val live: Boolean = false,
-    val theme: PlayerJsonTheme? = null,
+    //val theme: PlayerJsonTheme? = null,
     val autoplay: Boolean = false,
     val loop: Boolean = false,
     val `visible-controls`: Boolean = true,
