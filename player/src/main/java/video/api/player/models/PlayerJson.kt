@@ -20,7 +20,10 @@ data class PlayerJson(
     val api: Boolean = false
 ) {
     companion object {
-        fun from(json: String) = Json.decodeFromString(serializer(), json)
+        private val json = Json { ignoreUnknownKeys = true }
+
+        fun from(serializable: String) =
+            json.decodeFromString(serializer(), serializable)
     }
 }
 
@@ -31,4 +34,9 @@ data class PlayerJsonVideo(val src: String, val poster: String? = null, val mp4:
 data class PlayerJsonTheme(val src: String? = null, val logo: PlayerJsonLogo? = null)
 
 @Serializable
-data class PlayerJsonLogo(val src: String, val url: String, val title: String? = null, val target: String? = null)
+data class PlayerJsonLogo(
+    val src: String,
+    val url: String,
+    val title: String? = null,
+    val target: String? = null
+)
