@@ -8,7 +8,6 @@ import android.util.Log
 import android.util.Size
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
-import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -17,17 +16,23 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.LoadEventInfo
 import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.video.VideoSize
 import video.api.player.analytics.ApiVideoPlayerAnalytics
 import video.api.player.analytics.Options
 import video.api.player.models.PlayerJson
+import video.api.player.models.PlayerJsonRequest
+import video.api.player.models.PlayerJsonRequestResult
 import video.api.player.models.VideoType
 import java.io.IOException
 
+
 /**
+ * @param token private video token (only needed for private video, set to null otherwise)
  * @param showFullScreenButton show ([Boolean.true]) or hide full screen button
  */
 class ApiVideoPlayer(
@@ -36,6 +41,7 @@ class ApiVideoPlayer(
     private val videoType: VideoType,
     private val listener: Listener,
     private val playerView: StyledPlayerView,
+    private val token: String? = null,
     private val showFullScreenButton: Boolean = false
 ) {
     private val queue = Volley.newRequestQueue(context).apply {
@@ -43,6 +49,7 @@ class ApiVideoPlayer(
     }
     private lateinit var playerJson: PlayerJson
     private lateinit var analytics: ApiVideoPlayerAnalytics
+    private var xTokenSession: String? = null
     private var firstPlay = true
     private var isReady = false
     private val exoplayerListener = object : Player.Listener {
@@ -60,7 +67,7 @@ class ApiVideoPlayer(
             wasCanceled: Boolean
         ) {
             this@ApiVideoPlayer.playerJson.video.mp4?.let {
-                if (loadEventInfo.uri.toString() != it) {
+                if (loadEventInfo.uri.toString() != getPlayerFileUrl(it, token)) {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
                     setPlayerUri(it)
                 } else {
@@ -129,7 +136,8 @@ class ApiVideoPlayer(
 
     init {
         getPlayerJson({
-            playerJson = it
+            playerJson = it.playerJson
+            xTokenSession = it.headers?.get("X-Token-Session")
             analytics = ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerJson.video.src))
             setPlayerUri(playerJson.video.src)
             preparePlayer(playerJson)
@@ -209,8 +217,15 @@ class ApiVideoPlayer(
 
     private fun setPlayerUri(uri: String) {
         val mediaItem =
-            MediaItem.fromUri(uri)
-        exoplayer.setMediaItem(mediaItem)
+            MediaItem.fromUri(getPlayerFileUrl(uri, token))
+        val dataSourceFactory = DefaultHttpDataSource.Factory()
+
+        xTokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
+
+        val videoSource =
+            DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
+
+        exoplayer.setMediaSource(videoSource)
     }
 
     private fun preparePlayer(playerJson: PlayerJson) {
@@ -257,12 +272,15 @@ class ApiVideoPlayer(
         queue.add(imageRequest)
     }
 
-    private fun getPlayerJson(onSuccess: (PlayerJson) -> Unit, onError: (Exception) -> Unit) {
-        val stringRequest = StringRequest(
-            getPlayerJsonUrl(videoId, videoType),
+    private fun getPlayerJson(
+        onSuccess: (PlayerJsonRequestResult) -> Unit,
+        onError: (Exception) -> Unit
+    ) {
+        val stringRequest = PlayerJsonRequest(
+            getPlayerJsonUrl(videoId, videoType, token),
             { response ->
                 try {
-                    onSuccess(PlayerJson.from(response))
+                    onSuccess(response)
                 } catch (e: Exception) {
                     onError(e)
                 }
@@ -278,8 +296,18 @@ class ApiVideoPlayer(
     companion object {
         private val TAG = "ApiVideoPlayer"
 
-        private fun getPlayerJsonUrl(videoId: String, videoType: VideoType) =
-            videoType.baseUrl + videoId + "/player.json"
+        private fun getPlayerJsonUrl(
+            videoId: String,
+            videoType: VideoType,
+            privateToken: String? = null
+        ) =
+            videoType.baseUrl + videoId + (privateToken?.let { "/token/$privateToken" }
+                ?: "") + "/player.json"
+
+        private fun getPlayerFileUrl(
+            uri: String,
+            token: String? = null,
+        ) = "${token?.let { uri.replace(":token", it) } ?: uri}"
     }
 
     interface Listener {

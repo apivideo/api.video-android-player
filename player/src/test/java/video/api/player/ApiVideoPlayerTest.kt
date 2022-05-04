@@ -52,7 +52,9 @@ class ApiVideoPlayerTest {
 
         val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: Exception) {
-                lock.countDown()
+               lock.countDown()
+               //throw error
+
             }
         }
 

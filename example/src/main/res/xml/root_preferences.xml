@@ -14,4 +14,10 @@
         app:summaryOn="@string/video_type_live"
         app:title="@string/endpoint_type" />
 
+    <EditTextPreference
+        app:defaultValue=""
+        app:key="@string/private_video_token_key"
+        app:title="@string/private_video_token"
+        app:useSimpleSummaryProvider="true" />
+
 </PreferenceScreen>

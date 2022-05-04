@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
+import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
 import video.api.player.ApiVideoPlayer
 import video.api.player.example.databinding.ActivityMainBinding
@@ -41,10 +42,30 @@ class MainActivity : AppCompatActivity() {
                 VideoType.VOD
             }
         }
+    private val privateVideoToken: String?
+        get() {
+            val token = sharedPref.getString(getString(R.string.private_video_token_key), null)
+            return if (!token.isNullOrEmpty()) {
+                token
+            } else {
+                null
+            }
+        }
 
     private val playerListener = object : ApiVideoPlayer.Listener {
         override fun onError(error: Exception) {
-            displayMessage(error.message ?: "Unknown error")
+            val message = when {
+                error.message != null -> {
+                    error.message
+                }
+                error is ClientError -> {
+                    error.networkResponse.statusCode.toString()
+                }
+                else -> {
+                    error.toString()
+                }
+            }
+            displayMessage(message ?: "Unknown error")
         }
 
         override fun onReady() {
@@ -56,11 +77,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPlay() {
-     //       displayMessage("onPlay")
+            //       displayMessage("onPlay")
         }
 
         override fun onPause() {
-     //       displayMessage("onPause")
+            //       displayMessage("onPause")
         }
 
         override fun onSeek() {
@@ -166,6 +187,7 @@ class MainActivity : AppCompatActivity() {
             videoType,
             playerListener,
             binding.playerView,
+            token = privateVideoToken,
             showFullScreenButton = true
         )
     }
