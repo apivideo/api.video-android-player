@@ -135,6 +135,8 @@ class ApiVideoPlayer(
     }
 
     init {
+        require(videoType == VideoType.VOD) { "Only VOD videos are supported" }
+
         getPlayerJson({
             playerJson = it.playerJson
             xTokenSession = it.headers?.get("X-Token-Session")

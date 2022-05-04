@@ -58,7 +58,7 @@ class ApiVideoPlayerTest {
             }
         }
 
-        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(1, lock.count) // OnError not called
@@ -82,7 +82,7 @@ class ApiVideoPlayerTest {
             }
         }
 
-        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -100,7 +100,7 @@ class ApiVideoPlayerTest {
             }
         }
 
-        ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -111,7 +111,7 @@ class ApiVideoPlayerTest {
         val listener = object : ApiVideoPlayer.Listener {
         }
 
-        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        val player = ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         player.play()
         verify { exoplayer.play() }
     }
@@ -121,7 +121,7 @@ class ApiVideoPlayerTest {
         val listener = object : ApiVideoPlayer.Listener {
         }
 
-        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        val player = ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         player.pause()
         verify { exoplayer.pause() }
     }
@@ -131,7 +131,7 @@ class ApiVideoPlayerTest {
         val listener = object : ApiVideoPlayer.Listener {
         }
 
-        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        val player = ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         player.stop()
         verify { exoplayer.stop() }
     }
@@ -141,7 +141,7 @@ class ApiVideoPlayerTest {
         val listener = object : ApiVideoPlayer.Listener {
         }
 
-        val player = ApiVideoPlayer(context, "test", VideoType.LIVE, listener, playerView)
+        val player = ApiVideoPlayer(context, "test", VideoType.VOD, listener, playerView)
         player.release()
         verify { exoplayer.release() }
     }
