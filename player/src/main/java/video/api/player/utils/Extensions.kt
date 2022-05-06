@@ -1,4 +1,4 @@
-package video.api.player
+package video.api.player.utils
 
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 
@@ -8,6 +8,6 @@ import com.google.android.exoplayer2.analytics.AnalyticsListener
 fun Long.toSeconds() = this.toFloat() / 1000
 
 /**
- * An [EventTime] to a player analytics intelligible value
+ * An [AnalyticsListener.EventTime] to a player analytics intelligible value
  */
 fun AnalyticsListener.EventTime.toSeconds() = this.currentPlaybackPositionMs.toSeconds()

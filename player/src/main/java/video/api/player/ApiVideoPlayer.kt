@@ -26,10 +26,18 @@ import video.api.player.models.PlayerJson
 import video.api.player.models.PlayerJsonRequest
 import video.api.player.models.PlayerJsonRequestResult
 import video.api.player.models.VideoType
+import video.api.player.utils.toSeconds
 import java.io.IOException
 
 
 /**
+ * The api.video player class.
+ *
+ * @param context the application context
+ * @param videoId the video ID of the video to play
+ * @param videoType the [VideoType] of the video to play. Only [VideoType.VOD] is supported.
+ * @param listener a [Player.Listener] to listen to player events
+ * @param playerView a [StyledPlayerView] to use to display the player
  * @param token private video token (only needed for private video, set to null otherwise)
  * @param showFullScreenButton show ([Boolean.true]) or hide full screen button
  */
@@ -155,6 +163,11 @@ class ApiVideoPlayer(
          * @return current video position in seconds
          */
         get() = exoplayer.currentPosition.toFloat() / 1000.0f
+        /**
+         * Set current video position in seconds
+         *
+         * @param value video position in seconds
+         */
         set(value) {
             exoplayer.seekTo((value * 1000.0).toLong())
         }
@@ -167,18 +180,30 @@ class ApiVideoPlayer(
          */
         get() = exoplayer.duration / 1000.0f
 
+    /**
+     * Plays the video
+     */
     fun play() {
         exoplayer.play()
     }
 
+    /**
+     * Pauses the video
+     */
     fun pause() {
         exoplayer.pause()
     }
 
+    /**
+     * Stops the video
+     */
     fun stop() {
         exoplayer.stop()
     }
 
+    /**
+     * Releases the player
+     */
     fun release() {
         exoplayer.release()
     }
@@ -200,28 +225,46 @@ class ApiVideoPlayer(
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
 
+    /**
+     * Mutes the device
+     */
     fun mute() {
         exoplayer.isDeviceMuted = true
     }
 
+    /**
+     * Unmutes the device
+     */
     fun unmute() {
         exoplayer.isDeviceMuted = false
     }
 
+    /**
+     * Hides the video controller
+     */
     fun hideControls() {
         playerView.useController = false
     }
 
+    /**
+     * Shows the video controller
+     */
     fun showControls() {
         playerView.useController = true
         playerView.showController()
     }
 
+    /**
+     * Shows the subtitles
+     */
     fun showSubtitles() {
         playerView.subtitleView?.visibility = View.VISIBLE
         playerView.setShowSubtitleButton(true)
     }
 
+    /**
+     * Hides the subtitles
+     */
     fun hideSubtitles() {
         playerView.subtitleView?.visibility = View.INVISIBLE
         playerView.setShowSubtitleButton(false)
@@ -322,6 +365,9 @@ class ApiVideoPlayer(
         ) = "${token?.let { uri.replace(":token", it) } ?: uri}"
     }
 
+    /**
+     * Listener for player events
+     */
     interface Listener {
         /**
          * An error occurred
