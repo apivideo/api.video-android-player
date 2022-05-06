@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlinx-serialization'
 }
+apply from: 'maven-push.gradle'
 
 android {
     compileSdk 31
