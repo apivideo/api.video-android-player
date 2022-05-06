@@ -52,7 +52,7 @@ class ApiVideoPlayer(
     private var isReady = false
     private val exoplayerListener = object : Player.Listener {
     }
-    private val exoPlayerAnalyticsListener = object : AnalyticsListener {
+    private val exoPlayerAnalyticsListener: AnalyticsListener = object : AnalyticsListener {
         override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
             listener.onError(error)
         }
@@ -85,8 +85,10 @@ class ApiVideoPlayer(
                 }
                 listener.onPlay()
             } else {
-                analytics.pause(eventTime.toSeconds())
-                listener.onPause()
+                if (exoplayer.playbackState != STATE_ENDED) {
+                    analytics.pause(eventTime.toSeconds())
+                    listener.onPause()
+                }
             }
         }
 
