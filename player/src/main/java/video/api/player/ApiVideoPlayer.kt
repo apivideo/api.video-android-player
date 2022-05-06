@@ -6,13 +6,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.Size
+import android.view.View
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
@@ -215,6 +213,16 @@ class ApiVideoPlayer(
     fun showControls() {
         playerView.useController = true
         playerView.showController()
+    }
+
+    fun showSubtitles() {
+        playerView.subtitleView?.visibility = View.VISIBLE
+        playerView.setShowSubtitleButton(true)
+    }
+
+    fun hideSubtitles() {
+        playerView.subtitleView?.visibility = View.INVISIBLE
+        playerView.setShowSubtitleButton(false)
     }
 
     private fun setPlayerUri(uri: String) {

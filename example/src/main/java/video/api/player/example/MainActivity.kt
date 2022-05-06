@@ -172,6 +172,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.showControls.setOnClickListener { player.showControls() }
         binding.hideControls.setOnClickListener { player.hideControls() }
+
+        binding.showSubtitles.setOnClickListener { player.showSubtitles() }
+        binding.hideSubtitles.setOnClickListener { player.hideSubtitles() }
     }
 
     override fun onResume() {

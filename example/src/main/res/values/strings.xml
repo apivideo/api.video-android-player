@@ -14,4 +14,6 @@
     <string name="hide_controls">HideControls</string>
     <string name="private_video_token_key">private_video_token_key</string>
     <string name="private_video_token">Private video token</string>
+    <string name="show_subtitles">ShowSubtitles</string>
+    <string name="hide_subtitles">HideSubtitles</string>
 </resources>
