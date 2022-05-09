@@ -1,0 +1,15 @@
+{
+  "id": "vi216aJPRd2WaCRBC6PVh2Ij",
+  "title": "240P-AAC-H264-60SEC timecode (subtitles+chapters)",
+  "description": "",
+  "video": {
+    "poster": "https://cdn.api.video/vod/vi216aJPRd2WaCRBC6PVh2Ij/thumbnail.jpg",
+    "src": "https://cdn.api.video/vod/vi216aJPRd2WaCRBC6PVh2Ij/hls/manifest.m3u8",
+    "mp4": "https://cdn.api.video/vod/vi216aJPRd2WaCRBC6PVh2Ij/mp4/source.mp4"
+  },
+  "panoramic": false,
+  "chapters": {
+    "en": "https://cdn.api.video/vod/vi216aJPRd2WaCRBC6PVh2Ij/chapters/en.vtt"
+  },
+  "unknown_key": "unknown_value"
+}

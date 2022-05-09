@@ -44,7 +44,7 @@ class ApiVideoPlayerTest {
             HttpResponse(
                 200,
                 emptyList(),
-                Resources.readFile("/assets/player.json").toByteArray()
+                Resources.readFile("/assets/valid_player.json").toByteArray()
             )
         )
 
@@ -53,8 +53,6 @@ class ApiVideoPlayerTest {
         val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: Exception) {
                lock.countDown()
-               //throw error
-
             }
         }
 

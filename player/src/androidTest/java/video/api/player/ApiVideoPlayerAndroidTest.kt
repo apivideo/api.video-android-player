@@ -9,6 +9,7 @@ import org.junit.Test
 import video.api.client.api.clients.VideosApi
 import video.api.client.api.models.Environment
 import video.api.player.models.VideoType
+import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
@@ -70,6 +71,7 @@ class ApiVideoPlayerAndroidTest {
         val readyLock = CountDownLatch(1)
         val firstPlayLock = CountDownLatch(1)
         val playLock = CountDownLatch(1)
+        val pauseLock = CountDownLatch(1)
         val endLock = CountDownLatch(1)
         val listener = object : ApiVideoPlayer.Listener {
             override fun onError(error: Exception) {
@@ -86,6 +88,10 @@ class ApiVideoPlayerAndroidTest {
 
             override fun onPlay() {
                 playLock.countDown()
+            }
+
+            override fun onPause() {
+                pauseLock.countDown()
             }
 
             override fun onEnd() {
@@ -106,9 +112,68 @@ class ApiVideoPlayerAndroidTest {
         assertEquals(1, errorLock.count) // No error has happened
         assertEquals(0, playLock.count)
         assertEquals(0, firstPlayLock.count)
+        assertEquals(1, pauseLock.count)
         assertEquals(0, endLock.count)
     }
 
+    @Test
+    fun pausePlayTest() {
+        val errorLock = CountDownLatch(1)
+        val readyLock = CountDownLatch(1)
+        val firstPlayLock = CountDownLatch(1)
+        val playLock = CountDownLatch(2)
+        val pauseLock = CountDownLatch(1)
+        val endLock = CountDownLatch(1)
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: Exception) {
+                errorLock.countDown()
+            }
+
+            override fun onReady() {
+                readyLock.countDown()
+            }
+
+            override fun onFirstPlay() {
+                firstPlayLock.countDown()
+            }
+
+            override fun onPlay() {
+                playLock.countDown()
+            }
+
+            override fun onPause() {
+                pauseLock.countDown()
+            }
+
+            override fun onEnd() {
+                endLock.countDown()
+            }
+        }
+        player = ApiVideoPlayer(context, VALID_VIDEO_ID, VideoType.VOD, listener, playerView)
+
+        readyLock.await(5, TimeUnit.SECONDS)
+        assertEquals(0, readyLock.count)
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.play()
+        }
+        sleep(1000)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.pause()
+        }
+        sleep(1000)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.play()
+        }
+        
+        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+
+        assertEquals(1, errorLock.count) // No error has happened
+        assertEquals(0, playLock.count)
+        assertEquals(0, firstPlayLock.count)
+        assertEquals(0, pauseLock.count)
+        assertEquals(0, endLock.count)
+    }
 
     @Test
     fun privateVideoSinglePlayTest() {
