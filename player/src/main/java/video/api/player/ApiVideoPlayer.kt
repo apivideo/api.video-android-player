@@ -180,6 +180,22 @@ class ApiVideoPlayer(
          */
         get() = exoplayer.duration / 1000.0f
 
+    var isMuted: Boolean
+        /**
+         * Get the device mute states
+         *
+         * @return true if the device is muted, false otherwise
+         */
+        get() = exoplayer.isDeviceMuted
+        /**
+         * Set the device mute states
+         *
+         * @param value true if the device is muted, false otherwise
+         */
+        set(value) {
+            exoplayer.isDeviceMuted = value
+        }
+
     /**
      * Plays the video
      */
@@ -224,20 +240,6 @@ class ApiVideoPlayer(
             exoplayer.deviceVolume =
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
-
-    /**
-     * Mutes the device
-     */
-    fun mute() {
-        exoplayer.isDeviceMuted = true
-    }
-
-    /**
-     * Unmutes the device
-     */
-    fun unmute() {
-        exoplayer.isDeviceMuted = false
-    }
 
     /**
      * Hides the video controller

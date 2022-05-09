@@ -164,11 +164,11 @@ class MainActivity : AppCompatActivity() {
         binding.pause.setOnClickListener { player.pause() }
         binding.stop.setOnClickListener { player.stop() }
 
-        binding.mute.setOnClickListener { player.mute() }
+        binding.mute.setOnClickListener { player.isMuted = true }
         binding.volume.addOnChangeListener { _, volume, _ ->
             player.volume = (volume / 100f)
         }
-        binding.unmute.setOnClickListener { player.unmute() }
+        binding.unmute.setOnClickListener { player.isMuted = false }
 
         binding.showControls.setOnClickListener { player.showControls() }
         binding.hideControls.setOnClickListener { player.hideControls() }
