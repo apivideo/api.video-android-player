@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Test
 import video.api.client.api.clients.VideosApi
 import video.api.client.api.models.Environment
+import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
@@ -41,7 +42,12 @@ class ApiVideoPlayerAndroidTest {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayer(context, VALID_VIDEO_ID, VideoType.VOD, listener, playerView)
+        player = ApiVideoPlayer(
+            context,
+            VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
+            listener,
+            playerView
+        )
         lock.await(5, TimeUnit.SECONDS)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
@@ -59,7 +65,12 @@ class ApiVideoPlayerAndroidTest {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayer(context, INVALID_VIDEO_ID, VideoType.VOD, listener, playerView)
+        player = ApiVideoPlayer(
+            context,
+            VideoOptions(INVALID_VIDEO_ID, VideoType.VOD),
+            listener,
+            playerView
+        )
         lock.await(5, TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -98,7 +109,137 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(context, VALID_VIDEO_ID, VideoType.VOD, listener, playerView)
+        player = ApiVideoPlayer(
+            context,
+            VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
+            listener,
+            playerView
+        )
+
+        readyLock.await(5, TimeUnit.SECONDS)
+        assertEquals(0, readyLock.count)
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.play()
+        }
+
+        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+
+        assertEquals(1, errorLock.count) // No error has happened
+        assertEquals(0, playLock.count)
+        assertEquals(0, firstPlayLock.count)
+        assertEquals(1, pauseLock.count)
+        assertEquals(0, endLock.count)
+    }
+
+    @Test
+    fun singlePlayWithVideoOptionTest() {
+        val errorLock = CountDownLatch(1)
+        val readyLock = CountDownLatch(1)
+        val firstPlayLock = CountDownLatch(1)
+        val playLock = CountDownLatch(1)
+        val pauseLock = CountDownLatch(1)
+        val endLock = CountDownLatch(1)
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: Exception) {
+                errorLock.countDown()
+            }
+
+            override fun onReady() {
+                readyLock.countDown()
+            }
+
+            override fun onFirstPlay() {
+                firstPlayLock.countDown()
+            }
+
+            override fun onPlay() {
+                playLock.countDown()
+            }
+
+            override fun onPause() {
+                pauseLock.countDown()
+            }
+
+            override fun onEnd() {
+                endLock.countDown()
+            }
+        }
+        player = ApiVideoPlayer(
+            context,
+            listener = listener,
+            playerView = playerView
+        ).apply {
+            videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        }
+
+        readyLock.await(5, TimeUnit.SECONDS)
+        assertEquals(0, readyLock.count)
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.play()
+        }
+
+        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+
+        assertEquals(1, errorLock.count) // No error has happened
+        assertEquals(0, playLock.count)
+        assertEquals(0, firstPlayLock.count)
+        assertEquals(1, pauseLock.count)
+        assertEquals(0, endLock.count)
+    }
+
+    @Test
+    fun multiplePlayWithVideoOptionTest() {
+        val errorLock = CountDownLatch(1)
+        val readyLock = CountDownLatch(2)
+        val firstPlayLock = CountDownLatch(2)
+        val playLock = CountDownLatch(2)
+        val pauseLock = CountDownLatch(1)
+        val endLock = CountDownLatch(2)
+        val listener = object : ApiVideoPlayer.Listener {
+            override fun onError(error: Exception) {
+                errorLock.countDown()
+            }
+
+            override fun onReady() {
+                readyLock.countDown()
+            }
+
+            override fun onFirstPlay() {
+                firstPlayLock.countDown()
+            }
+
+            override fun onPlay() {
+                playLock.countDown()
+            }
+
+            override fun onPause() {
+                pauseLock.countDown()
+            }
+
+            override fun onEnd() {
+                endLock.countDown()
+            }
+        }
+        player = ApiVideoPlayer(
+            context,
+            listener = listener,
+            playerView = playerView
+        ).apply {
+            videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        }
+
+        readyLock.await(5, TimeUnit.SECONDS)
+        assertEquals(1, readyLock.count)
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.play()
+        }
+
+        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+
+        player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
 
         readyLock.await(5, TimeUnit.SECONDS)
         assertEquals(0, readyLock.count)
@@ -149,7 +290,12 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(context, VALID_VIDEO_ID, VideoType.VOD, listener, playerView)
+        player = ApiVideoPlayer(
+            context,
+            VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
+            listener,
+            playerView
+        )
 
         readyLock.await(5, TimeUnit.SECONDS)
         assertEquals(0, readyLock.count)
@@ -165,7 +311,7 @@ class ApiVideoPlayerAndroidTest {
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
             player.play()
         }
-        
+
         endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         assertEquals(1, errorLock.count) // No error has happened
@@ -215,11 +361,9 @@ class ApiVideoPlayerAndroidTest {
         }
         player = ApiVideoPlayer(
             context,
-            PRIVATE_VIDEO_ID,
-            VideoType.VOD,
+            VideoOptions(PRIVATE_VIDEO_ID, VideoType.VOD, privateToken),
             listener,
-            playerView,
-            token = privateToken
+            playerView
         )
 
         readyLock.await(5, TimeUnit.SECONDS)

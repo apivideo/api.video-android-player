@@ -18,6 +18,7 @@ import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
 import video.api.player.ApiVideoPlayer
 import video.api.player.example.databinding.ActivityMainBinding
+import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 
 class MainActivity : AppCompatActivity() {
@@ -186,11 +187,9 @@ class MainActivity : AppCompatActivity() {
     private fun loadPlayer() {
         player = ApiVideoPlayer(
             this,
-            videoId,
-            videoType,
+            VideoOptions(videoId, videoType, privateVideoToken),
             playerListener,
             binding.playerView,
-            token = privateVideoToken,
             showFullScreenButton = true
         )
     }
