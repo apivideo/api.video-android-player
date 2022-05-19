@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!--Settings-->
-    <string name="default_video_id">myVideoId</string>
+    <string name="default_video_id">YOUR_VIDEO_ID</string>
     <string name="video_id_key">video_id_key</string>
     <string name="video_id">VideoId</string>
     <string name="video_type_key">video_type_key</string>
