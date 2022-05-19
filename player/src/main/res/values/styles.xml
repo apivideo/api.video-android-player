@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ExoStyledControls.Button.Center.Previous">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="ExoStyledControls.Button.Center.Next">
+        <item name="android:visibility">gone</item>
+    </style>
+    <style name="ExoStyledControls.Button.Center.FfwdWithAmount">
+        <item name="android:foreground">@drawable/exo_styled_controls_fastforward</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/exo_icon_text_size</item>
+        <item name="android:textColor">@color/exo_white</item>
+        <!-- Needed for https://github.com/google/ExoPlayer/issues/7898 -->
+        <item name="backgroundTint">@color/exo_white</item>
+    </style>
+    <style name="ExoStyledControls.Button.Center.RewWithAmount">
+        <item name="android:foreground">@drawable/exo_styled_controls_rewind</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/exo_icon_text_size</item>
+        <item name="android:textColor">@color/exo_white</item>
+        <!-- Needed for https://github.com/google/ExoPlayer/issues/7898 -->
+        <item name="backgroundTint">@color/exo_white</item>
+    </style>
+</resources>

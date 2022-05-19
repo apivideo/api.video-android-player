@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="exo_styled_controls_pause">@drawable/ic_pause_primary</drawable>
+    <drawable name="exo_styled_controls_play">@drawable/ic_play_primary_colored</drawable>
+    <drawable name="exo_styled_controls_rewind">@drawable/ic_back2</drawable>
+    <drawable name="exo_styled_controls_fastforward">@drawable/ic_forward2</drawable>
+    <drawable name="exo_styled_controls_settings">@drawable/ic_more</drawable>
+    <drawable name="exo_styled_controls_fullscreen_enter">@drawable/ic_resize_full</drawable>
+    <drawable name="exo_styled_controls_fullscreen_exit">@drawable/ic_resize_normal</drawable>
+    <drawable name="exo_styled_controls_subtitle_off">@drawable/ic_subtitles_disable</drawable>
+    <drawable name="exo_styled_controls_subtitle_on">@drawable/ic_subtitles_enable</drawable>
+</resources>
