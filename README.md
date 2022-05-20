@@ -16,7 +16,8 @@ your app.
     - [Installation](#installation)
         - [Gradle](#gradle)
     - [Permissions](#permissions)
-    - [Code sample](#code-sample)
+    - [Permissions](#permissions)
+    - [Retrieve your video Id](#retrieve-your-video-id)
 - [Sample application](#sample-application)
 - [Documentation](#documentation)
 - [Dependencies](#dependencies)
@@ -45,14 +46,37 @@ dependencies {
 In your `AndroidManifest.xml`, add the following code in `<manifest>`:
 
 ```xml
+
 <uses-permission android:name="android.permission.INTERNET" />
 ```
+
+## Retrieve your video Id
+
+At this point, you must have uploaded a least one video to your account. If you haven't
+see [how to upload a video](https://docs.api.video/docs/upload-a-video-regular-upload). You'll need
+a video Id to use this component and play a video from api.video. To get yours, follow these steps:
+
+1. [Log into your account](https://dashboard.api.video/login) or create
+   one [here](https://dashboard.api.video/register).
+2. Copy your API key (sandbox or production if you are subscribed to one of
+   our [plan](https://api.video/pricing)).
+3. Go to [the official api.video documentation](https://docs.api.video/docs).
+4. Log into your account in the top right corner. If it's already done, be sure it's the account you
+   want to use.
+5. Go to API Reference -> Videos -> [List all videos](https://docs.api.video/reference/list-videos)
+6. On the right, be sure the "Authentication" section contains the API key you want to use.
+7. Generate your upload token by clicking the "Try It!" button in the right section
+8. Copy the "videoId" value of one of elements of the response in the right section.
+
+Alternatively, you can find your video Id in the video details of
+your [dashboard](https://dashboard.api.video).
 
 ## Code sample
 
 1. Add a `StyledPlayerView` to your Activity/Fragment layout:
 
 ```xml
+
 <com.google.android.exoplayer2.ui.StyledPlayerView
     android:id="@+id/playerView"
     android:layout_width="wrap_content"
@@ -66,8 +90,12 @@ You can customize the `StyledPlayerView` according to your application design.
 
 ```kotlin
 val playerListener = object : ApiVideoPlayer.Listener {
-    override fun onError(error: Exception) {}
-    override fun onReady() {}
+    override fun onError(error: Exception) {
+        Log.e(TAG, "An error happened", error)
+    }
+    override fun onReady() {
+        Log.I(TAG, "Player is ready")
+    }
 }
 ```
 
@@ -90,6 +118,10 @@ val player = ApiVideoPlayer(
 A demo application demonstrates how to use player.
 See [`/example`](https://github.com/apivideo/api.video-android-player/tree/main/example)
 folder.
+
+On the first run, you will have to set your video Id:
+1. Click on the FloatingActionButton -> Settings
+2. Replace "YOUR_VIDEO_ID" by your video Id
 
 # Documentation
 
