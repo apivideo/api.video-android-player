@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FA5B30</color>
-    <color name="colorSecondary">#FFB39E</color>
-    <color name="colorAccent">#FA5B30</color>
-    <color name="colorOnPrimary">#D9E1EC</color>
-    <color name="accentColor">#FA5B30</color>
+    <!-- White -->
+    <color name="white">#FFFFFF</color>
+
+    <!-- Black -->
+    <color name="black">#000000</color>
+
+    <!-- Orange -->
+    <color name="orangePrimary">#FA5B30</color>
+
+    <!-- Blue -->
+    <color name="bluePrimary">#4580FF</color>
+
+    <!-- Red -->
+    <color name="redPrimary">#B91C1C</color>
+
+    <!-- Indigo -->
+    <color name="indigoPrimary">#640AFF</color>
+
+    <!-- Green -->
+    <color name="greenPrimary">#10B981</color>
+
+    <!-- Grey -->
+    <color name="greyPrimary">#666C8E</color>
+
+    <!-- Grey 900 -->
+    <color name="greyDarker">#0B0F17</color>
+
+    <!-- Yellow -->
+    <color name="yellowPrimary">#D97706</color>
+
+    <!-- Purple -->
+    <color name="purplePrimary">#D53FFF</color>
 </resources>
