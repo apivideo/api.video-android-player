@@ -2,10 +2,12 @@
 buildscript {
     ext {
         kotlinVersion = '1.6.10'
+        dokkaVersion = '1.6.10'
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
     }
 }
 plugins {

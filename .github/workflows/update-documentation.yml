@@ -22,4 +22,4 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: analytics/build/dokka/html
+          FOLDER: player/build/dokka/html
