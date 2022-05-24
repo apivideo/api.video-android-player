@@ -54,7 +54,16 @@ class ApiVideoPlayer(
     private var xTokenSession: String? = null
     private var firstPlay = true
     private var isReady = false
+
+    /**
+     * Set/get the video options.
+     */
     var videoOptions: VideoOptions? = null
+        /**
+         * Play a new video from the given [VideoOptions].
+         *
+         * @param value the video options
+         */
         set(value) {
             field = value
             value?.let {
