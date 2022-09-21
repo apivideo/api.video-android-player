@@ -6,7 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.Size
-import android.view.View
+import android.view.SurfaceView
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
@@ -25,31 +25,90 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.video.VideoSize
 import video.api.player.analytics.ApiVideoPlayerAnalytics
 import video.api.player.analytics.Options
+import video.api.player.interfaces.IExoPlayerBasedPlayerView
+import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.*
 import video.api.player.utils.toSeconds
 import java.io.IOException
 
 
 /**
- * The api.video player class.
+ * The api.video player controller class.
  *
  * @param context the application context
  * @param initialVideoOptions initial video options
  * @param listener a [Player.Listener] to listen to player events
- * @param playerView a [StyledPlayerView] to use to display the player
- * @param showFullScreenButton show ([Boolean.true]) or hide full screen button
  */
-class ApiVideoPlayer(
+class ApiVideoPlayerController
+internal constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
     private val listener: Listener,
-    private val playerView: StyledPlayerView,
-    private val showFullScreenButton: Boolean = false
 ) {
+    /**
+     * @param context the application context
+     * @param initialVideoOptions initial video options
+     * @param listener the [Player.Listener] to listen to player events
+     * @param playerView the [IExoPlayerBasedPlayerView] interface for ExoPlayer [StyledPlayerView] based player view
+     */
+    constructor(
+        context: Context,
+        initialVideoOptions: VideoOptions? = null,
+        listener: Listener,
+        playerView: IExoPlayerBasedPlayerView
+    ) : this(context, initialVideoOptions, listener, playerView.styledPlayerView) {
+        viewListener = playerView
+    }
+
+    /**
+     * @param context the application context
+     * @param initialVideoOptions initial video options
+     * @param listener the [Player.Listener] to listen to player events
+     * @param playerView the [ISurfaceViewBasedPlayerView] interface for [SurfaceView] based player view
+     */
+    constructor(
+        context: Context,
+        initialVideoOptions: VideoOptions? = null,
+        listener: Listener,
+        playerView: ISurfaceViewBasedPlayerView
+    ) : this(context, initialVideoOptions, listener, playerView.surfaceView) {
+        viewListener = playerView
+    }
+
+    /**
+     * @param context the application context
+     * @param initialVideoOptions initial video options
+     * @param listener the [Player.Listener] to listen to player events
+     * @param styledPlayerView the [StyledPlayerView] to use to display the player
+     */
+    constructor(
+        context: Context,
+        initialVideoOptions: VideoOptions? = null,
+        listener: Listener,
+        styledPlayerView: StyledPlayerView
+    ) : this(context, initialVideoOptions, listener) {
+        styledPlayerView.player = exoplayer
+    }
+
+    /**
+     * @param context the application context
+     * @param initialVideoOptions initial video options
+     * @param listener the [Player.Listener] to listen to player events
+     * @param surfaceView the [SurfaceView] to use to display the video
+     */
+    constructor(
+        context: Context,
+        initialVideoOptions: VideoOptions? = null,
+        listener: Listener,
+        surfaceView: SurfaceView
+    ) : this(context, initialVideoOptions, listener) {
+        exoplayer.setVideoSurfaceView(surfaceView)
+    }
+
     private val queue = Volley.newRequestQueue(context).apply {
         start()
     }
-    private lateinit var playerJson: PlayerJson
+    private lateinit var playerManifest: PlayerManifest
     private lateinit var analytics: ApiVideoPlayerAnalytics
     private var xTokenSession: String? = null
     private var firstPlay = true
@@ -87,7 +146,7 @@ class ApiVideoPlayer(
             error: IOException,
             wasCanceled: Boolean
         ) {
-            this@ApiVideoPlayer.playerJson.video.mp4?.let {
+            this@ApiVideoPlayerController.playerManifest.video.mp4?.let {
                 if (loadEventInfo.uri.toString() != getPlayerFileUrl(it, videoOptions?.token)) {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
                     setPlayerUri(it)
@@ -202,14 +261,17 @@ class ApiVideoPlayer(
             exoplayer.isDeviceMuted = value
         }
 
+    private var viewListener: ViewListener? = null
+
     private fun loadPlayer(videoOptions: VideoOptions) {
-        getPlayerJson(videoOptions, { request ->
-            playerJson = request.playerJson
+        getPlayerManifest(videoOptions, { request ->
+            playerManifest = request.playerManifest
+            viewListener?.onNewVideoManifest(playerManifest)
             xTokenSession = request.headers?.get("X-Token-Session")
             analytics =
-                ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerJson.video.src))
-            setPlayerUri(playerJson.video.src, videoOptions.token)
-            preparePlayer(playerJson)
+                ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerManifest.video.src))
+            setPlayerUri(playerManifest.video.src, videoOptions.token)
+            preparePlayer(playerManifest)
         }, { error ->
             listener.onError(error)
         })
@@ -260,37 +322,6 @@ class ApiVideoPlayer(
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
 
-    /**
-     * Hides the video controller
-     */
-    fun hideControls() {
-        playerView.useController = false
-    }
-
-    /**
-     * Shows the video controller
-     */
-    fun showControls() {
-        playerView.useController = true
-        playerView.showController()
-    }
-
-    /**
-     * Shows the subtitles
-     */
-    fun showSubtitles() {
-        playerView.subtitleView?.visibility = View.VISIBLE
-        playerView.setShowSubtitleButton(true)
-    }
-
-    /**
-     * Hides the subtitles
-     */
-    fun hideSubtitles() {
-        playerView.subtitleView?.visibility = View.INVISIBLE
-        playerView.setShowSubtitleButton(false)
-    }
-
     private fun setPlayerUri(uri: String, token: String? = null) {
         val mediaItem =
             MediaItem.fromUri(getPlayerFileUrl(uri, token))
@@ -304,26 +335,12 @@ class ApiVideoPlayer(
         exoplayer.setMediaSource(videoSource)
     }
 
-    private fun preparePlayer(playerJson: PlayerJson) {
-        if (playerJson.loop) {
+    private fun preparePlayer(playerManifest: PlayerManifest) {
+        if (playerManifest.loop) {
             exoplayer.repeatMode = REPEAT_MODE_ALL
         }
-        exoplayer.playWhenReady = playerJson.autoplay
+        exoplayer.playWhenReady = playerManifest.autoplay
         exoplayer.prepare()
-
-        preparePlayerView(playerJson)
-    }
-
-    private fun preparePlayerView(playerJson: PlayerJson) {
-        playerView.player = exoplayer
-        playerView.useController = playerJson.`visible-controls`
-        if (showFullScreenButton) {
-            playerView.setControllerOnFullScreenModeChangedListener {
-                listener.onFullScreenModeChanged(
-                    it
-                )
-            }
-        }
     }
 
     private fun loadPoster(posterUrl: String, callback: (Drawable) -> Unit) {
@@ -348,7 +365,7 @@ class ApiVideoPlayer(
         queue.add(imageRequest)
     }
 
-    private fun getPlayerJson(
+    private fun getPlayerManifest(
         videoOptions: VideoOptions,
         onSuccess: (PlayerJsonRequestResult) -> Unit,
         onError: (Exception) -> Unit
@@ -427,17 +444,19 @@ class ApiVideoPlayer(
         fun onEnd() {}
 
         /**
-         * Called when the full screen button has been clicked
-         *
-         * @param isFullScreen true if the player is in fullscreen mode
-         */
-        fun onFullScreenModeChanged(isFullScreen: Boolean) {}
-
-        /**
          * Called when the video resolution has changed
          *
          * @param resolution the new video resolution
          */
         fun onVideoSizeChanged(resolution: Size) {}
+    }
+
+    interface ViewListener {
+        /**
+         * Called when a new video manifest has been loaded.
+         *
+         * Use it to adapt your view according to api.video player settings.
+         */
+        fun onNewVideoManifest(playerManifest: PlayerManifest)
     }
 }

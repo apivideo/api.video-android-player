@@ -16,4 +16,11 @@
     <string name="private_video_token">Private video token</string>
     <string name="show_subtitles">ShowSubtitles</string>
     <string name="hide_subtitles">HideSubtitles</string>
+    <string name="show_full_screen_button">ShowFullScreen</string>
+    <string name="hide_full_screen_button">HideFullScreen</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="mute">Mute</string>
+    <string name="unmute">Unmute</string>
 </resources>

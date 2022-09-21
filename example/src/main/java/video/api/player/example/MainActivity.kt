@@ -16,7 +16,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
-import video.api.player.ApiVideoPlayer
+import video.api.player.ApiVideoExoPlayerView
+import video.api.player.ApiVideoPlayerController
 import video.api.player.example.databinding.ActivityMainBinding
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
@@ -53,7 +54,34 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private val playerListener = object : ApiVideoPlayer.Listener {
+    private val playerViewListener = object : ApiVideoExoPlayerView.Listener {
+        override fun onFullScreenModeChanged(isFullScreen: Boolean) {
+            /**
+             * For fullscreen video, hides every views and forces orientation in landscape.
+             */
+            if (isFullScreen) {
+                supportActionBar?.hide()
+                hideSystemUI()
+                binding.fab.hide()
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                binding.playerView.layoutParams.apply {
+                    width = ViewGroup.LayoutParams.MATCH_PARENT
+                    height = ViewGroup.LayoutParams.MATCH_PARENT
+                }
+            } else {
+                supportActionBar?.show()
+                showSystemUI()
+                binding.fab.show()
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                binding.playerView.layoutParams.apply {
+                    width = ViewGroup.LayoutParams.WRAP_CONTENT
+                    height = ViewGroup.LayoutParams.WRAP_CONTENT
+                }
+            }
+        }
+    }
+
+    private val playerControllerListener = object : ApiVideoPlayerController.Listener {
         override fun onError(error: Exception) {
             val message = when {
                 error.message != null -> {
@@ -93,34 +121,20 @@ class MainActivity : AppCompatActivity() {
             displayMessage("onEnd")
         }
 
-        override fun onFullScreenModeChanged(isFullScreen: Boolean) {
-            if (isFullScreen) {
-                supportActionBar?.hide()
-                hideSystemUI()
-                binding.fab.hide()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                binding.playerView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = ViewGroup.LayoutParams.MATCH_PARENT
-                }
-            } else {
-                supportActionBar?.show()
-                showSystemUI()
-                binding.fab.show()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-                binding.playerView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.WRAP_CONTENT
-                    height = ViewGroup.LayoutParams.WRAP_CONTENT
-                }
-            }
-        }
-
         override fun onVideoSizeChanged(resolution: Size) {
             displayMessage("onVideoSizeChanged: $resolution")
         }
     }
 
-    private lateinit var player: ApiVideoPlayer
+    private val player: ApiVideoPlayerController by lazy {
+        binding.playerView.listener = playerViewListener
+        ApiVideoPlayerController(
+            applicationContext,
+            null,
+            playerControllerListener,
+            binding.playerView
+        )
+    }
 
     private fun displayMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
@@ -171,27 +185,36 @@ class MainActivity : AppCompatActivity() {
         }
         binding.unmute.setOnClickListener { player.isMuted = false }
 
-        binding.showControls.setOnClickListener { player.showControls() }
-        binding.hideControls.setOnClickListener { player.hideControls() }
+        binding.showFullScreenButton.setOnClickListener { binding.playerView.showFullScreenButton = true }
+        binding.hideFullScreenButton.setOnClickListener { binding.playerView.showFullScreenButton = false }
 
-        binding.showSubtitles.setOnClickListener { player.showSubtitles() }
-        binding.hideSubtitles.setOnClickListener { player.hideSubtitles() }
+        binding.showControls.setOnClickListener { binding.playerView.showControls = true }
+        binding.hideControls.setOnClickListener { binding.playerView.showControls = false }
+
+        binding.showSubtitles.setOnClickListener { binding.playerView.showSubtitles = true }
+        binding.hideSubtitles.setOnClickListener { binding.playerView.showSubtitles = false }
     }
 
     override fun onResume() {
         super.onResume()
 
-        loadPlayer()
+        loadVideo()
     }
 
-    private fun loadPlayer() {
-        player = ApiVideoPlayer(
-            this,
-            VideoOptions(videoId, videoType, privateVideoToken),
-            playerListener,
-            binding.playerView,
-            showFullScreenButton = true
-        )
+    override fun onPause() {
+        super.onPause()
+
+        player.pause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        player.release()
+    }
+
+    private fun loadVideo() {
+        player.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
     }
 
     private fun showMenu(anchor: View) {
