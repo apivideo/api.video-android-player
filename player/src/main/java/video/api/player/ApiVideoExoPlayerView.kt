@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import video.api.player.databinding.ExoPlayerLayoutBinding
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
@@ -37,11 +36,11 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
     var showFullScreenButton: Boolean = true
         set(value) {
             if (value) {
-                styledPlayerView.setControllerOnFullScreenModeChangedListener {
+                styledPlayerView.setFullscreenButtonClickListener {
                     listener?.onFullScreenModeChanged(it)
                 }
             } else {
-                styledPlayerView.setControllerOnFullScreenModeChangedListener(null)
+                styledPlayerView.setFullscreenButtonClickListener(null)
             }
             field = value
         }
