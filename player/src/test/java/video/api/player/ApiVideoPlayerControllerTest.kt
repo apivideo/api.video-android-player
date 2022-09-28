@@ -22,7 +22,7 @@ import video.api.player.utils.Resources
 import java.io.IOException
 import java.util.concurrent.CountDownLatch
 
-class ApiVideoPlayerTest {
+class ApiVideoPlayerControllerTest {
     private val context = mockk<Context>(relaxed = true)
     private val mockHttpStack = MockHttpStack()
     private val playerView = mockk<StyledPlayerView>(relaxed = true)
@@ -60,7 +60,7 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 error.printStackTrace()
                 println(error.message)
@@ -68,7 +68,7 @@ class ApiVideoPlayerTest {
             }
         }
 
-        ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(1, lock.count) // OnError not called
@@ -86,13 +86,13 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
 
-        ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -104,13 +104,13 @@ class ApiVideoPlayerTest {
 
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
 
-        ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -118,44 +118,64 @@ class ApiVideoPlayerTest {
 
     @Test
     fun `play test`() {
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
         }
 
         val player =
-            ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+            ApiVideoPlayerController(
+                context,
+                VideoOptions("test", VideoType.VOD),
+                listener,
+                playerView
+            )
         player.play()
         verify { exoplayer.play() }
     }
 
     @Test
     fun `pause test`() {
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
         }
 
         val player =
-            ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+            ApiVideoPlayerController(
+                context,
+                VideoOptions("test", VideoType.VOD),
+                listener,
+                playerView
+            )
         player.pause()
         verify { exoplayer.pause() }
     }
 
     @Test
     fun `stop test`() {
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
         }
 
         val player =
-            ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+            ApiVideoPlayerController(
+                context,
+                VideoOptions("test", VideoType.VOD),
+                listener,
+                playerView
+            )
         player.stop()
         verify { exoplayer.stop() }
     }
 
     @Test
     fun `release test`() {
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
         }
 
         val player =
-            ApiVideoPlayer(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+            ApiVideoPlayerController(
+                context,
+                VideoOptions("test", VideoType.VOD),
+                listener,
+                playerView
+            )
         player.release()
         verify { exoplayer.release() }
     }

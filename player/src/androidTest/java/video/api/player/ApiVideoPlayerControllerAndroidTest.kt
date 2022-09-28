@@ -1,12 +1,11 @@
 package video.api.player
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.google.android.exoplayer2.ui.StyledPlayerView
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
-import video.api.client.api.clients.VideosApi
+import video.api.client.ApiVideoClient
 import video.api.client.api.models.Environment
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
@@ -15,17 +14,16 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 
-class ApiVideoPlayerAndroidTest {
+class ApiVideoPlayerControllerAndroidTest {
     companion object {
         private const val VALID_VIDEO_ID = "vi2G6Qr8ZVE67dWLNymk7qbc"
         private const val INVALID_VIDEO_ID = "unknownVideoId"
         private const val PRIVATE_VIDEO_ID = "viMgTZ1KULkXrjFfDCTBtLs"
     }
 
-    private lateinit var player: ApiVideoPlayer
+    private lateinit var player: ApiVideoPlayerController
     private var apiKey: String? = null
     private val context = InstrumentationRegistry.getInstrumentation().context
-    private val playerView = StyledPlayerView(context)
 
     @Before
     fun setUp() {
@@ -37,16 +35,15 @@ class ApiVideoPlayerAndroidTest {
     fun assertDurationTest() {
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onReady() {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener,
-            playerView
+            listener
         )
         lock.await(5, TimeUnit.SECONDS)
 
@@ -60,16 +57,15 @@ class ApiVideoPlayerAndroidTest {
     fun unknownVideoId() {
         val lock = CountDownLatch(1)
 
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
             VideoOptions(INVALID_VIDEO_ID, VideoType.VOD),
-            listener,
-            playerView
+            listener
         )
         lock.await(5, TimeUnit.SECONDS)
 
@@ -84,7 +80,7 @@ class ApiVideoPlayerAndroidTest {
         val playLock = CountDownLatch(1)
         val pauseLock = CountDownLatch(1)
         val endLock = CountDownLatch(1)
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 errorLock.countDown()
             }
@@ -109,11 +105,10 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener,
-            playerView
+            listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -140,7 +135,7 @@ class ApiVideoPlayerAndroidTest {
         val playLock = CountDownLatch(1)
         val pauseLock = CountDownLatch(1)
         val endLock = CountDownLatch(1)
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 errorLock.countDown()
             }
@@ -165,10 +160,9 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
-            listener = listener,
-            playerView = playerView
+            listener = listener
         ).apply {
             videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
         }
@@ -197,7 +191,7 @@ class ApiVideoPlayerAndroidTest {
         val playLock = CountDownLatch(2)
         val pauseLock = CountDownLatch(1)
         val endLock = CountDownLatch(2)
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 errorLock.countDown()
             }
@@ -222,10 +216,9 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
-            listener = listener,
-            playerView = playerView
+            listener = listener
         ).apply {
             videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
         }
@@ -265,7 +258,7 @@ class ApiVideoPlayerAndroidTest {
         val playLock = CountDownLatch(2)
         val pauseLock = CountDownLatch(1)
         val endLock = CountDownLatch(1)
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 errorLock.countDown()
             }
@@ -290,11 +283,10 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener,
-            playerView
+            listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -326,10 +318,10 @@ class ApiVideoPlayerAndroidTest {
         assumeTrue("Required API key", apiKey != null)
         assumeTrue("API key not set", apiKey != "null")
 
-        val videosApi = VideosApi(
-            apiKey!!,
-            Environment.PRODUCTION.basePath
-        )
+        val apiClient = ApiVideoClient(apiKey!!, Environment.PRODUCTION)
+        apiClient.setApplicationName("player-integration-tests", "0")
+        val videosApi = apiClient.videos()
+
         val video = videosApi.get(PRIVATE_VIDEO_ID)
         val privateToken = video.assets!!.player.toString().split("=")[1]
 
@@ -338,7 +330,7 @@ class ApiVideoPlayerAndroidTest {
         val firstPlayLock = CountDownLatch(1)
         val playLock = CountDownLatch(1)
         val endLock = CountDownLatch(1)
-        val listener = object : ApiVideoPlayer.Listener {
+        val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
                 errorLock.countDown()
             }
@@ -359,11 +351,10 @@ class ApiVideoPlayerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayer(
+        player = ApiVideoPlayerController(
             context,
             VideoOptions(PRIVATE_VIDEO_ID, VideoType.VOD, privateToken),
-            listener,
-            playerView
+            listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)

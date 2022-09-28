@@ -73,23 +73,25 @@ your [dashboard](https://dashboard.api.video).
 
 ## Code sample
 
-1. Add a `StyledPlayerView` to your Activity/Fragment layout:
+1. Add a `ApiVideoExoPlayerView` to your Activity/Fragment layout:
 
 ```xml
 
-<com.google.android.exoplayer2.ui.StyledPlayerView
+<video.api.player.ApiVideoExoPlayerView
     android:id="@+id/playerView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:show_subtitle_button="true" />
+    app:show_fullscreen_button="true"
+    app:show_controls="true"
+    app:show_subtitles="true" />
 ```
 
-You can customize the `StyledPlayerView` according to your application design.
+You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your customisation level.
 
-2. Implements the `Player.Listener` interface:
+2. Implements the `ApiVideoPlayerController.Listener` interface:
 
 ```kotlin
-val playerListener = object : ApiVideoPlayer.Listener {
+val playerControllerListener = object : ApiVideoPlayerController.Listener {
     override fun onError(error: Exception) {
         Log.e(TAG, "An error happened", error)
     }
@@ -99,19 +101,23 @@ val playerListener = object : ApiVideoPlayer.Listener {
 }
 ```
 
-3. Instantiate the `ApiVideoPlayer` in an your Activity/Fragment:
+3. Instantiate the `ApiVideoPlayerController` in an your Activity/Fragment:
 
 ```kotlin
-val playerView = findViewById<StyledPlayerView>(R.id.playerView)
+val playerView = findViewById<ApiVideoExoPlayerView>(R.id.playerView)
 
-val player = ApiVideoPlayer(
-    this,
-    "YOUR_VIDEO_ID",
-    VideoType.VOD,
+val player = ApiVideoPlayerController(
+    applicationContext,
+    VideoOptions("YOUR_VIDEO_ID", VideoType.VOD), // For private video: VideoOptions("YOUR_VIDEO_ID", VideoType.VOD, "YOUR_PRIVATE_VIDEO_TOKEN")
     playerListener,
     playerView
 )
 ```
+
+4. Fullscreen video
+
+If you requires a fullscreen video. You will have to implement the `ApiVideoPlayerController.ViewListener` interface.
+Check out for the implementation in the [Sample application](#sample-application).
 
 # Sample application
 

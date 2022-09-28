@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 @Serializable
-data class PlayerJson(
+data class PlayerManifest(
     val id: String,
     val title: String? = null,
     val description: String? = null,
