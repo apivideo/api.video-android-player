@@ -23,12 +23,10 @@ import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.video.VideoSize
-import video.api.player.analytics.ApiVideoPlayerAnalytics
-import video.api.player.analytics.Options
+import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.*
-import video.api.player.utils.toSeconds
 import java.io.IOException
 
 
@@ -109,7 +107,7 @@ internal constructor(
         start()
     }
     private lateinit var playerManifest: PlayerManifest
-    private lateinit var analytics: ApiVideoPlayerAnalytics
+    private var analyticsListener: ApiVideoAnalyticsListener? = null
     private var xTokenSession: String? = null
     private var firstPlay = true
     private var isReady = false
@@ -159,16 +157,12 @@ internal constructor(
         override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
             if (isPlaying) {
                 if (firstPlay) {
-                    analytics.play(eventTime.toSeconds())
                     firstPlay = false
                     listener.onFirstPlay()
-                } else {
-                    analytics.resume(eventTime.toSeconds())
                 }
                 listener.onPlay()
             } else {
                 if (exoplayer.playbackState != STATE_ENDED) {
-                    analytics.pause(eventTime.toSeconds())
                     listener.onPause()
                 }
             }
@@ -177,12 +171,10 @@ internal constructor(
         override fun onPlaybackStateChanged(eventTime: EventTime, state: Int) {
             if (state == STATE_READY) {
                 if (!isReady) {
-                    analytics.ready(eventTime.toSeconds())
                     isReady = true
                     listener.onReady()
                 }
             } else if (state == STATE_ENDED) {
-                analytics.end(eventTime.toSeconds())
                 listener.onEnd()
             }
         }
@@ -194,16 +186,8 @@ internal constructor(
             reason: Int
         ) {
             if (reason == DISCONTINUITY_REASON_SEEK) {
-                analytics.seek(
-                    oldPosition.positionMs.toSeconds(),
-                    newPosition.positionMs.toSeconds()
-                )
                 listener.onSeek()
             }
-        }
-
-        override fun onPlayerReleased(eventTime: EventTime) {
-            analytics.destroy(eventTime.toSeconds())
         }
 
         override fun onVideoSizeChanged(eventTime: EventTime, videoSize: VideoSize) {
@@ -268,8 +252,11 @@ internal constructor(
             playerManifest = request.playerManifest
             viewListener?.onNewVideoManifest(playerManifest)
             xTokenSession = request.headers?.get("X-Token-Session")
-            analytics =
-                ApiVideoPlayerAnalytics(context, Options(mediaUrl = playerManifest.video.src))
+            analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
+            analyticsListener =
+                ApiVideoAnalyticsListener(context, exoplayer, playerManifest.video.src).apply {
+                    exoplayer.addAnalyticsListener(this)
+                }
             setPlayerUri(playerManifest.video.src, videoOptions.token)
             preparePlayer(playerManifest)
         }, { error ->
@@ -302,6 +289,8 @@ internal constructor(
      * Releases the player
      */
     fun release() {
+        exoplayer.removeAnalyticsListener(exoPlayerAnalyticsListener)
+        analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
         exoplayer.release()
     }
 
