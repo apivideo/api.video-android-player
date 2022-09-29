@@ -1,5 +1,6 @@
 package video.api.player
 
+import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
@@ -19,6 +20,8 @@ class ApiVideoPlayerControllerAndroidTest {
         private const val VALID_VIDEO_ID = "vi2G6Qr8ZVE67dWLNymk7qbc"
         private const val INVALID_VIDEO_ID = "unknownVideoId"
         private const val PRIVATE_VIDEO_ID = "viMgTZ1KULkXrjFfDCTBtLs"
+
+        private const val TAG = "ApiVideoPlayerControllerAndroidTest"
     }
 
     private lateinit var player: ApiVideoPlayerController
@@ -59,6 +62,7 @@ class ApiVideoPlayerControllerAndroidTest {
 
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 lock.countDown()
             }
         }
@@ -82,6 +86,7 @@ class ApiVideoPlayerControllerAndroidTest {
         val endLock = CountDownLatch(1)
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 errorLock.countDown()
             }
 
@@ -118,7 +123,7 @@ class ApiVideoPlayerControllerAndroidTest {
             player.play()
         }
 
-        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+        endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         assertEquals(1, errorLock.count) // No error has happened
         assertEquals(0, playLock.count)
@@ -137,6 +142,7 @@ class ApiVideoPlayerControllerAndroidTest {
         val endLock = CountDownLatch(1)
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 errorLock.countDown()
             }
 
@@ -174,7 +180,7 @@ class ApiVideoPlayerControllerAndroidTest {
             player.play()
         }
 
-        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+        endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         assertEquals(1, errorLock.count) // No error has happened
         assertEquals(0, playLock.count)
@@ -193,6 +199,7 @@ class ApiVideoPlayerControllerAndroidTest {
         val endLock = CountDownLatch(2)
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 errorLock.countDown()
             }
 
@@ -230,7 +237,7 @@ class ApiVideoPlayerControllerAndroidTest {
             player.play()
         }
 
-        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+        endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
 
@@ -241,7 +248,7 @@ class ApiVideoPlayerControllerAndroidTest {
             player.play()
         }
 
-        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+        endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         assertEquals(1, errorLock.count) // No error has happened
         assertEquals(0, playLock.count)
@@ -260,6 +267,7 @@ class ApiVideoPlayerControllerAndroidTest {
         val endLock = CountDownLatch(1)
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 errorLock.countDown()
             }
 
@@ -304,7 +312,7 @@ class ApiVideoPlayerControllerAndroidTest {
             player.play()
         }
 
-        endLock.await(62, TimeUnit.SECONDS) // Video duration is 60.2 seconds
+        endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
         assertEquals(1, errorLock.count) // No error has happened
         assertEquals(0, playLock.count)
@@ -332,6 +340,7 @@ class ApiVideoPlayerControllerAndroidTest {
         val endLock = CountDownLatch(1)
         val listener = object : ApiVideoPlayerController.Listener {
             override fun onError(error: Exception) {
+                Log.e(TAG, "An error occurred", error)
                 errorLock.countDown()
             }
 
