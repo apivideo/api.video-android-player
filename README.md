@@ -37,7 +37,7 @@ In your module `build.gradle`, add the following code in `dependencies`:
 
 ```groovy
 dependencies {
-    implementation 'video.api:android-player:1.0.0'
+    implementation 'video.api:android-player:1.1.0'
 }
 ```
 
