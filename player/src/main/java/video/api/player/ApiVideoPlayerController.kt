@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.Size
+import android.view.Surface
 import android.view.SurfaceView
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
@@ -101,6 +102,21 @@ internal constructor(
         surfaceView: SurfaceView
     ) : this(context, initialVideoOptions, listener) {
         exoplayer.setVideoSurfaceView(surfaceView)
+    }
+
+    /**
+     * @param context the application context
+     * @param initialVideoOptions initial video options
+     * @param listener the [Player.Listener] to listen to player events
+     * @param surface the [Surface] to use to display the video
+     */
+    constructor(
+        context: Context,
+        initialVideoOptions: VideoOptions? = null,
+        listener: Listener,
+        surface: Surface
+    ) : this(context, initialVideoOptions, listener) {
+        exoplayer.setVideoSurface(surface)
     }
 
     private val queue = Volley.newRequestQueue(context).apply {
