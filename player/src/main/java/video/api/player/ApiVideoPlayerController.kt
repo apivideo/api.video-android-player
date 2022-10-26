@@ -221,6 +221,12 @@ internal constructor(
         }
     }
 
+    /**
+     * Check if player is playing
+     */
+    val isPlaying: Boolean
+        get() = exoplayer.isPlaying
+
     var currentTime: Float
         /**
          * Get current video position in seconds
