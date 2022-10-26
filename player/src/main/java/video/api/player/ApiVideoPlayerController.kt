@@ -302,6 +302,13 @@ internal constructor(
     }
 
     /**
+     * Sets the video position to a time in milliseconds from the current time.
+     */
+    fun seek(offset: Float) {
+        currentTime += offset
+    }
+
+    /**
      * Releases the player
      */
     fun release() {
