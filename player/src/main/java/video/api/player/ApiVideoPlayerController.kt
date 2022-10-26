@@ -12,6 +12,7 @@ import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.Format
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
@@ -266,6 +267,14 @@ internal constructor(
         set(value) {
             exoplayer.isDeviceMuted = value
         }
+
+    val videoSize: Size?
+        /**
+         * Get the video size
+         *
+         * @return the video size
+         */
+        get() = exoplayer.videoFormat?.let { Size(it.width, it.height) }
 
     private var viewListener: ViewListener? = null
 
