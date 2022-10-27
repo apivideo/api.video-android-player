@@ -2,6 +2,12 @@
 
 All changes to this project will be documented in this file.
 
+## [1.1.2] - 2022-10-27
+
+- Add an API to get the video size: see `videoSize`.
+- Add an API to get player state: see `isPlaying`.
+- Add an API to seek from an offset.
+
 ## [1.1.1] - 2022-10-21
 
 - Add the `ApiVideoPlayerController` that takes a `Surface` as a parameter.
