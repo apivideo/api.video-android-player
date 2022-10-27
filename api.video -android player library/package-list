@@ -87,11 +87,14 @@ $dokka.location:video.api.player/ApiVideoPlayerController/ApiVideoPlayerControll
 $dokka.location:video.api.player/ApiVideoPlayerController/currentTime/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/current-time.html
 $dokka.location:video.api.player/ApiVideoPlayerController/duration/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/duration.html
 $dokka.location:video.api.player/ApiVideoPlayerController/isMuted/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-muted.html
+$dokka.location:video.api.player/ApiVideoPlayerController/isPlaying/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-playing.html
 $dokka.location:video.api.player/ApiVideoPlayerController/pause/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/pause.html
 $dokka.location:video.api.player/ApiVideoPlayerController/play/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/play.html
 $dokka.location:video.api.player/ApiVideoPlayerController/release/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/release.html
+$dokka.location:video.api.player/ApiVideoPlayerController/seek/#kotlin.Float/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/seek.html
 $dokka.location:video.api.player/ApiVideoPlayerController/stop/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/stop.html
 $dokka.location:video.api.player/ApiVideoPlayerController/videoOptions/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/video-options.html
+$dokka.location:video.api.player/ApiVideoPlayerController/videoSize/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/video-size.html
 $dokka.location:video.api.player/ApiVideoPlayerController/volume/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/volume.html
 video.api.player
 video.api.player.interfaces
