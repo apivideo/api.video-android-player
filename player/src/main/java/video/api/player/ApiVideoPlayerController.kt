@@ -43,6 +43,7 @@ class ApiVideoPlayerController
 internal constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
+    initialAutoplay: Boolean = false,
     private val listener: Listener,
 ) {
     /**
@@ -54,9 +55,10 @@ internal constructor(
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
+        initialAutoplay: Boolean = false,
         listener: Listener,
         playerView: IExoPlayerBasedPlayerView
-    ) : this(context, initialVideoOptions, listener, playerView.styledPlayerView) {
+    ) : this(context, initialVideoOptions, initialAutoplay, listener, playerView.styledPlayerView) {
         viewListener = playerView
     }
 
@@ -69,9 +71,10 @@ internal constructor(
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
+        initialAutoplay: Boolean = false,
         listener: Listener,
         playerView: ISurfaceViewBasedPlayerView
-    ) : this(context, initialVideoOptions, listener, playerView.surfaceView) {
+    ) : this(context, initialVideoOptions, initialAutoplay, listener, playerView.surfaceView) {
         viewListener = playerView
     }
 
@@ -84,9 +87,10 @@ internal constructor(
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
+        initialAutoplay: Boolean = false,
         listener: Listener,
         styledPlayerView: StyledPlayerView
-    ) : this(context, initialVideoOptions, listener) {
+    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
         styledPlayerView.player = exoplayer
     }
 
@@ -99,9 +103,10 @@ internal constructor(
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
+        initialAutoplay: Boolean = false,
         listener: Listener,
         surfaceView: SurfaceView
-    ) : this(context, initialVideoOptions, listener) {
+    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
         exoplayer.setVideoSurfaceView(surfaceView)
     }
 
@@ -114,9 +119,10 @@ internal constructor(
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
+        initialAutoplay: Boolean = false,
         listener: Listener,
         surface: Surface
-    ) : this(context, initialVideoOptions, listener) {
+    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
         exoplayer.setVideoSurface(surface)
     }
 
@@ -216,12 +222,6 @@ internal constructor(
         addAnalyticsListener(exoPlayerAnalyticsListener)
     }
 
-    init {
-        initialVideoOptions?.let {
-            videoOptions = it
-        }
-    }
-
     /**
      * Check if player is playing
      */
@@ -276,6 +276,49 @@ internal constructor(
          */
         get() = exoplayer.videoFormat?.let { Size(it.width, it.height) }
 
+    var autoplay: Boolean
+        /**
+         * Get the autoplay state
+         *
+         * @return true if the video will autoplay, false otherwise
+         */
+        get() = exoplayer.playWhenReady
+        /**
+         * Set the autoplay state
+         *
+         * @param value true if the video will autoplay, false otherwise
+         */
+        set(value) {
+            exoplayer.playWhenReady = value
+        }
+
+    var isLooping: Boolean
+        /**
+         * Get the looping state
+         *
+         * @return true if the video is looping, false otherwise
+         */
+        get() = exoplayer.repeatMode == REPEAT_MODE_ALL
+        /**
+         * Set the looping state
+         *
+         * @param value true if the video is looping, false otherwise
+         */
+        set(value) {
+            if (value) {
+                exoplayer.repeatMode = REPEAT_MODE_ALL
+            } else {
+                exoplayer.repeatMode = REPEAT_MODE_OFF
+            }
+        }
+
+    init {
+        initialVideoOptions?.let {
+            videoOptions = it
+        }
+        autoplay = initialAutoplay
+    }
+
     private var viewListener: ViewListener? = null
 
     private fun loadPlayer(videoOptions: VideoOptions) {
@@ -289,7 +332,7 @@ internal constructor(
                     exoplayer.addAnalyticsListener(this)
                 }
             setPlayerUri(playerManifest.video.src, videoOptions.token)
-            preparePlayer(playerManifest)
+            exoplayer.prepare()
         }, { error ->
             listener.onError(error)
         })
@@ -360,14 +403,6 @@ internal constructor(
             DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
 
         exoplayer.setMediaSource(videoSource)
-    }
-
-    private fun preparePlayer(playerManifest: PlayerManifest) {
-        if (playerManifest.loop) {
-            exoplayer.repeatMode = REPEAT_MODE_ALL
-        }
-        exoplayer.playWhenReady = playerManifest.autoplay
-        exoplayer.prepare()
     }
 
     private fun loadPoster(posterUrl: String, callback: (Drawable) -> Unit) {

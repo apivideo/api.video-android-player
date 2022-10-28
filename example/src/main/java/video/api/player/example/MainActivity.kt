@@ -131,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         ApiVideoPlayerController(
             applicationContext,
             null,
+            false,
             playerControllerListener,
             binding.playerView
         )
@@ -185,8 +186,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.unmute.setOnClickListener { player.isMuted = false }
 
-        binding.showFullScreenButton.setOnClickListener { binding.playerView.showFullScreenButton = true }
-        binding.hideFullScreenButton.setOnClickListener { binding.playerView.showFullScreenButton = false }
+        binding.showFullScreenButton.setOnClickListener {
+            binding.playerView.showFullScreenButton = true
+        }
+        binding.hideFullScreenButton.setOnClickListener {
+            binding.playerView.showFullScreenButton = false
+        }
 
         binding.showControls.setOnClickListener { binding.playerView.showControls = true }
         binding.hideControls.setOnClickListener { binding.playerView.showControls = false }
