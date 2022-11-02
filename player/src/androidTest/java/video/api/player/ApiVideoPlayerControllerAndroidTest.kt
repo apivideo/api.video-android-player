@@ -46,7 +46,7 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener
+            listener = listener
         )
         lock.await(5, TimeUnit.SECONDS)
 
@@ -69,7 +69,7 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             VideoOptions(INVALID_VIDEO_ID, VideoType.VOD),
-            listener
+            listener = listener
         )
         lock.await(5, TimeUnit.SECONDS)
 
@@ -113,7 +113,7 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener
+            listener = listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -294,7 +294,7 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
-            listener
+            listener = listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -363,7 +363,7 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             VideoOptions(PRIVATE_VIDEO_ID, VideoType.VOD, privateToken),
-            listener
+            listener = listener
         )
 
         readyLock.await(5, TimeUnit.SECONDS)

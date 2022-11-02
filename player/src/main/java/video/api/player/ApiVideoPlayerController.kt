@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.Size
 import android.view.Surface
@@ -12,7 +14,6 @@ import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Format
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
@@ -38,6 +39,7 @@ import java.io.IOException
  * @param context the application context
  * @param initialVideoOptions initial video options
  * @param listener a [Player.Listener] to listen to player events
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
  */
 class ApiVideoPlayerController
 internal constructor(
@@ -45,20 +47,30 @@ internal constructor(
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
     private val listener: Listener,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
 ) {
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
      * @param listener the [Player.Listener] to listen to player events
      * @param playerView the [IExoPlayerBasedPlayerView] interface for ExoPlayer [StyledPlayerView] based player view
+     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener,
-        playerView: IExoPlayerBasedPlayerView
-    ) : this(context, initialVideoOptions, initialAutoplay, listener, playerView.styledPlayerView) {
+        playerView: IExoPlayerBasedPlayerView,
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    ) : this(
+        context,
+        initialVideoOptions,
+        initialAutoplay,
+        listener,
+        playerView.styledPlayerView,
+        looper
+    ) {
         viewListener = playerView
     }
 
@@ -67,14 +79,23 @@ internal constructor(
      * @param initialVideoOptions initial video options
      * @param listener the [Player.Listener] to listen to player events
      * @param playerView the [ISurfaceViewBasedPlayerView] interface for [SurfaceView] based player view
+     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener,
-        playerView: ISurfaceViewBasedPlayerView
-    ) : this(context, initialVideoOptions, initialAutoplay, listener, playerView.surfaceView) {
+        playerView: ISurfaceViewBasedPlayerView,
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    ) : this(
+        context,
+        initialVideoOptions,
+        initialAutoplay,
+        listener,
+        playerView.surfaceView,
+        looper
+    ) {
         viewListener = playerView
     }
 
@@ -83,14 +104,16 @@ internal constructor(
      * @param initialVideoOptions initial video options
      * @param listener the [Player.Listener] to listen to player events
      * @param styledPlayerView the [StyledPlayerView] to use to display the player
+     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener,
-        styledPlayerView: StyledPlayerView
-    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
+        styledPlayerView: StyledPlayerView,
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
         styledPlayerView.player = exoplayer
     }
 
@@ -99,14 +122,16 @@ internal constructor(
      * @param initialVideoOptions initial video options
      * @param listener the [Player.Listener] to listen to player events
      * @param surfaceView the [SurfaceView] to use to display the video
+     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener,
-        surfaceView: SurfaceView
-    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
+        surfaceView: SurfaceView,
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
         exoplayer.setVideoSurfaceView(surfaceView)
     }
 
@@ -115,17 +140,20 @@ internal constructor(
      * @param initialVideoOptions initial video options
      * @param listener the [Player.Listener] to listen to player events
      * @param surface the [Surface] to use to display the video
+     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener,
-        surface: Surface
-    ) : this(context, initialVideoOptions, initialAutoplay, listener) {
+        surface: Surface,
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
         exoplayer.setVideoSurface(surface)
     }
 
+    private val handler = Handler(looper)
     private val queue = Volley.newRequestQueue(context).apply {
         start()
     }
@@ -218,9 +246,10 @@ internal constructor(
         }
     }
 
-    private val exoplayer = ExoPlayer.Builder(context).build().apply {
-        addAnalyticsListener(exoPlayerAnalyticsListener)
-    }
+    private val exoplayer =
+        ExoPlayer.Builder(context).setLooper(looper).build().apply {
+            addAnalyticsListener(exoPlayerAnalyticsListener)
+        }
 
     /**
      * Check if player is playing
@@ -313,10 +342,12 @@ internal constructor(
         }
 
     init {
-        initialVideoOptions?.let {
-            videoOptions = it
+        handler.post {
+            initialVideoOptions?.let {
+                videoOptions = it
+            }
+            autoplay = initialAutoplay
         }
-        autoplay = initialAutoplay
     }
 
     private var viewListener: ViewListener? = null

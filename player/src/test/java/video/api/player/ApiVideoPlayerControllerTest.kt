@@ -1,6 +1,8 @@
 package video.api.player
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HttpResponse
@@ -28,9 +30,20 @@ class ApiVideoPlayerControllerTest {
     private val playerView = mockk<StyledPlayerView>(relaxed = true)
     private val exoplayer = spyk<ExoPlayer>()
     private val mediaSource = mockk<MediaSource>()
+    private val looper = mockk<Looper> {
+        every { thread } returns Thread.currentThread()
+    }
 
     @Before
     fun setUp() {
+        mockkStatic(Looper::class)
+        every { Looper.getMainLooper() } returns looper
+        mockkConstructor(Handler::class)
+        every { anyConstructed<Handler>().post(any()) } answers {
+            (arg(0) as Runnable).run()
+            true
+        }
+
         // Mock RequestQueue
         val queue =
             RequestQueue(NoCache(), BasicNetwork(mockHttpStack), 2, ImmediateResponseDelivery())
@@ -68,7 +81,13 @@ class ApiVideoPlayerControllerTest {
             }
         }
 
-        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(
+            context,
+            VideoOptions("test", VideoType.VOD),
+            false,
+            listener,
+            playerView
+        )
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(1, lock.count) // OnError not called
@@ -92,7 +111,13 @@ class ApiVideoPlayerControllerTest {
             }
         }
 
-        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(
+            context,
+            VideoOptions("test", VideoType.VOD),
+            false,
+            listener,
+            playerView
+        )
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -110,7 +135,13 @@ class ApiVideoPlayerControllerTest {
             }
         }
 
-        ApiVideoPlayerController(context, VideoOptions("test", VideoType.VOD), listener, playerView)
+        ApiVideoPlayerController(
+            context,
+            VideoOptions("test", VideoType.VOD),
+            false,
+            listener,
+            playerView
+        )
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
         assertEquals(0, lock.count)
@@ -125,8 +156,8 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
-                listener,
-                playerView
+                listener = listener,
+                styledPlayerView = playerView
             )
         player.play()
         verify { exoplayer.play() }
@@ -141,6 +172,7 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
+                false,
                 listener,
                 playerView
             )
@@ -157,6 +189,7 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
+                false,
                 listener,
                 playerView
             )
@@ -173,8 +206,10 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
+                false,
                 listener,
-                playerView
+                playerView,
+                looper
             )
         player.release()
         verify { exoplayer.release() }
