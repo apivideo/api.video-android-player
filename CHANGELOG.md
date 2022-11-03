@@ -2,6 +2,12 @@
 
 All changes to this project will be documented in this file.
 
+## [1.1.3] - 2022-11-03
+
+- Add an API to loop video. See `ApiVideoPlayerController.isLooping`.
+- Add an API to automatically play video once it has been loaded.
+  See `ApiVideoPlayerController.autoplay`.
+
 ## [1.1.2] - 2022-10-27
 
 - Add an API to get the video size: see `videoSize`.
