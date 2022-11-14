@@ -23,11 +23,8 @@ import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private const val TAG = "MainActivity"
-    }
-
     private lateinit var binding: ActivityMainBinding
+
     private val sharedPref: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
@@ -241,5 +238,9 @@ class MainActivity : AppCompatActivity() {
     private fun goToSettingsActivity() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

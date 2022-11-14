@@ -7,7 +7,6 @@ import android.widget.FrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import video.api.player.databinding.ExoPlayerLayoutBinding
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
-import video.api.player.models.*
 
 
 /**
@@ -28,7 +27,6 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         get() = binding.playerView
 
     var listener: Listener? = null
-
 
     /**
      * Shows or hides the full screen button
@@ -81,8 +79,8 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         }
     }
 
-    override fun onNewVideoManifest(playerManifest: PlayerManifest) {
-        styledPlayerView.useController = playerManifest.`visible-controls`
+    override fun onNewVideoLoaded(videoId: String) {
+        // Nothing to do yet
     }
 
     interface Listener {

@@ -1,17 +1,12 @@
 package video.api.player
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.util.Size
 import android.view.Surface
 import android.view.SurfaceView
-import android.widget.ImageView
-import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.*
@@ -26,7 +21,8 @@ import com.google.android.exoplayer2.video.VideoSize
 import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
-import video.api.player.models.*
+import video.api.player.models.PlayerJsonRequest
+import video.api.player.models.VideoOptions
 import java.io.IOException
 
 
@@ -154,7 +150,6 @@ internal constructor(
     private val queue = Volley.newRequestQueue(context).apply {
         start()
     }
-    private lateinit var playerManifest: PlayerManifest
     private var analyticsListener: ApiVideoAnalyticsListener? = null
     private var xTokenSession: String? = null
     private var firstPlay = true
@@ -163,7 +158,7 @@ internal constructor(
     /**
      * Set/get the video options.
      */
-    var videoOptions: VideoOptions? = null
+    private var _videoOptions: VideoOptions? = null
         /**
          * Play a new video from the given [VideoOptions].
          *
@@ -178,9 +173,34 @@ internal constructor(
             }
         }
 
+
+    /**
+     * Set/get the video options.
+     */
+    var videoOptions: VideoOptions
+        get() {
+            return _videoOptions ?: throw IllegalStateException("No video options set")
+        }
+        /**
+         * Play a new video from the given [VideoOptions].
+         *
+         * @param value the video options
+         */
+        set(value) {
+            _videoOptions = value
+        }
+
     private val exoPlayerAnalyticsListener: AnalyticsListener = object : AnalyticsListener {
         override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
             listener.onError(error)
+        }
+
+        override fun onLoadCompleted(
+            eventTime: EventTime,
+            loadEventInfo: LoadEventInfo,
+            mediaLoadData: MediaLoadData
+        ) {
+            viewListener?.onNewVideoLoaded(videoOptions.videoId)
         }
 
         override fun onLoadError(
@@ -190,10 +210,11 @@ internal constructor(
             error: IOException,
             wasCanceled: Boolean
         ) {
-            this@ApiVideoPlayerController.playerManifest.video.mp4?.let {
-                if (loadEventInfo.uri.toString() != getPlayerFileUrl(it, videoOptions?.token)) {
+            this@ApiVideoPlayerController._videoOptions?.let {
+                val mp4 = it.mp4Url
+                if (loadEventInfo.uri.toString() != mp4) {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
-                    setPlayerUri(it)
+                    setPlayerUri(mp4, xTokenSession)
                 } else {
                     listener.onError(error)
                 }
@@ -355,20 +376,25 @@ internal constructor(
     private var viewListener: ViewListener? = null
 
     private fun loadPlayer(videoOptions: VideoOptions) {
-        getPlayerManifest(videoOptions, { request ->
-            playerManifest = request.playerManifest
-            viewListener?.onNewVideoManifest(playerManifest)
-            xTokenSession = request.headers?.get("X-Token-Session")
-            analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
-            analyticsListener =
-                ApiVideoAnalyticsListener(context, exoplayer, playerManifest.video.src).apply {
-                    exoplayer.addAnalyticsListener(this)
-                }
-            setPlayerUri(playerManifest.video.src, videoOptions.token)
-            exoplayer.prepare()
-        }, { error ->
-            listener.onError(error)
-        })
+        val manifestUrl = videoOptions.hlsManifestUrl
+        videoOptions.token?.let {
+            getTokenSession(manifestUrl, {
+                xTokenSession = it
+                preparePlayer(manifestUrl, it)
+            }, {
+                listener.onError(it)
+            })
+        } ?: preparePlayer(manifestUrl)
+    }
+
+    private fun preparePlayer(manifestUrl: String, tokenSession: String? = null) {
+        analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
+        analyticsListener =
+            ApiVideoAnalyticsListener(context, exoplayer, manifestUrl).apply {
+                exoplayer.addAnalyticsListener(this)
+            }
+        setPlayerUri(manifestUrl, tokenSession)
+        exoplayer.prepare()
     }
 
     /**
@@ -425,12 +451,12 @@ internal constructor(
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
 
-    private fun setPlayerUri(uri: String, token: String? = null) {
+    private fun setPlayerUri(uri: String, tokenSession: String? = null) {
         val mediaItem =
-            MediaItem.fromUri(getPlayerFileUrl(uri, token))
+            MediaItem.fromUri(uri)
         val dataSourceFactory = DefaultHttpDataSource.Factory()
 
-        xTokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
+        tokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
 
         val videoSource =
             DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
@@ -438,41 +464,14 @@ internal constructor(
         exoplayer.setMediaSource(videoSource)
     }
 
-    private fun loadPoster(posterUrl: String, callback: (Drawable) -> Unit) {
-        val imageRequest = ImageRequest(
-            posterUrl,
-            { bitmap ->
-                try {
-                    callback(BitmapDrawable(context.resources, bitmap))
-                } catch (e: Exception) {
-                    Log.e(TAG, e.message ?: "Failed to transform poster to drawable")
-                }
-            },
-            0,
-            0,
-            ImageView.ScaleType.CENTER,
-            Bitmap.Config.ARGB_8888,
-            { error ->
-                Log.e(TAG, error.message ?: "Failed to get poster")
-            }
-        )
-
-        queue.add(imageRequest)
-    }
-
-    private fun getPlayerManifest(
-        videoOptions: VideoOptions,
-        onSuccess: (PlayerJsonRequestResult) -> Unit,
+    private fun getTokenSession(
+        url: String,
+        onSuccess: (String?) -> Unit,
         onError: (Exception) -> Unit
     ) {
-        val stringRequest = PlayerJsonRequest(
-            getPlayerJsonUrl(videoOptions.videoId, videoOptions.videoType, videoOptions.token),
+        val stringRequest = PlayerJsonRequest(url,
             { response ->
-                try {
-                    onSuccess(response)
-                } catch (e: Exception) {
-                    onError(e)
-                }
+                onSuccess(response.headers?.get("X-Token-Session"))
             },
             { error ->
                 onError(error)
@@ -483,20 +482,7 @@ internal constructor(
     }
 
     companion object {
-        private val TAG = "ApiVideoPlayer"
-
-        private fun getPlayerJsonUrl(
-            videoId: String,
-            videoType: VideoType,
-            privateToken: String? = null
-        ) =
-            videoType.baseUrl + videoId + (privateToken?.let { "/token/$privateToken" }
-                ?: "") + "/player.json"
-
-        private fun getPlayerFileUrl(
-            uri: String,
-            token: String? = null,
-        ) = token?.let { uri.replace(":token", it) } ?: uri
+        private const val TAG = "ApiVideoPlayer"
     }
 
     /**
@@ -552,6 +538,6 @@ internal constructor(
          *
          * Use it to adapt your view according to api.video player settings.
          */
-        fun onNewVideoManifest(playerManifest: PlayerManifest)
+        fun onNewVideoLoaded(videoId: String) {}
     }
 }

@@ -17,8 +17,8 @@ class PlayerJsonRequest(
         } catch (e: UnsupportedEncodingException) {
             String(response.data)
         }
-        val playerManifest = PlayerManifest.from(parsed)
-        val playerJsonRequestResult = PlayerJsonRequestResult(playerManifest, response.headers)
+
+        val playerJsonRequestResult = PlayerJsonRequestResult(parsed, response.headers)
         return Response.success(
             playerJsonRequestResult,
             HttpHeaderParser.parseCacheHeaders(response)
