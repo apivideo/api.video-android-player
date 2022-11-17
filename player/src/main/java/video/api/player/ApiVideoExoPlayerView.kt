@@ -40,7 +40,7 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
                     listener?.onFullScreenModeChanged(it)
                 }
             } else {
-                styledPlayerView.setFullscreenButtonClickListener(null)
+                styledPlayerView.setControllerOnFullScreenModeChangedListener(null)
             }
             field = value
         }
