@@ -46,7 +46,7 @@ internal constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
-    private val listener: Listener,
+    private val listener: Listener = object: Listener {},
     looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
 ) {
     /**
@@ -60,7 +60,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener,
+        listener: Listener = object: Listener {},
         playerView: IExoPlayerBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -85,7 +85,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener,
+        listener: Listener = object: Listener {},
         playerView: ISurfaceViewBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -110,7 +110,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener,
+        listener: Listener = object: Listener {},
         styledPlayerView: StyledPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -128,7 +128,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener,
+        listener: Listener = object: Listener {},
         surfaceView: SurfaceView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -146,7 +146,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener,
+        listener: Listener = object: Listener {},
         surface: Surface,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
