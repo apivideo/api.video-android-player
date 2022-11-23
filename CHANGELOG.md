@@ -2,6 +2,12 @@
 
 All changes to this project will be documented in this file.
 
+
+## [1.1.4] - 2022-11-23
+
+- Fix the display of the fullscreen button
+- The `ApiVideoPlayerController.Listener` is not mandatory to simplify usage
+
 ## [1.1.3] - 2022-11-03
 
 - Add an API to loop video. See `ApiVideoPlayerController.isLooping`.
