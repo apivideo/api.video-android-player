@@ -13,10 +13,7 @@ import android.view.SurfaceView
 import android.widget.ImageView
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.PlaybackException
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
@@ -46,7 +43,7 @@ internal constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
-    private val listener: Listener = object: Listener {},
+    private val listener: Listener = object : Listener {},
     looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
 ) {
     /**
@@ -60,7 +57,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object: Listener {},
+        listener: Listener = object : Listener {},
         playerView: IExoPlayerBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -85,7 +82,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object: Listener {},
+        listener: Listener = object : Listener {},
         playerView: ISurfaceViewBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -110,7 +107,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object: Listener {},
+        listener: Listener = object : Listener {},
         styledPlayerView: StyledPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -128,7 +125,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object: Listener {},
+        listener: Listener = object : Listener {},
         surfaceView: SurfaceView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -146,7 +143,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object: Listener {},
+        listener: Listener = object : Listener {},
         surface: Surface,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -279,7 +276,14 @@ internal constructor(
          *
          * @return video duration in seconds
          */
-        get() = exoplayer.duration / 1000.0f
+        get() {
+            val duration = exoplayer.duration
+            return if (duration == C.TIME_UNSET) {
+                0.0f
+            } else {
+                exoplayer.duration / 1000.0f
+            }
+        }
 
     var isMuted: Boolean
         /**
