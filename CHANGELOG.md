@@ -2,6 +2,9 @@
 
 All changes to this project will be documented in this file.
 
+## [1.1.5] - 2022-12-12
+
+- `ApiVideoPlayerController.duration` returns `0` when video is not loaded
 
 ## [1.1.4] - 2022-11-23
 
