@@ -172,8 +172,6 @@ internal constructor(
         set(value) {
             field = value
             value?.let {
-                require(it.videoType == VideoType.VOD) { "Only VOD videos are supported" }
-
                 firstPlay = true
                 isReady = false
                 loadPlayer(it)

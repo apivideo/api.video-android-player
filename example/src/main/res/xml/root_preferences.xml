@@ -7,12 +7,12 @@
         app:title="@string/video_id"
         app:useSimpleSummaryProvider="true" />
 
-  <!--  <SwitchPreference
+    <SwitchPreference
         android:defaultValue="true"
         app:key="@string/video_type_key"
         app:summaryOff="@string/video_type_vod"
         app:summaryOn="@string/video_type_live"
-        app:title="@string/endpoint_type" />-->
+        app:title="@string/endpoint_type" />
 
     <EditTextPreference
         app:defaultValue=""
