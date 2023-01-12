@@ -377,7 +377,7 @@ internal constructor(
      * Plays the video
      */
     fun play() {
-        exoplayer.play()
+        exoplayer.playWhenReady = true
     }
 
     /**
