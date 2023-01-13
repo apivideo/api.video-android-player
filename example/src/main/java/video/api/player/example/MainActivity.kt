@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val player: ApiVideoPlayerController by lazy {
+    private val playerController: ApiVideoPlayerController by lazy {
         binding.playerView.listener = playerViewListener
         ApiVideoPlayerController(
             applicationContext,
@@ -166,22 +166,22 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.currentTime.setLabelFormatter { value: Float ->
-            val newCurrentTime = value * player.duration / 100
-            "${String.format("%.3f", newCurrentTime)}/${player.duration}"
+            val newCurrentTime = value * playerController.duration / 100
+            "${String.format("%.3f", newCurrentTime)}/${playerController.duration}"
         }
         binding.currentTime.addOnChangeListener { _, value, _ ->
-            player.currentTime = value * player.duration / 100
+            playerController.currentTime = value * playerController.duration / 100
         }
 
-        binding.play.setOnClickListener { player.play() }
-        binding.pause.setOnClickListener { player.pause() }
-        binding.stop.setOnClickListener { player.stop() }
+        binding.play.setOnClickListener { playerController.play() }
+        binding.pause.setOnClickListener { playerController.pause() }
+        binding.stop.setOnClickListener { playerController.stop() }
 
-        binding.mute.setOnClickListener { player.isMuted = true }
+        binding.mute.setOnClickListener { playerController.isMuted = true }
         binding.volume.addOnChangeListener { _, volume, _ ->
-            player.volume = (volume / 100f)
+            playerController.volume = (volume / 100f)
         }
-        binding.unmute.setOnClickListener { player.isMuted = false }
+        binding.unmute.setOnClickListener { playerController.isMuted = false }
 
         binding.showFullScreenButton.setOnClickListener {
             binding.playerView.showFullScreenButton = true
@@ -206,17 +206,17 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        player.pause()
+        playerController.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        player.release()
+        playerController.release()
     }
 
     private fun loadVideo() {
-        player.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
+        playerController.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
     }
 
     private fun showMenu(anchor: View) {
