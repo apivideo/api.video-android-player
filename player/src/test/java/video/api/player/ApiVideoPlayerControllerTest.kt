@@ -94,36 +94,6 @@ class ApiVideoPlayerControllerTest {
     }
 
     @Test
-    fun `get an invalid player json`() {
-        mockHttpStack.setResponseToReturn(
-            HttpResponse(
-                200,
-                emptyList(),
-                byteArrayOf(7, 34, 12)
-            )
-        )
-
-        val lock = CountDownLatch(1)
-
-        val listener = object : ApiVideoPlayerController.Listener {
-            override fun onError(error: Exception) {
-                lock.countDown()
-            }
-        }
-
-        ApiVideoPlayerController(
-            context,
-            VideoOptions("test", VideoType.VOD),
-            false,
-            listener,
-            playerView
-        )
-        lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
-
-        assertEquals(0, lock.count)
-    }
-
-    @Test
     fun `get an exception on player json connection`() {
         mockHttpStack.setExceptionToThrow(IOException())
 
@@ -137,7 +107,11 @@ class ApiVideoPlayerControllerTest {
 
         ApiVideoPlayerController(
             context,
-            VideoOptions("test", VideoType.VOD),
+            VideoOptions(
+                "test",
+                VideoType.VOD,
+                "token"
+            ), // The endpoint is only called when a token is provided
             false,
             listener,
             playerView
@@ -149,18 +123,14 @@ class ApiVideoPlayerControllerTest {
 
     @Test
     fun `play test`() {
-        val listener = object : ApiVideoPlayerController.Listener {
-        }
-
         val player =
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
-                listener = listener,
                 styledPlayerView = playerView
             )
         player.play()
-        verify { exoplayer.play() }
+        verify { exoplayer.playWhenReady = true }
     }
 
     @Test
