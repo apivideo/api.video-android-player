@@ -79,10 +79,6 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         }
     }
 
-    override fun onNewVideoLoaded(videoId: String) {
-        // Nothing to do yet
-    }
-
     interface Listener {
         /**
          * Called when the full screen button has been clicked

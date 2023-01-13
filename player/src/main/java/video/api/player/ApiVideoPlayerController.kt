@@ -23,6 +23,7 @@ import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.PlayerJsonRequest
 import video.api.player.models.VideoOptions
+import video.api.player.utils.currentVideoOptions
 import java.io.IOException
 
 
@@ -39,7 +40,7 @@ internal constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
-    private val listener: Listener = object : Listener {},
+    listener: Listener? = null,
     looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
 ) {
     /**
@@ -53,7 +54,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object : Listener {},
+        listener: Listener? = null,
         playerView: IExoPlayerBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -64,7 +65,7 @@ internal constructor(
         playerView.styledPlayerView,
         looper
     ) {
-        viewListener = playerView
+        addListener(playerView)
     }
 
     /**
@@ -78,7 +79,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object : Listener {},
+        listener: Listener? = null,
         playerView: ISurfaceViewBasedPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(
@@ -89,7 +90,7 @@ internal constructor(
         playerView.surfaceView,
         looper
     ) {
-        viewListener = playerView
+        addListener(playerView)
     }
 
     /**
@@ -103,7 +104,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object : Listener {},
+        listener: Listener? = null,
         styledPlayerView: StyledPlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -121,7 +122,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object : Listener {},
+        listener: Listener? = null,
         surfaceView: SurfaceView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -139,7 +140,7 @@ internal constructor(
         context: Context,
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
-        listener: Listener = object : Listener {},
+        listener: Listener? = null,
         surface: Surface,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
     ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
@@ -151,6 +152,8 @@ internal constructor(
         start()
     }
     private var analyticsListener: ApiVideoAnalyticsListener? = null
+    private val listeners = mutableListOf<Listener>()
+
     private var xTokenSession: String? = null
     private var firstPlay = true
     private var isReady = false
@@ -158,49 +161,39 @@ internal constructor(
     /**
      * Set/get the video options.
      */
-    private var _videoOptions: VideoOptions? = null
-        /**
-         * Play a new video from the given [VideoOptions].
-         *
-         * @param value the video options
-         */
+    var videoOptions: VideoOptions?
+        get() = exoplayer.currentVideoOptions
         set(value) {
-            field = value
             value?.let {
-                firstPlay = true
-                isReady = false
-                loadPlayer(it)
+                setMediaSource(value)
+            } ?: throw IllegalArgumentException("VideoOptions cannot be null")
+        }
+
+    private val exoplayerListener: AnalyticsListener = object : AnalyticsListener {
+        override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
+            listeners.forEach { listener -> listener.onError(error) }
+        }
+
+        override fun onMediaItemTransition(
+            eventTime: EventTime,
+            mediaItem: MediaItem?,
+            reason: Int
+        ) {
+            // Reload analytics listener when a new video is loaded
+            analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
+            mediaItem?.localConfiguration?.uri?.toString()?.let { url ->
+                analyticsListener =
+                    ApiVideoAnalyticsListener(context, exoplayer, url).apply {
+                        exoplayer.addAnalyticsListener(this)
+                    }
             }
         }
 
-
-    /**
-     * Set/get the video options.
-     */
-    var videoOptions: VideoOptions
-        get() {
-            return _videoOptions ?: throw IllegalStateException("No video options set")
-        }
-        /**
-         * Play a new video from the given [VideoOptions].
-         *
-         * @param value the video options
-         */
-        set(value) {
-            _videoOptions = value
-        }
-
-    private val exoPlayerAnalyticsListener: AnalyticsListener = object : AnalyticsListener {
-        override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
-            listener.onError(error)
-        }
-
-        override fun onLoadCompleted(
-            eventTime: EventTime,
-            loadEventInfo: LoadEventInfo,
-            mediaLoadData: MediaLoadData
-        ) {
-            viewListener?.onNewVideoLoaded(videoOptions.videoId)
+        override fun onTimelineChanged(eventTime: EventTime, reason: Int) {
+            if (reason == TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED) {
+                firstPlay = true
+                isReady = false
+            }
         }
 
         override fun onLoadError(
@@ -210,27 +203,27 @@ internal constructor(
             error: IOException,
             wasCanceled: Boolean
         ) {
-            this@ApiVideoPlayerController._videoOptions?.let {
+            this@ApiVideoPlayerController.videoOptions?.let {
                 val mp4 = it.mp4Url
                 if (loadEventInfo.uri.toString() != mp4) {
                     Log.w(TAG, "Failed to load video. Fallback to mp4")
-                    setPlayerUri(mp4, xTokenSession)
+                    setMediaSource(mp4, it, xTokenSession)
                 } else {
-                    listener.onError(error)
+                    listeners.forEach { listener -> listener.onError(error) }
                 }
-            } ?: listener.onError(error)
+            } ?: listeners.forEach { listener -> listener.onError(error) }
         }
 
         override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
             if (isPlaying) {
                 if (firstPlay) {
                     firstPlay = false
-                    listener.onFirstPlay()
+                    listeners.forEach { listener -> listener.onFirstPlay() }
                 }
-                listener.onPlay()
+                listeners.forEach { listener -> listener.onPlay() }
             } else {
                 if (exoplayer.playbackState != STATE_ENDED) {
-                    listener.onPause()
+                    listeners.forEach { listener -> listener.onPause() }
                 }
             }
         }
@@ -239,10 +232,10 @@ internal constructor(
             if (state == STATE_READY) {
                 if (!isReady) {
                     isReady = true
-                    listener.onReady()
+                    listeners.forEach { listener -> listener.onReady() }
                 }
             } else if (state == STATE_ENDED) {
-                listener.onEnd()
+                listeners.forEach { listener -> listener.onEnd() }
             }
         }
 
@@ -253,18 +246,26 @@ internal constructor(
             reason: Int
         ) {
             if (reason == DISCONTINUITY_REASON_SEEK) {
-                listener.onSeek()
+                listeners.forEach { listener -> listener.onSeek() }
             }
         }
 
         override fun onVideoSizeChanged(eventTime: EventTime, videoSize: VideoSize) {
-            listener.onVideoSizeChanged(Size(videoSize.width, videoSize.height))
+            listeners.forEach { listener ->
+                listener.onVideoSizeChanged(
+                    Size(
+                        videoSize.width,
+                        videoSize.height
+                    )
+                )
+            }
         }
     }
 
     private val exoplayer =
         ExoPlayer.Builder(context).setLooper(looper).build().apply {
-            addAnalyticsListener(exoPlayerAnalyticsListener)
+            addAnalyticsListener(exoplayerListener)
+            prepare()
         }
 
     /**
@@ -365,6 +366,8 @@ internal constructor(
         }
 
     init {
+        listener?.let { addListener(it) }
+
         handler.post {
             initialVideoOptions?.let {
                 videoOptions = it
@@ -373,28 +376,51 @@ internal constructor(
         }
     }
 
-    private var viewListener: ViewListener? = null
-
-    private fun loadPlayer(videoOptions: VideoOptions) {
+    private fun setMediaSource(videoOptions: VideoOptions) {
         val manifestUrl = videoOptions.hlsManifestUrl
         videoOptions.token?.let {
             getTokenSession(manifestUrl, {
                 xTokenSession = it
-                preparePlayer(manifestUrl, it)
+                setMediaSource(manifestUrl, videoOptions, it)
             }, {
-                listener.onError(it)
+                listeners.forEach { listener -> listener.onError(it) }
             })
-        } ?: preparePlayer(manifestUrl)
+        } ?: setMediaSource(manifestUrl, videoOptions)
     }
 
-    private fun preparePlayer(manifestUrl: String, tokenSession: String? = null) {
-        analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
-        analyticsListener =
-            ApiVideoAnalyticsListener(context, exoplayer, manifestUrl).apply {
-                exoplayer.addAnalyticsListener(this)
-            }
-        setPlayerUri(manifestUrl, tokenSession)
-        exoplayer.prepare()
+    private fun setMediaSource(
+        uri: String,
+        videoOptions: VideoOptions,
+        tokenSession: String? = null
+    ) {
+        val mediaItem = MediaItem.Builder().setUri(uri).setTag(videoOptions).build()
+
+        val dataSourceFactory = DefaultHttpDataSource.Factory()
+
+        tokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
+
+        val videoSource =
+            DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
+
+        exoplayer.setMediaSource(videoSource)
+    }
+
+    /**
+     * Add a listener to the player
+     *
+     * @param listener the listener to add
+     */
+    fun addListener(listener: Listener) {
+        listeners.add(listener)
+    }
+
+    /**
+     * Remove a listener
+     *
+     * @param listener the listener to remove
+     */
+    fun removeListener(listener: Listener) {
+        listeners.remove(listener)
     }
 
     /**
@@ -429,7 +455,7 @@ internal constructor(
      * Releases the player
      */
     fun release() {
-        exoplayer.removeAnalyticsListener(exoPlayerAnalyticsListener)
+        exoplayer.removeAnalyticsListener(exoplayerListener)
         analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
         exoplayer.release()
     }
@@ -450,19 +476,6 @@ internal constructor(
             exoplayer.deviceVolume =
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
-
-    private fun setPlayerUri(uri: String, tokenSession: String? = null) {
-        val mediaItem =
-            MediaItem.fromUri(uri)
-        val dataSourceFactory = DefaultHttpDataSource.Factory()
-
-        tokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
-
-        val videoSource =
-            DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
-
-        exoplayer.setMediaSource(videoSource)
-    }
 
     private fun getTokenSession(
         url: String,
@@ -530,14 +543,5 @@ internal constructor(
          * @param resolution the new video resolution
          */
         fun onVideoSizeChanged(resolution: Size) {}
-    }
-
-    interface ViewListener {
-        /**
-         * Called when a new video manifest has been loaded.
-         *
-         * Use it to adapt your view according to api.video player settings.
-         */
-        fun onNewVideoLoaded(videoId: String) {}
     }
 }
