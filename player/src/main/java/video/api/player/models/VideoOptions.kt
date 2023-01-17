@@ -22,5 +22,11 @@ data class VideoOptions(
         "$liveUrl.m3u8"
     }
 
+    val sessionTokenUrl = if (videoType == VideoType.VOD) {
+        "$vodUrl/session"
+    } else {
+        hlsManifestUrl // Temp: return the same url as hlsManifestUrl for live
+    }
+
     val mp4Url = "$vodUrl/mp4/source.mp4"
 }

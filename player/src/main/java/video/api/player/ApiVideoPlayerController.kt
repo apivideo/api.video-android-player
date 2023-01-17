@@ -22,7 +22,9 @@ import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.PlayerJsonRequest
+import video.api.player.models.SessionTokenRequest
 import video.api.player.models.VideoOptions
+import video.api.player.models.VideoType
 import video.api.player.utils.currentVideoOptions
 import java.io.IOException
 
@@ -377,15 +379,15 @@ internal constructor(
     }
 
     private fun setMediaSource(videoOptions: VideoOptions) {
-        val manifestUrl = videoOptions.hlsManifestUrl
+        val sessionTokenUrl = videoOptions.sessionTokenUrl
         videoOptions.token?.let {
-            getTokenSession(manifestUrl, {
+            getTokenSession(sessionTokenUrl, videoOptions.videoType, {
                 xTokenSession = it
-                setMediaSource(manifestUrl, videoOptions, it)
+                setMediaSource(sessionTokenUrl, videoOptions, it)
             }, {
                 listeners.forEach { listener -> listener.onError(it) }
             })
-        } ?: setMediaSource(manifestUrl, videoOptions)
+        } ?: setMediaSource(sessionTokenUrl, videoOptions)
     }
 
     private fun setMediaSource(
@@ -479,19 +481,31 @@ internal constructor(
 
     private fun getTokenSession(
         url: String,
+        videoType: VideoType,
         onSuccess: (String?) -> Unit,
         onError: (Exception) -> Unit
     ) {
-        val stringRequest = PlayerJsonRequest(url,
-            { response ->
-                onSuccess(response.headers?.get("X-Token-Session"))
-            },
-            { error ->
-                onError(error)
-            }
-        )
+        val sessionTokenRequest = if (videoType == VideoType.VOD) {
+            SessionTokenRequest(url,
+                { sessionTokenResult ->
+                    onSuccess(sessionTokenResult.sessionToken)
+                },
+                { error ->
+                    onError(error)
+                }
+            )
+        } else {
+            PlayerJsonRequest(url,
+                { sessionTokenResult ->
+                    onSuccess(sessionTokenResult.sessionToken)
+                },
+                { error ->
+                    onError(error)
+                }
+            )
+        }
 
-        queue.add(stringRequest)
+        queue.add(sessionTokenRequest)
     }
 
     companion object {
