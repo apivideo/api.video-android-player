@@ -7,25 +7,19 @@ import android.util.Log
 import android.util.Size
 import android.view.Surface
 import android.view.SurfaceView
-import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.Player.*
 import com.google.android.exoplayer2.analytics.AnalyticsListener
 import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.LoadEventInfo
 import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.video.VideoSize
 import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
-import video.api.player.models.PlayerJsonRequest
-import video.api.player.models.SessionTokenRequest
+import video.api.player.models.ApiVideoMediaSourceFactory
 import video.api.player.models.VideoOptions
-import video.api.player.models.VideoType
-import video.api.player.utils.currentVideoOptions
 import java.io.IOException
 
 
@@ -150,15 +144,13 @@ internal constructor(
     }
 
     private val handler = Handler(looper)
-    private val queue = Volley.newRequestQueue(context).apply {
-        start()
-    }
     private var analyticsListener: ApiVideoAnalyticsListener? = null
     private val listeners = mutableListOf<Listener>()
 
-    private var xTokenSession: String? = null
     private var firstPlay = true
     private var isReady = false
+
+    private var mediaSourceFactory: ApiVideoMediaSourceFactory? = null
 
     /**
      * Set/get the video options.
@@ -167,7 +159,13 @@ internal constructor(
         get() = exoplayer.currentVideoOptions
         set(value) {
             value?.let {
-                setMediaSource(value)
+                mediaSourceFactory = ApiVideoMediaSourceFactory(it) { error ->
+                    listeners.forEach { listener ->
+                        listener.onError(error)
+                    }
+                }.apply {
+                    exoplayer.setMediaSource(this)
+                }
             } ?: throw IllegalArgumentException("VideoOptions cannot be null")
         }
 
@@ -206,10 +204,9 @@ internal constructor(
             wasCanceled: Boolean
         ) {
             this@ApiVideoPlayerController.videoOptions?.let {
-                val mp4 = it.mp4Url
-                if (loadEventInfo.uri.toString() != mp4) {
-                    Log.w(TAG, "Failed to load video. Fallback to mp4")
-                    setMediaSource(mp4, it, xTokenSession)
+                if (loadEventInfo.uri.toString() != it.mp4Url) {
+                    Log.w(TAG, "Failed to load video. Fallback to mp4.")
+                    exoplayer.setMp4MediaSource(mediaSourceFactory!!)
                 } else {
                     listeners.forEach { listener -> listener.onError(error) }
                 }
@@ -267,7 +264,6 @@ internal constructor(
     private val exoplayer =
         ExoPlayer.Builder(context).setLooper(looper).build().apply {
             addAnalyticsListener(exoplayerListener)
-            prepare()
         }
 
     /**
@@ -375,36 +371,8 @@ internal constructor(
                 videoOptions = it
             }
             autoplay = initialAutoplay
+            exoplayer.prepare()
         }
-    }
-
-    private fun setMediaSource(videoOptions: VideoOptions) {
-        val sessionTokenUrl = videoOptions.sessionTokenUrl
-        videoOptions.token?.let {
-            getTokenSession(sessionTokenUrl, videoOptions.videoType, {
-                xTokenSession = it
-                setMediaSource(sessionTokenUrl, videoOptions, it)
-            }, {
-                listeners.forEach { listener -> listener.onError(it) }
-            })
-        } ?: setMediaSource(sessionTokenUrl, videoOptions)
-    }
-
-    private fun setMediaSource(
-        uri: String,
-        videoOptions: VideoOptions,
-        tokenSession: String? = null
-    ) {
-        val mediaItem = MediaItem.Builder().setUri(uri).setTag(videoOptions).build()
-
-        val dataSourceFactory = DefaultHttpDataSource.Factory()
-
-        tokenSession?.let { dataSourceFactory.setDefaultRequestProperties(mapOf("X-Token-Session" to it)) }
-
-        val videoSource =
-            DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(mediaItem)
-
-        exoplayer.setMediaSource(videoSource)
     }
 
     /**
@@ -478,35 +446,6 @@ internal constructor(
             exoplayer.deviceVolume =
                 (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
         }
-
-    private fun getTokenSession(
-        url: String,
-        videoType: VideoType,
-        onSuccess: (String?) -> Unit,
-        onError: (Exception) -> Unit
-    ) {
-        val sessionTokenRequest = if (videoType == VideoType.VOD) {
-            SessionTokenRequest(url,
-                { sessionTokenResult ->
-                    onSuccess(sessionTokenResult.sessionToken)
-                },
-                { error ->
-                    onError(error)
-                }
-            )
-        } else {
-            PlayerJsonRequest(url,
-                { sessionTokenResult ->
-                    onSuccess(sessionTokenResult.sessionToken)
-                },
-                { error ->
-                    onError(error)
-                }
-            )
-        }
-
-        queue.add(sessionTokenRequest)
-    }
 
     companion object {
         private const val TAG = "ApiVideoPlayer"

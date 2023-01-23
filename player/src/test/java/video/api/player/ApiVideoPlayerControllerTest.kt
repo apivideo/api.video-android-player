@@ -3,11 +3,11 @@ package video.api.player
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HttpResponse
 import com.android.volley.toolbox.NoCache
-import com.android.volley.toolbox.Volley
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSource
@@ -46,10 +46,15 @@ class ApiVideoPlayerControllerTest {
 
         // Mock RequestQueue
         val queue =
-            RequestQueue(NoCache(), BasicNetwork(mockHttpStack), 2, ImmediateResponseDelivery())
-
-        mockkStatic(Volley::class)
-        every { Volley.newRequestQueue(any()) } returns queue
+            RequestQueue(NoCache(), BasicNetwork(mockHttpStack), 2, ImmediateResponseDelivery()).apply {
+                start()
+            }
+        mockkConstructor(RequestQueue::class)
+        every { anyConstructed<RequestQueue>().add(any<Request<Any>>()) } answers {
+            queue.add(
+                firstArg()
+            )
+        }
 
         mockkConstructor(ExoPlayer.Builder::class)
         every { anyConstructed<ExoPlayer.Builder>().build() } returns exoplayer

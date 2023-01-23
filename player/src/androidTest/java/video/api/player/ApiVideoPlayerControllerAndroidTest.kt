@@ -169,8 +169,10 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             listener = listener
-        ).apply {
-            videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        )
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
         }
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -226,8 +228,10 @@ class ApiVideoPlayerControllerAndroidTest {
         player = ApiVideoPlayerController(
             context,
             listener = listener
-        ).apply {
-            videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        )
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
         }
 
         readyLock.await(5, TimeUnit.SECONDS)
@@ -239,7 +243,9 @@ class ApiVideoPlayerControllerAndroidTest {
 
         endLock.await(70, TimeUnit.SECONDS) // Video duration is 60.2 seconds
 
-        player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            player.videoOptions = VideoOptions(VALID_VIDEO_ID, VideoType.VOD)
+        }
 
         readyLock.await(5, TimeUnit.SECONDS)
         assertEquals(0, readyLock.count)
