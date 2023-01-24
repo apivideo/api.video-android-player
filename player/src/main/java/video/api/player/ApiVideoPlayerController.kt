@@ -16,6 +16,9 @@ import com.google.android.exoplayer2.source.MediaLoadData
 import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.video.VideoSize
 import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
+import video.api.player.extensions.currentVideoOptions
+import video.api.player.extensions.setMp4MediaSource
+import video.api.player.extensions.setMediaSource
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoMediaSourceFactory

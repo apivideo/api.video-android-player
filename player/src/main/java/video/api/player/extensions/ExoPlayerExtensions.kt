@@ -1,4 +1,4 @@
-package video.api.player
+package video.api.player.extensions
 
 import com.google.android.exoplayer2.ExoPlayer
 import video.api.player.models.ApiVideoMediaSourceFactory

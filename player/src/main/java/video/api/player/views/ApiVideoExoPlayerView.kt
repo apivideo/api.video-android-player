@@ -1,10 +1,11 @@
-package video.api.player
+package video.api.player.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import video.api.player.R
 import video.api.player.databinding.ExoPlayerLayoutBinding
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 

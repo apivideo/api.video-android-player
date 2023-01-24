@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
-import video.api.player.ApiVideoExoPlayerView
+import video.api.player.views.ApiVideoExoPlayerView
 import video.api.player.ApiVideoPlayerController
 import video.api.player.example.databinding.ActivityMainBinding
 import video.api.player.models.VideoOptions
