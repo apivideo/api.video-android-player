@@ -3,5 +3,7 @@
     package="video.api.player">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    
+    <!--This permission is required to use the ExoPlayer for Android >= 33-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
 </manifest>
