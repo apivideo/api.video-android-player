@@ -17,7 +17,7 @@ class ApiVideoMediaSourceFactory(
     private val videoOptions: VideoOptions,
     private val onError: (Exception) -> Unit,
 ) {
-    private val videoUrlFactory = ApiVideoVideoUrlFactory(videoOptions, onError)
+    private val videoUrlFactory = ApiVideoUrlFactory(videoOptions, onError)
 
     /**
      * Creates a [MediaSource] for [ExoPlayer] to read from api.video HLS.

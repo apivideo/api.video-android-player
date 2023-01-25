@@ -6,13 +6,13 @@ import com.google.android.exoplayer2.source.MediaSource
 import video.api.player.utils.SessionTokenUtils
 
 /**
- * An [ApiVideoVideoUrlFactory] is a wrapper around [VideoOptions] to create an [Uri] for player.
+ * An [ApiVideoUrlFactory] is a wrapper around [VideoOptions] to create an [Uri] for player.
  * It also manages the token session for private videos.
  *
  * @param videoOptions The [VideoOptions] to use
  * @param onError The callback to call when an error occurs
  */
-class ApiVideoVideoUrlFactory(
+class ApiVideoUrlFactory(
     private val videoOptions: VideoOptions,
     private val onError: (Exception) -> Unit,
 ) {
