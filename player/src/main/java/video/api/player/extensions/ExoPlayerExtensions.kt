@@ -1,13 +1,33 @@
 package video.api.player.extensions
 
+import android.util.Log
 import com.google.android.exoplayer2.ExoPlayer
 import video.api.player.models.ApiVideoMediaSourceFactory
 import video.api.player.models.VideoOptions
 
+private const val TAG = "ExoPlayerExtensions"
+
 /**
  * Sets a media source to [ExoPlayer] to read from api.video HLS.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to use
+ * @param videoOptions The [VideoOptions] to play
+ */
+fun ExoPlayer.setMediaSource(
+    videoOptions: VideoOptions,
+) {
+    setMediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+        Log.e(
+            TAG,
+            "Failed to create session $error"
+        )
+    })
+}
+
+/**
+ * Sets a media source to [ExoPlayer] to read from api.video HLS.
+ * Use this method if you want to keep the session token for later usage.
+ *
+ * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
  */
 fun ExoPlayer.setMediaSource(
     mediaSourceFactory: ApiVideoMediaSourceFactory,
@@ -20,7 +40,24 @@ fun ExoPlayer.setMediaSource(
 /**
  * Sets a media source to [ExoPlayer] to read from api.video MP4 URL.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to use
+ * @param videoOptions The [VideoOptions] to play
+ */
+fun ExoPlayer.setMp4MediaSource(
+    videoOptions: VideoOptions,
+) {
+    setMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+        Log.e(
+            TAG,
+            "Failed to create session $error"
+        )
+    })
+}
+
+/**
+ * Sets a media source to [ExoPlayer] to read from api.video MP4 URL.
+ * Use this method if you want to keep the session token for later usage.
+ *
+ * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
  */
 fun ExoPlayer.setMp4MediaSource(
     mediaSourceFactory: ApiVideoMediaSourceFactory,
@@ -33,7 +70,24 @@ fun ExoPlayer.setMp4MediaSource(
 /**
  * Adds a media source to [ExoPlayer] to read from api.video HLS.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to use
+ * @param videoOptions The [VideoOptions] to play
+ */
+fun ExoPlayer.addMediaSource(
+    videoOptions: VideoOptions,
+) {
+    addMediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+        Log.e(
+            TAG,
+            "Failed to create session $error"
+        )
+    })
+}
+
+/**
+ * Adds a media source to [ExoPlayer] to read from api.video HLS.
+ * Use this method if you want to keep the session token for later usage.
+ *
+ * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
  */
 fun ExoPlayer.addMediaSource(
     mediaSourceFactory: ApiVideoMediaSourceFactory,
@@ -46,7 +100,24 @@ fun ExoPlayer.addMediaSource(
 /**
  * Adds a media source to [ExoPlayer] to read from api.video MP4 URL.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to use
+ * @param videoOptions The [VideoOptions] to play
+ */
+fun ExoPlayer.addMp4MediaSource(
+    videoOptions: VideoOptions,
+) {
+    addMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+        Log.e(
+            TAG,
+            "Failed to create session $error"
+        )
+    })
+}
+
+/**
+ * Adds a media source to [ExoPlayer] to read from api.video MP4 URL.
+ * Use this method if you want to keep the session token for later usage.
+ *
+ * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
  */
 fun ExoPlayer.addMp4MediaSource(
     mediaSourceFactory: ApiVideoMediaSourceFactory,
