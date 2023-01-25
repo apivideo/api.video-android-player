@@ -2,29 +2,29 @@ package video.api.player
 
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Test
 import video.api.client.ApiVideoClient
 import video.api.client.api.models.Environment
+import video.api.player.VideoIds.INVALID_VIDEO_ID
+import video.api.player.VideoIds.PRIVATE_VIDEO_ID
+import video.api.player.VideoIds.VALID_VIDEO_ID
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 import java.lang.Thread.sleep
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
-
 class ApiVideoPlayerControllerAndroidTest {
-    companion object {
-        private const val VALID_VIDEO_ID = "vi2G6Qr8ZVE67dWLNymk7qbc"
-        private const val INVALID_VIDEO_ID = "unknownVideoId"
-        private const val PRIVATE_VIDEO_ID = "viMgTZ1KULkXrjFfDCTBtLs"
+    private var _player: ApiVideoPlayerController? = null
+    private val player: ApiVideoPlayerController
+        get() {
+            return _player!!
+        }
 
-        private const val TAG = "ApiVideoPlayerControllerAndroidTest"
-    }
-
-    private lateinit var player: ApiVideoPlayerController
     private var apiKey: String? = null
     private val context = InstrumentationRegistry.getInstrumentation().context
 
@@ -32,6 +32,13 @@ class ApiVideoPlayerControllerAndroidTest {
     fun setUp() {
         val arguments = InstrumentationRegistry.getArguments()
         apiKey = arguments.getString("INTEGRATION_TESTS_API_KEY")
+    }
+
+    @After
+    fun tearDown() {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            _player?.release()
+        }
     }
 
     @Test
@@ -43,7 +50,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
             listener = listener
@@ -66,7 +73,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 lock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             VideoOptions(INVALID_VIDEO_ID, VideoType.VOD),
             listener = listener
@@ -110,7 +117,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
             listener = listener
@@ -166,7 +173,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             listener = listener
         )
@@ -225,7 +232,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             listener = listener
         )
@@ -297,7 +304,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             VideoOptions(VALID_VIDEO_ID, VideoType.VOD),
             listener = listener
@@ -366,7 +373,7 @@ class ApiVideoPlayerControllerAndroidTest {
                 endLock.countDown()
             }
         }
-        player = ApiVideoPlayerController(
+        _player = ApiVideoPlayerController(
             context,
             VideoOptions(PRIVATE_VIDEO_ID, VideoType.VOD, privateToken),
             listener = listener
@@ -385,5 +392,9 @@ class ApiVideoPlayerControllerAndroidTest {
         assertEquals(0, playLock.count)
         assertEquals(0, firstPlayLock.count)
         assertEquals(0, endLock.count)
+    }
+
+    companion object {
+        private const val TAG = "ApiVideoPlayerControllerAndroidTest"
     }
 }
