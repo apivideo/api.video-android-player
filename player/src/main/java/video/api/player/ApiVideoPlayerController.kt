@@ -17,8 +17,8 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import com.google.android.exoplayer2.video.VideoSize
 import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.extensions.currentVideoOptions
-import video.api.player.extensions.setMp4MediaSource
 import video.api.player.extensions.setMediaSource
+import video.api.player.extensions.setMp4MediaSource
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoMediaSourceFactory
@@ -40,7 +40,8 @@ internal constructor(
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
     listener: Listener? = null,
-    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    private val notificationController: ApiVideoPlayerNotificationController? = null
 ) {
     /**
      * @param context the application context
@@ -55,14 +56,18 @@ internal constructor(
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
         playerView: IExoPlayerBasedPlayerView,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+            context
+        )
     ) : this(
         context,
         initialVideoOptions,
         initialAutoplay,
         listener,
         playerView.styledPlayerView,
-        looper
+        looper,
+        notificationController
     ) {
         addListener(playerView)
     }
@@ -80,14 +85,18 @@ internal constructor(
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
         playerView: ISurfaceViewBasedPlayerView,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+            context
+        )
     ) : this(
         context,
         initialVideoOptions,
         initialAutoplay,
         listener,
         playerView.surfaceView,
-        looper
+        looper,
+        notificationController
     ) {
         addListener(playerView)
     }
@@ -105,8 +114,18 @@ internal constructor(
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
         styledPlayerView: StyledPlayerView,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
-    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+            context
+        )
+    ) : this(
+        context,
+        initialVideoOptions,
+        initialAutoplay,
+        listener,
+        looper,
+        notificationController
+    ) {
         styledPlayerView.player = exoplayer
     }
 
@@ -123,8 +142,18 @@ internal constructor(
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
         surfaceView: SurfaceView,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
-    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+            context
+        )
+    ) : this(
+        context,
+        initialVideoOptions,
+        initialAutoplay,
+        listener,
+        looper,
+        notificationController
+    ) {
         exoplayer.setVideoSurfaceView(surfaceView)
     }
 
@@ -141,8 +170,18 @@ internal constructor(
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
         surface: Surface,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper()
-    ) : this(context, initialVideoOptions, initialAutoplay, listener, looper) {
+        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+            context
+        )
+    ) : this(
+        context,
+        initialVideoOptions,
+        initialAutoplay,
+        listener,
+        looper,
+        notificationController
+    ) {
         exoplayer.setVideoSurface(surface)
     }
 
@@ -267,6 +306,9 @@ internal constructor(
     private val exoplayer =
         ExoPlayer.Builder(context).setLooper(looper).build().apply {
             addAnalyticsListener(exoplayerListener)
+            Handler(context.mainLooper).post {
+                notificationController?.showNotification(this)
+            }
         }
 
     /**
@@ -400,6 +442,7 @@ internal constructor(
      * Plays the video
      */
     fun play() {
+        notificationController?.isActive = true
         exoplayer.playWhenReady = true
     }
 
@@ -415,6 +458,7 @@ internal constructor(
      */
     fun stop() {
         exoplayer.stop()
+        notificationController?.isActive = false
     }
 
     /**
@@ -428,6 +472,7 @@ internal constructor(
      * Releases the player
      */
     fun release() {
+        notificationController?.hideNotification()
         exoplayer.removeAnalyticsListener(exoplayerListener)
         analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
         exoplayer.release()

@@ -3,7 +3,7 @@ package video.api.player.models
 import android.net.Uri
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
-import video.api.player.utils.SessionTokenUtils
+import video.api.player.utils.RequestManager
 
 /**
  * An [ApiVideoUrlFactory] is a wrapper around [VideoOptions] to create an [Uri] for player.
@@ -51,7 +51,7 @@ class ApiVideoUrlFactory(
             if (xTokenSession != null) {
                 onSuccess(createVideoUrl(uri, xTokenSession))
             } else {
-                SessionTokenUtils.getSessionToken(
+                RequestManager.getSessionToken(
                     videoOptions.sessionTokenUrl,
                     videoOptions.videoType,
                     {

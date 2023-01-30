@@ -29,4 +29,6 @@ data class VideoOptions(
     }
 
     val mp4Url = "$vodUrl/mp4/source.mp4"
+
+    val thumbnailUrl = "$vodUrl/thumbnail.jpg"
 }

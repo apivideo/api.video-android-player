@@ -1,7 +1,9 @@
 package video.api.player.models
 
+import android.net.Uri
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.MediaMetadata
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
@@ -49,8 +51,15 @@ class ApiVideoMediaSourceFactory(
         request: VideoRequest,
         videoOptions: VideoOptions,
     ): MediaSource {
-        val mediaItem = MediaItem.Builder().setUri(request.uri).setMediaId(videoOptions.videoId)
-            .setTag(videoOptions).build()
+        val mediaMetadata = MediaMetadata.Builder()
+            .setArtworkUri(Uri.parse(videoOptions.thumbnailUrl))
+            .build()
+        val mediaItem = MediaItem.Builder()
+            .setUri(request.uri)
+            .setMediaId(videoOptions.videoId)
+            .setTag(videoOptions)
+            .setMediaMetadata(mediaMetadata)
+            .build()
         val dataSourceFactory = DefaultHttpDataSource.Factory()
         request.headers?.let { dataSourceFactory.setDefaultRequestProperties(it) }
         return DefaultMediaSourceFactory(dataSourceFactory).createMediaSource(

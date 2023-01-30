@@ -91,7 +91,8 @@ class ApiVideoPlayerControllerTest {
             VideoOptions("test", VideoType.VOD),
             false,
             listener,
-            playerView
+            playerView,
+            notificationController = null
         )
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
@@ -119,7 +120,8 @@ class ApiVideoPlayerControllerTest {
             ), // The endpoint is only called when a token is provided
             false,
             listener,
-            playerView
+            playerView,
+            notificationController = null
         )
         lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
 
@@ -132,7 +134,8 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
-                styledPlayerView = playerView
+                styledPlayerView = playerView,
+                notificationController = null
             )
         player.play()
         verify { exoplayer.playWhenReady = true }
@@ -149,7 +152,8 @@ class ApiVideoPlayerControllerTest {
                 VideoOptions("test", VideoType.VOD),
                 false,
                 listener,
-                playerView
+                playerView,
+                notificationController = null
             )
         player.pause()
         verify { exoplayer.pause() }
@@ -166,7 +170,8 @@ class ApiVideoPlayerControllerTest {
                 VideoOptions("test", VideoType.VOD),
                 false,
                 listener,
-                playerView
+                playerView,
+                notificationController = null
             )
         player.stop()
         verify { exoplayer.stop() }
@@ -184,7 +189,8 @@ class ApiVideoPlayerControllerTest {
                 false,
                 listener,
                 playerView,
-                looper
+                looper,
+                notificationController = null
             )
         player.release()
         verify { exoplayer.release() }
