@@ -15,13 +15,14 @@ private const val TAG = "VideoViewExtensions"
  */
 fun VideoView.setVideo(
     videoOptions: VideoOptions,
-) {
-    setVideo(ApiVideoUrlFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setVideo(ApiVideoUrlFactory(videoOptions, onError))
 }
 
 /**
@@ -47,13 +48,14 @@ fun VideoView.setVideo(
  */
 fun VideoView.setMp4Video(
     videoOptions: VideoOptions,
-) {
-    setMp4Video(ApiVideoUrlFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMp4Video(ApiVideoUrlFactory(videoOptions, onError))
 }
 
 /**

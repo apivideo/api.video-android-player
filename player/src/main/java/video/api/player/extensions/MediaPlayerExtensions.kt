@@ -17,13 +17,14 @@ private const val TAG = "MediaPlayerExtensions"
 fun MediaPlayer.setDataSource(
     context: Context,
     videoOptions: VideoOptions,
-) {
-    setDataSource(context, ApiVideoUrlFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setDataSource(context, ApiVideoUrlFactory(videoOptions, onError))
 }
 
 /**
@@ -51,13 +52,14 @@ fun MediaPlayer.setDataSource(
 fun MediaPlayer.setMp4DataSource(
     context: Context,
     videoOptions: VideoOptions,
-) {
-    setMp4DataSource(context, ApiVideoUrlFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMp4DataSource(context, ApiVideoUrlFactory(videoOptions, onError))
 }
 
 /**

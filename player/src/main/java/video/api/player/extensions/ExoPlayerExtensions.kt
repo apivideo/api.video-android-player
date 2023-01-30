@@ -74,13 +74,14 @@ fun ExoPlayer.setMp4MediaSource(
  */
 fun ExoPlayer.addMediaSource(
     videoOptions: VideoOptions,
-) {
-    addMediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    addMediaSource(ApiVideoMediaSourceFactory(videoOptions, onError))
 }
 
 /**
@@ -104,13 +105,14 @@ fun ExoPlayer.addMediaSource(
  */
 fun ExoPlayer.addMp4MediaSource(
     videoOptions: VideoOptions,
-) {
-    addMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    addMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions, onError))
 }
 
 /**
