@@ -225,7 +225,7 @@ internal constructor(
             analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
             mediaItem?.localConfiguration?.uri?.toString()?.let { url ->
                 analyticsListener =
-                    ApiVideoAnalyticsListener(context, exoplayer, url).apply {
+                    ApiVideoAnalyticsListener(exoplayer, url).apply {
                         exoplayer.addAnalyticsListener(this)
                     }
             }

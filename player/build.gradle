@@ -66,8 +66,8 @@ dependencies {
     api 'com.android.volley:volley:1.2.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.18.2'
     implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.2'
-    implementation 'video.api:android-player-analytics:1.2.1'
-    implementation 'video.api:android-player-analytics-exoplayer:1.2.1'
+    implementation 'video.api:android-player-analytics:1.2.2'
+    implementation 'video.api:android-player-analytics-exoplayer:1.2.2'
 
     testImplementation 'org.robolectric:robolectric:4.7'
     testImplementation 'org.robolectric:shadows-httpclient:4.5.1'
