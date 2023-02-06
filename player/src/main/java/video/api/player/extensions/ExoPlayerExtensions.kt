@@ -6,7 +6,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.Player
-import video.api.player.models.ApiVideoMediaSourceFactory
+import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 
 private const val TAG = "ExoPlayerExtensions"
@@ -18,25 +18,26 @@ private const val TAG = "ExoPlayerExtensions"
  */
 fun ExoPlayer.setMediaSource(
     videoOptions: VideoOptions,
-) {
-    setMediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMediaSource(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a [MediaSource] to [ExoPlayer] to read from api.video HLS.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun ExoPlayer.setMediaSource(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMediaSource {
+    mediaSourceFactory.getMediaSource {
         setMediaSource(it)
     }
 }
@@ -48,25 +49,26 @@ fun ExoPlayer.setMediaSource(
  */
 fun ExoPlayer.setMp4MediaSource(
     videoOptions: VideoOptions,
-) {
-    setMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMp4MediaSource(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a [MediaSource] to [ExoPlayer] to read from api.video MP4 URL.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun ExoPlayer.setMp4MediaSource(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMp4MediaSource {
+    mediaSourceFactory.getMp4MediaSource {
         setMediaSource(it)
     }
 }
@@ -85,19 +87,19 @@ fun ExoPlayer.addMediaSource(
         )
     }
 ) {
-    addMediaSource(ApiVideoMediaSourceFactory(videoOptions, onError))
+    addMediaSource(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Adds a [MediaSource] to [ExoPlayer] to read from api.video HLS.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun ExoPlayer.addMediaSource(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMediaSource {
+    mediaSourceFactory.getMediaSource {
         addMediaSource(it)
     }
 }
@@ -116,19 +118,19 @@ fun ExoPlayer.addMp4MediaSource(
         )
     }
 ) {
-    addMp4MediaSource(ApiVideoMediaSourceFactory(videoOptions, onError))
+    addMp4MediaSource(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Adds a [MediaSource] to [ExoPlayer] to read from api.video MP4 URL.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun ExoPlayer.addMp4MediaSource(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMp4MediaSource {
+    mediaSourceFactory.getMp4MediaSource {
         addMediaSource(it)
     }
 }
@@ -140,25 +142,26 @@ fun ExoPlayer.addMp4MediaSource(
  */
 fun Player.setMediaItem(
     videoOptions: VideoOptions,
-) {
-    setMediaItem(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMediaItem(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a [MediaItem] to [Player] to read from api.video HLS.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun Player.setMediaItem(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMediaItem {
+    mediaSourceFactory.getMediaItem {
         setMediaItem(it)
     }
 }
@@ -170,25 +173,26 @@ fun Player.setMediaItem(
  */
 fun Player.setMp4MediaItem(
     videoOptions: VideoOptions,
-) {
-    setMp4MediaItem(ApiVideoMediaSourceFactory(videoOptions) { error ->
+    onError: (Exception) -> Unit = { error ->
         Log.e(
             TAG,
             "Failed to create session $error"
         )
-    })
+    }
+) {
+    setMp4MediaItem(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a [MediaItem] to [Player] to read from api.video MP4 URL.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun Player.setMp4MediaItem(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMp4MediaItem {
+    mediaSourceFactory.getMp4MediaItem {
         setMediaItem(it)
     }
 }
@@ -207,19 +211,19 @@ fun Player.addMediaItem(
         )
     }
 ) {
-    addMediaItem(ApiVideoMediaSourceFactory(videoOptions, onError))
+    addMediaItem(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Adds a [MediaItem] to [Player] to read from api.video HLS.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun Player.addMediaItem(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMediaItem {
+    mediaSourceFactory.getMediaItem {
         addMediaItem(it)
     }
 }
@@ -238,19 +242,19 @@ fun Player.addMp4MediaItem(
         )
     }
 ) {
-    addMp4MediaItem(ApiVideoMediaSourceFactory(videoOptions, onError))
+    addMp4MediaItem(ApiVideoExoPlayerMediaFactory(videoOptions, onError))
 }
 
 /**
  * Adds a [MediaItem] to [Player] to read from api.video MP4 URL.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param mediaSourceFactory The [ApiVideoMediaSourceFactory] to play
+ * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
 fun Player.addMp4MediaItem(
-    mediaSourceFactory: ApiVideoMediaSourceFactory,
+    mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
-    mediaSourceFactory.createMp4MediaItem {
+    mediaSourceFactory.getMp4MediaItem {
         addMediaItem(it)
     }
 }

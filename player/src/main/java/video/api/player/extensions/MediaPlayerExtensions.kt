@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
 import android.util.Log
-import video.api.player.models.ApiVideoUrlFactory
+import video.api.player.models.ApiVideoMediaFactory
 import video.api.player.models.VideoOptions
 
 private const val TAG = "MediaPlayerExtensions"
@@ -24,20 +24,20 @@ fun MediaPlayer.setDataSource(
         )
     }
 ) {
-    setDataSource(context, ApiVideoUrlFactory(videoOptions, onError))
+    setDataSource(context, ApiVideoMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a media source to [MediaPlayer] to read from api.video HLS.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param videoUrlFactory The [ApiVideoUrlFactory] to play
+ * @param videoUrlFactory The [ApiVideoMediaFactory] to play
  */
 fun MediaPlayer.setDataSource(
     context: Context,
-    videoUrlFactory: ApiVideoUrlFactory,
+    videoUrlFactory: ApiVideoMediaFactory,
 ) {
-    videoUrlFactory.createVideoUrl {
+    videoUrlFactory.getVideoUrl {
         val uri = Uri.parse(it.uri)
         setDataSource(context, uri, it.headers)
     }
@@ -59,20 +59,20 @@ fun MediaPlayer.setMp4DataSource(
         )
     }
 ) {
-    setMp4DataSource(context, ApiVideoUrlFactory(videoOptions, onError))
+    setMp4DataSource(context, ApiVideoMediaFactory(videoOptions, onError))
 }
 
 /**
  * Sets a media source to [MediaPlayer] to read from api.video MP4 URL.
  * Use this method if you want to keep the session token for later usage.
  *
- * @param videoUrlFactory The [ApiVideoUrlFactory] to play
+ * @param videoUrlFactory The [ApiVideoMediaFactory] to play
  */
 fun MediaPlayer.setMp4DataSource(
     context: Context,
-    videoUrlFactory: ApiVideoUrlFactory,
+    videoUrlFactory: ApiVideoMediaFactory,
 ) {
-    videoUrlFactory.createMp4VideoUrl {
+    videoUrlFactory.getMp4VideoUrl {
         val uri = Uri.parse(it.uri)
         setDataSource(context, uri, it.headers)
     }

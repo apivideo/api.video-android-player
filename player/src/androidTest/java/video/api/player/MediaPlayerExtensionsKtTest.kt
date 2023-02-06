@@ -8,7 +8,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import video.api.player.extensions.setDataSource
-import video.api.player.models.ApiVideoUrlFactory
+import video.api.player.models.ApiVideoMediaFactory
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 import java.util.concurrent.CountDownLatch
@@ -40,7 +40,7 @@ class MediaPlayerExtensionsKtTest {
             false
         }
         player.setDataSource(context,
-            ApiVideoUrlFactory(
+            ApiVideoMediaFactory(
                 VideoOptions(VideoIds.VALID_VIDEO_ID, VideoType.VOD)
             ) {
                 Log.e(TAG, "Error: $it")

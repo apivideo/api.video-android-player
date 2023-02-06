@@ -21,7 +21,7 @@ import video.api.player.extensions.setMediaSource
 import video.api.player.extensions.setMp4MediaSource
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
-import video.api.player.models.ApiVideoMediaSourceFactory
+import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 import java.io.IOException
 
@@ -192,7 +192,7 @@ internal constructor(
     private var firstPlay = true
     private var isReady = false
 
-    private var mediaSourceFactory: ApiVideoMediaSourceFactory? = null
+    private var mediaSourceFactory: ApiVideoExoPlayerMediaFactory? = null
 
     /**
      * Set/get the video options.
@@ -201,7 +201,7 @@ internal constructor(
         get() = exoplayer.currentVideoOptions
         set(value) {
             value?.let {
-                mediaSourceFactory = ApiVideoMediaSourceFactory(it) { error ->
+                mediaSourceFactory = ApiVideoExoPlayerMediaFactory(it) { error ->
                     listeners.forEach { listener ->
                         listener.onError(error)
                     }
