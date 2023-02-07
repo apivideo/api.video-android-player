@@ -2,6 +2,15 @@
 
 All changes to this project will be documented in this file.
 
+## [1.2.0] - 2023-02-07
+
+- Add support for live streaming
+- Remove call to `player.json` endpoint
+- Implements new VOD private video mechanism
+- Add API for media controls and notifications
+- Add extensions to set up videos for several Android players: ExoPlayer, MediaPlayer, VideoView.
+- Fix 400 error on analytics
+
 ## [1.1.5] - 2022-12-12
 
 - `ApiVideoPlayerController.duration` returns `0` when video is not loaded
