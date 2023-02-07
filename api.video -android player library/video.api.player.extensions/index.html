@@ -1,0 +1,330 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>video.api.player.extensions</title>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+const savedDarkMode = storage ? JSON.parse(storage) : false
+if(savedDarkMode === true){
+    document.getElementsByTagName("html")[0].classList.add("theme-dark")
+}</script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><link href="../../styles/prism.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" defer="defer"></script><script type="text/javascript" src="../../scripts/prism.js" async="async"></script><link href="../../images/docs_logo.svg"><link href="../../images/logo-icon.svg">  </head>
+  <body>
+    <div class="navigation-wrapper" id="navigation-wrapper">
+      <div id="leftToggler"><span class="icon-toggler"></span></div>
+      <div class="library-name"><a href="../../index.html">api.video Android player library</a></div>
+      <div></div>
+      <div class="pull-right d-flex"><button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+      </div>
+    </div>
+    <div id="container">
+      <div id="leftColumn">
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div class="main-content" id="content" pageIds="api.video Android player library::video.api.player.extensions////PointingToDeclaration//766909139">
+          <div class="breadcrumbs"><a href="../../index.html">api.video Android player library</a>/<a href="index.html">video.api.player.extensions</a></div>
+          <div class="cover ">
+            <h1 class="cover"><span><span>Package</span></span> <span>video.</span><wbr></wbr><span>api.</span><wbr></wbr><span>player.</span><wbr></wbr><span>extensions</span></h1>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="-1776404760%2FFunctions%2F766909139" anchor-label="addMediaItem" id="-1776404760%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="add-media-item.html"><span>add</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1776404760%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="add-media-item.html"><span class="token function">addMediaItem</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="add-media-item.html"><span class="token function">addMediaItem</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2071175624%2FFunctions%2F766909139" anchor-label="addMediaSource" id="2071175624%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="add-media-source.html"><span>add</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2071175624%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="add-media-source.html"><span class="token function">addMediaSource</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="add-media-source.html"><span class="token function">addMediaSource</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1381088502%2FFunctions%2F766909139" anchor-label="addMp4MediaItem" id="-1381088502%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="add-mp4-media-item.html"><span>add</span><wbr></wbr><span>Mp4Media</span><wbr></wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1381088502%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="add-mp4-media-item.html"><span class="token function">addMp4MediaItem</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="add-mp4-media-item.html"><span class="token function">addMp4MediaItem</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="585105480%2FFunctions%2F766909139" anchor-label="addMp4MediaSource" id="585105480%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="add-mp4-media-source.html"><span>add</span><wbr></wbr><span>Mp4Media</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="585105480%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="add-mp4-media-source.html"><span class="token function">addMp4MediaSource</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="add-mp4-media-source.html"><span class="token function">addMp4MediaSource</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Adds a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-487801011%2FFunctions%2F766909139" anchor-label="appendTokenSession" id="-487801011%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="append-token-session.html"><span>append</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>Session</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-487801011%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">.</span><a href="append-token-session.html"><span class="token function">appendTokenSession</span></a><span class="token punctuation">(</span>tokenSession<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1069482114%2FFunctions%2F766909139" anchor-label="getStateFrom" id="-1069482114%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="get-state-from.html"><span>get</span><wbr></wbr><span>State</span><wbr></wbr><span><span>From</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1069482114%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="get-state-from.html"><span class="token function">getStateFrom</span></a><span class="token punctuation">(</span>otherPlayer<span class="token operator">: </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Copy the state of another player to this player</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-835784475%2FFunctions%2F766909139" anchor-label="setDataSource" id="-835784475%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-data-source.html"><span>set</span><wbr></wbr><span>Data</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-835784475%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a><span class="token punctuation">.</span><a href="set-data-source.html"><span class="token function">setDataSource</span></a><span class="token punctuation">(</span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span>videoUrlFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a><span class="token punctuation">.</span><a href="set-data-source.html"><span class="token function">setDataSource</span></a><span class="token punctuation">(</span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1782831752%2FFunctions%2F766909139" anchor-label="setMediaItem" id="1782831752%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-media-item.html"><span>set</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1782831752%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="set-media-item.html"><span class="token function">setMediaItem</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="set-media-item.html"><span class="token function">setMediaItem</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-683939130%2FFunctions%2F766909139" anchor-label="setMediaSource" id="-683939130%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-media-source.html"><span>set</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-683939130%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="set-media-source.html"><span class="token function">setMediaSource</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="set-media-source.html"><span class="token function">setMediaSource</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="212685831%2FFunctions%2F766909139" anchor-label="setMp4DataSource" id="212685831%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-mp4-data-source.html"><span>set</span><wbr></wbr><span>Mp4Data</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="212685831%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a><span class="token punctuation">.</span><a href="set-mp4-data-source.html"><span class="token function">setMp4DataSource</span></a><span class="token punctuation">(</span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span>videoUrlFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a><span class="token punctuation">.</span><a href="set-mp4-data-source.html"><span class="token function">setMp4DataSource</span></a><span class="token punctuation">(</span>context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/media/MediaPlayer.html">MediaPlayer</a> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-334872760%2FFunctions%2F766909139" anchor-label="setMp4MediaItem" id="-334872760%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-mp4-media-item.html"><span>set</span><wbr></wbr><span>Mp4Media</span><wbr></wbr><span><span>Item</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-334872760%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="set-mp4-media-item.html"><span class="token function">setMp4MediaItem</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="set-mp4-media-item.html"><span class="token function">setMp4MediaItem</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2/MediaItem///PointingToDeclaration/">MediaItem</span> to <span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="960574696%2FFunctions%2F766909139" anchor-label="setMp4MediaSource" id="960574696%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-mp4-media-source.html"><span>set</span><wbr></wbr><span>Mp4Media</span><wbr></wbr><span><span>Source</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="960574696%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="set-mp4-media-source.html"><span class="token function">setMp4MediaSource</span></a><span class="token punctuation">(</span>mediaSourceFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span><span class="token punctuation">.</span><a href="set-mp4-media-source.html"><span class="token function">setMp4MediaSource</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a <span data-unresolved-link="com.google.android.exoplayer2.source/MediaSource///PointingToDeclaration/">MediaSource</span> to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1509739737%2FFunctions%2F766909139" anchor-label="setMp4Video" id="-1509739737%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-mp4-video.html"><span>set</span><wbr></wbr><span><span>Mp4Video</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1509739737%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a><span class="token punctuation">.</span><a href="set-mp4-video.html"><span class="token function">setMp4Video</span></a><span class="token punctuation">(</span>videoUrlFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a> to read from api.video MP4 URL. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a><span class="token punctuation">.</span><a href="set-mp4-video.html"><span class="token function">setMp4Video</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a> to read from api.video MP4 URL.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1782598749%2FFunctions%2F766909139" anchor-label="setVideo" id="-1782598749%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="set-video.html"><span>set</span><wbr></wbr><span><span>Video</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1782598749%2FFunctions%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a><span class="token punctuation">.</span><a href="set-video.html"><span class="token function">setVideo</span></a><span class="token punctuation">(</span>videoUrlFactory<span class="token operator">: </span><a href="../video.api.player.models/-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a> to read from api.video HLS. Use this method if you want to keep the session token for later usage.</p></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a><span class="token punctuation">.</span><a href="set-video.html"><span class="token function">setVideo</span></a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{ error -&gt;
+        Log.e(
+            TAG,
+            &quot;Failed to create session $error&quot;
+        )
+    }<span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets a media source to <a href="https://developer.android.com/reference/kotlin/android/widget/VideoView.html">VideoView</a> to read from api.video HLS.</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="1056389230%2FProperties%2F766909139" anchor-label="currentVideoOptions" id="1056389230%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex">
+                        <div><a href="current-video-options.html">currentVideoOptions</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1056389230%2FProperties%2F766909139"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><a data-name="1056389230%2FProperties%2F766909139" anchor-label="currentVideoOptions" id="1056389230%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><span data-unresolved-link="com.google.android.exoplayer2/Player///PointingToDeclaration/">Player</span><span class="token punctuation">.</span><a href="current-video-options.html">currentVideoOptions</a><span class="token operator">: </span><a href="../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1056389230%2FProperties%2F766909139" anchor-label="currentVideoOptions" id="1056389230%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a><p class="paragraph">Get the current video options</p></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
