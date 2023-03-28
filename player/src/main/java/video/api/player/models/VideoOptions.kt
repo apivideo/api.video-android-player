@@ -1,11 +1,13 @@
 package video.api.player.models
 
+import video.api.player.extensions.parseAsVideoOptions
+
 /**
  * Description of the video to play.
  *
  * @param videoId the video ID of the video to play
  * @param videoType the [VideoType] of the video to play. Only [VideoType.VOD] is supported.
- * @param token private video token (only needed for private video, set to null otherwise)
+ * @param token the private video token (only needed for private video, set to null otherwise)
  */
 data class VideoOptions(
     val videoId: String,
@@ -31,4 +33,13 @@ data class VideoOptions(
     val mp4Url = "$vodUrl/mp4/source.mp4"
 
     val thumbnailUrl = "$vodUrl/thumbnail.jpg"
+
+    companion object {
+        /**
+         * Creates a [VideoOptions] from an api.video URL.
+         *
+         * @param url the URL of the video to play
+         */
+        fun fromUrl(url: String) = url.parseAsVideoOptions()
+    }
 }
