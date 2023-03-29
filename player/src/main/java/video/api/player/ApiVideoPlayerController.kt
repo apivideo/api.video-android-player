@@ -442,6 +442,22 @@ internal constructor(
                 exoplayer.repeatMode = REPEAT_MODE_OFF
             }
         }
+    
+    var playbackSpeed: Float
+        /**
+         * Get the playback speed
+         *
+         * @return the playback speed
+         */
+        get() = exoplayer.playbackParameters.speed
+        /**
+         * Set the playback speed
+         *
+         * @param value the playback speed
+         */
+        set(value) {
+            exoplayer.setPlaybackSpeed(value)
+        }
 
     init {
         listener?.let { addListener(it) }
