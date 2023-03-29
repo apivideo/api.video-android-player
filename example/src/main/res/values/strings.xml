@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ApiVideoPlayer</string>
+    <string name="app_name">Player</string>
     <string name="settings">Settings</string>
 
     <!--Settings-->
