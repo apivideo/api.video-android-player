@@ -312,11 +312,14 @@ internal constructor(
         }
 
     /**
-     * Check if player is playing
+     * Checks if player is playing
      */
     val isPlaying: Boolean
         get() = exoplayer.isPlaying
 
+    /**
+     * Gets/sets the current video position in seconds
+     */
     var currentTime: Float
         /**
          * Get current video position in seconds
@@ -333,6 +336,9 @@ internal constructor(
             exoplayer.seekTo((value * 1000.0).toLong())
         }
 
+    /**
+     * Gets/sets the video duration in seconds
+     */
     val duration: Float
         /**
          * Get video duration in seconds
@@ -348,6 +354,9 @@ internal constructor(
             }
         }
 
+    /**
+     * Mutes/unmutes the device
+     */
     var isMuted: Boolean
         /**
          * Get the device mute states
@@ -364,14 +373,37 @@ internal constructor(
             exoplayer.isDeviceMuted = value
         }
 
-    val videoSize: Size?
+    /**
+     * Gets/Sets the audio volume
+     */
+    var volume: Float
         /**
-         * Get the video size
+         * Get audio volume
          *
-         * @return the video size
+         * @return volume between 0 and 1.0
          */
+        get() = exoplayer.deviceVolume.toFloat() / (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) - exoplayer.deviceInfo.minVolume
+        /**
+         * Set audio volume
+         *
+         * @param value volume between 0 and 1.0
+         */
+        set(value) {
+            exoplayer.deviceVolume =
+                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
+        }
+
+    /**
+     * Gets the video size
+     *
+     * @return the video size
+     */
+    val videoSize: Size?
         get() = exoplayer.videoFormat?.let { Size(it.width, it.height) }
 
+    /**
+     * Gets/Sets the autoplay state
+     */
     var autoplay: Boolean
         /**
          * Get the autoplay state
@@ -388,6 +420,9 @@ internal constructor(
             exoplayer.playWhenReady = value
         }
 
+    /**
+     * Gets/Sets the looping state
+     */
     var isLooping: Boolean
         /**
          * Get the looping state
@@ -477,23 +512,6 @@ internal constructor(
         analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
         exoplayer.release()
     }
-
-    var volume: Float
-        /**
-         * Get audio volume
-         *
-         * @return volume between 0 and 1.0
-         */
-        get() = exoplayer.deviceVolume.toFloat() / (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) - exoplayer.deviceInfo.minVolume
-        /**
-         * Set audio volume
-         *
-         * @param value volume between 0 and 1.0
-         */
-        set(value) {
-            exoplayer.deviceVolume =
-                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
-        }
 
     companion object {
         private const val TAG = "ApiVideoPlayer"
