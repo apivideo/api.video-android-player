@@ -20,6 +20,7 @@ fun String.toVideoType() = VideoType.fromString(this)
  *
  * @return corresponding [VideoOptions] or an exception
  */
-fun String.parseAsVideoOptions(): VideoOptions {
-    return Utils.parseMediaUrl(this)
-}
+fun String.parseAsVideoOptions(
+    vodDomainURL: String = VideoType.VOD.baseUrl,
+    liveDomainURL: String = VideoType.LIVE.baseUrl
+) = Utils.parseMediaUrl(this, vodDomainURL, liveDomainURL)
