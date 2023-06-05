@@ -2,6 +2,11 @@
 
 All changes to this project will be documented in this file.
 
+## [1.3.0] - 2023-06-05
+
+- Add API to set playback speed
+- Add API to use an api.video URL instead of a video ID (see `VideoOptions.fromUrl`)
+
 ## [1.2.0] - 2023-02-07
 
 - Add support for live streaming
