@@ -1,6 +1,8 @@
 package video.api.player.models
 
 import video.api.player.extensions.parseAsVideoOptions
+import video.api.player.utils.Utils
+import java.net.URL
 
 /**
  * Description of the video to play.
@@ -40,6 +42,21 @@ data class VideoOptions(
          *
          * @param url the URL of the video to play
          */
-        fun fromUrl(url: String) = url.parseAsVideoOptions()
+        fun fromUrl(
+            url: String,
+            vodDomainURL: String = VideoType.VOD.baseUrl,
+            liveDomainURL: String = VideoType.LIVE.baseUrl
+        ) = url.parseAsVideoOptions(vodDomainURL, liveDomainURL)
+
+        /**
+         * Creates a [VideoOptions] from an api.video URL.
+         *
+         * @param url the URL of the video to play
+         */
+        fun fromUrl(
+            url: URL,
+            vodDomainURL: URL = URL(VideoType.VOD.baseUrl),
+            liveDomainURL: URL = URL(VideoType.LIVE.baseUrl)
+        ) = url.parseAsVideoOptions(vodDomainURL, liveDomainURL)
     }
 }
