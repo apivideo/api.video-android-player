@@ -1,5 +1,6 @@
 package video.api.player.utils
 
+import video.api.player.extensions.toVideoType
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 import java.io.IOException
@@ -11,37 +12,31 @@ object Utils {
     private const val LIVE_TOKEN_DELIMITER = "private"
 
     fun parseMediaUrl(
-        mediaUrl: String,
-        vodDomainURL: String = VideoType.VOD.baseUrl,
-        liveDomainURL: String = VideoType.LIVE.baseUrl
-    ) = parseMediaUrl(URL(mediaUrl), URL(vodDomainURL), URL(liveDomainURL))
+        mediaUrl: String
+    ) = parseMediaUrl(URL(mediaUrl))
 
     fun parseMediaUrl(
-        mediaUrl: URL,
-        vodDomainURL: URL = URL(VideoType.VOD.baseUrl),
-        liveDomainURL: URL = URL(VideoType.LIVE.baseUrl)
+        mediaUrl: URL
     ): VideoOptions {
-        val regex =
-            "https:/.*[/].*/(?<id>(vi|li)[^/^.]*)[/.].*"
+        val regex = "https://[^/]+/(?>(?<type>vod|live)/)?(?>.*/)?(?<id>(vi|li)[^/^.]*).*"
         val pattern = Pattern.compile(regex)
         val matcher = pattern.matcher(mediaUrl.toString())
 
-        if (matcher.groupCount() < 2) {
+        if (matcher.groupCount() < 3) {
             throw IOException("The media url doesn't look like an api.video URL.")
         }
 
         try {
             matcher.find()
             // Group naming is not supported before Android API 26
-            val videoType =
-                if (mediaUrl.toString().startsWith(vodDomainURL.toString())) {
-                    VideoType.VOD
-                } else if (mediaUrl.toString().startsWith(liveDomainURL.toString())) {
-                    VideoType.LIVE
-                } else {
-                    throw IOException("The media url must start with $vodDomainURL or $liveDomainURL")
-                }
-            val videoId = matcher.group(1) ?: throw IOException("Failed to get videoId")
+            val videoId = matcher.group(2) ?: throw IOException("Failed to get videoId")
+
+            // For live, we might not have a type for now because there isn't any `/live/` in the URL.
+            val firstGroup = matcher.group(1)
+            val videoType = firstGroup?.toVideoType()
+                ?: if (videoId.startsWith("li")) VideoType.LIVE else throw IOException(
+                    "Failed to get videoType"
+                )
 
             val tokenDelimiter =
                 if (videoType == VideoType.VOD) VOD_TOKEN_DELIMITER else LIVE_TOKEN_DELIMITER

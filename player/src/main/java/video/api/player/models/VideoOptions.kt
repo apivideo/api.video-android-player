@@ -43,10 +43,8 @@ data class VideoOptions(
          * @param url the URL of the video to play
          */
         fun fromUrl(
-            url: String,
-            vodDomainURL: String = VideoType.VOD.baseUrl,
-            liveDomainURL: String = VideoType.LIVE.baseUrl
-        ) = url.parseAsVideoOptions(vodDomainURL, liveDomainURL)
+            url: String
+        ) = url.parseAsVideoOptions()
 
         /**
          * Creates a [VideoOptions] from an api.video URL.
@@ -54,9 +52,7 @@ data class VideoOptions(
          * @param url the URL of the video to play
          */
         fun fromUrl(
-            url: URL,
-            vodDomainURL: URL = URL(VideoType.VOD.baseUrl),
-            liveDomainURL: URL = URL(VideoType.LIVE.baseUrl)
-        ) = url.parseAsVideoOptions(vodDomainURL, liveDomainURL)
+            url: URL
+        ) = url.parseAsVideoOptions()
     }
 }
