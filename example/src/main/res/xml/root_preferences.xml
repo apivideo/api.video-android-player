@@ -8,7 +8,7 @@
         app:useSimpleSummaryProvider="true" />
 
     <SwitchPreference
-        android:defaultValue="true"
+        android:defaultValue="false"
         app:key="@string/video_type_key"
         app:summaryOff="@string/video_type_vod"
         app:summaryOn="@string/video_type_live"

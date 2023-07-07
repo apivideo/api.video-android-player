@@ -16,11 +16,11 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
-import video.api.player.views.ApiVideoExoPlayerView
 import video.api.player.ApiVideoPlayerController
 import video.api.player.example.databinding.ActivityMainBinding
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
+import video.api.player.views.ApiVideoExoPlayerView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
     private val videoId: String
-        get() = sharedPref.getString(getString(R.string.video_id_key), "")
+        get() = sharedPref.getString(getString(R.string.video_id_key), null)
             ?: throw IllegalArgumentException("Video ID is not set")
     private val videoType: VideoType
         get() {
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         ApiVideoPlayerController(
             applicationContext,
             null,
-            false,
+            true,
             playerControllerListener,
             binding.playerView
         )
@@ -157,6 +157,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -216,7 +218,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadVideo() {
-        playerController.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
+        try {
+            playerController.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error while loading video", e)
+            displayMessage("Error while loading video: ${e.message}")
+        }
     }
 
     private fun showMenu(anchor: View) {
