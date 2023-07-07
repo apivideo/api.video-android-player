@@ -138,8 +138,8 @@ On the first run, you will have to set your video Id:
 
 We are using external library
 
-| Plugin | README |
-| ------ | ------ |
+| Plugin                                           | README                                                  |
+|--------------------------------------------------|---------------------------------------------------------|
 | [Exoplayer](https://github.com/google/ExoPlayer) | [README.md](https://github.com/google/ExoPlayer#readme) |
 
 # FAQ
