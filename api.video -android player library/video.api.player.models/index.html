@@ -1,178 +1,217 @@
+<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>video.api.player.models</title>
-<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
-const savedDarkMode = storage ? JSON.parse(storage) : false
-if(savedDarkMode === true){
-    document.getElementsByTagName("html")[0].classList.add("theme-dark")
-}</script>
-<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><link href="../../styles/prism.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" defer="defer"></script><script type="text/javascript" src="../../scripts/prism.js" async="async"></script><link href="../../images/docs_logo.svg"><link href="../../images/logo-icon.svg">  </head>
-  <body>
-    <div class="navigation-wrapper" id="navigation-wrapper">
-      <div id="leftToggler"><span class="icon-toggler"></span></div>
-      <div class="library-name"><a href="../../index.html">api.video Android player library</a></div>
-      <div></div>
-      <div class="pull-right d-flex"><button id="theme-toggle-button"><span id="theme-toggle"></span></button>
-        <div id="searchBar"></div>
-      </div>
+    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../";</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+<link href="../../images/docs_logo.svg">
+<link href="../../images/logo-icon.svg">
+</head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+            <a href="../../index.html">
+                    <span>api.video Android player library</span>
+            </a>
     </div>
-    <div id="container">
-      <div id="leftColumn">
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":player:dokkaHtml/release">androidJvm</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
         <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div class="main-content" id="content" pageIds="api.video Android player library::video.api.player.models////PointingToDeclaration//766909139">
-          <div class="breadcrumbs"><a href="../../index.html">api.video Android player library</a>/<a href="index.html">video.api.player.models</a></div>
-          <div class="cover ">
-            <h1 class="cover"><span><span>Package</span></span> <span>video.</span><wbr></wbr><span>api.</span><wbr></wbr><span>player.</span><wbr></wbr><span>models</span></h1>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
-            <div class="tabs-section-body">
-              <h2 class="">Types</h2>
-              <div class="table" data-togglable="Types"><a data-name="1004996014%2FClasslikes%2F766909139" anchor-label="ApiVideoExoPlayerMediaFactory" id="1004996014%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-api-video-exo-player-media-factory/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Exo</span><wbr></wbr><span>Player</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Factory</span></span></a></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="package" id="content" pageIds="api.video Android player library::video.api.player.models////PointingToDeclaration//766909139">
+  <div class="breadcrumbs"><a href="../../index.html">api.video Android player library</a><span class="delimiter">/</span><span class="current">video.api.player.models</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1004996014%2FClasslikes%2F766909139" anchor-label="ApiVideoExoPlayerMediaFactory" id="1004996014%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-api-video-exo-player-media-factory/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Exo</span><wbr></wbr><span>Player</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Factory</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1004996014%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph"><a href="-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a> has the same purpose as <a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a> but dedicated to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span>. It also stores the token session for private videos.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">videoOptions<span class="token operator">: </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span></span><span class="parameter ">onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph"><a href="-api-video-exo-player-media-factory/index.html">ApiVideoExoPlayerMediaFactory</a> has the same purpose as <a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a> but dedicated to <span data-unresolved-link="com.google.android.exoplayer2/ExoPlayer///PointingToDeclaration/">ExoPlayer</span>. It also stores the token session for private videos.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="1833961146%2FClasslikes%2F766909139" anchor-label="ApiVideoMediaDescriptionAdapter" id="1833961146%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-api-video-media-description-adapter/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Media</span><wbr></wbr><span>Description</span><wbr></wbr><span><span>Adapter</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-api-video-media-description-adapter/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Media</span><wbr></wbr><span>Description</span><wbr></wbr><span><span>Adapter</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1833961146%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-media-description-adapter/index.html">ApiVideoMediaDescriptionAdapter</a> : <span data-unresolved-link="com.google.android.exoplayer2.ui/PlayerNotificationManager.MediaDescriptionAdapter///PointingToDeclaration/">PlayerNotificationManager.MediaDescriptionAdapter</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Creates a default <span data-unresolved-link="com.google.android.exoplayer2.ui/PlayerNotificationManager.MediaDescriptionAdapter///PointingToDeclaration/">MediaDescriptionAdapter</span> to populate the notification from api.video.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-media-description-adapter/index.html">ApiVideoMediaDescriptionAdapter</a> : <span data-unresolved-link="com.google.android.exoplayer2.ui/PlayerNotificationManager.MediaDescriptionAdapter///PointingToDeclaration/">PlayerNotificationManager.MediaDescriptionAdapter</span></div><div class="brief "><p class="paragraph">Creates a default <span data-unresolved-link="com.google.android.exoplayer2.ui/PlayerNotificationManager.MediaDescriptionAdapter///PointingToDeclaration/">MediaDescriptionAdapter</span> to populate the notification from api.video.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="2066759947%2FClasslikes%2F766909139" anchor-label="ApiVideoMediaFactory" id="2066759947%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-api-video-media-factory/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Factory</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-api-video-media-factory/index.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Factory</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2066759947%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">(</span>videoOptions<span class="token operator">: </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span>onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph"><a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a> is a wrapper around <a href="-video-options/index.html">VideoOptions</a> to create URL for the different api.video media items (HLS, MP4, thumbnails). It also stores the token session for private videos.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">videoOptions<span class="token operator">: </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">, </span></span><span class="parameter ">onError<span class="token operator">: </span><span class="token punctuation">(</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-exception/index.html">Exception</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph"><a href="-api-video-media-factory/index.html">ApiVideoMediaFactory</a> is a wrapper around <a href="-video-options/index.html">VideoOptions</a> to create URL for the different api.video media items (HLS, MP4, thumbnails). It also stores the token session for private videos.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="1081948938%2FClasslikes%2F766909139" anchor-label="PlayerJsonRequest" id="1081948938%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-player-json-request/index.html"><span>Player</span><wbr></wbr><span>Json</span><wbr></wbr><span><span>Request</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-player-json-request/index.html"><span>Player</span><wbr></wbr><span>Json</span><wbr></wbr><span><span>Request</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1081948938%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-player-json-request/index.html">PlayerJsonRequest</a><span class="token punctuation">(</span>url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>listener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.Listener///PointingToDeclaration/">Response.Listener</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt;</span><span class="token punctuation">, </span>errorListener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.ErrorListener///PointingToDeclaration/">Response.ErrorListener</span><span class="token operator">?</span><span class="token punctuation">)</span> : <span data-unresolved-link="com.android.volley/Request///PointingToDeclaration/">Request</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt; </span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-player-json-request/index.html">PlayerJsonRequest</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.Listener///PointingToDeclaration/">Response.Listener</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">errorListener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.ErrorListener///PointingToDeclaration/">Response.ErrorListener</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <span data-unresolved-link="com.android.volley/Request///PointingToDeclaration/">Request</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt; </span></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="-2056057082%2FClasslikes%2F766909139" anchor-label="PlayerMediaRequest" id="-2056057082%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-player-media-request/index.html"><span>Player</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Request</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-player-media-request/index.html"><span>Player</span><wbr></wbr><span>Media</span><wbr></wbr><span><span>Request</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2056057082%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-player-media-request/index.html">PlayerMediaRequest</a><span class="token punctuation">(</span>uri<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>xTokenSession<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Encapsulates a video URL and headers.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-player-media-request/index.html">PlayerMediaRequest</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>uri<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>xTokenSession<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Encapsulates a video URL and headers.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="1036968164%2FClasslikes%2F766909139" anchor-label="SessionTokenRequest" id="1036968164%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-session-token-request/index.html"><span>Session</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>Request</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-session-token-request/index.html"><span>Session</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>Request</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1036968164%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-session-token-request/index.html">SessionTokenRequest</a><span class="token punctuation">(</span>url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>listener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.Listener///PointingToDeclaration/">Response.Listener</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt;</span><span class="token punctuation">, </span>errorListener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.ErrorListener///PointingToDeclaration/">Response.ErrorListener</span><span class="token punctuation">)</span> : <span data-unresolved-link="com.android.volley.toolbox/JsonObjectRequest///PointingToDeclaration/">JsonObjectRequest</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Request to get a session token for a private video.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-session-token-request/index.html">SessionTokenRequest</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.Listener///PointingToDeclaration/">Response.Listener</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">errorListener<span class="token operator">: </span><span data-unresolved-link="com.android.volley/Response.ErrorListener///PointingToDeclaration/">Response.ErrorListener</span></span></span><span class="token punctuation">)</span> : <span data-unresolved-link="com.android.volley.toolbox/JsonObjectRequest///PointingToDeclaration/">JsonObjectRequest</span></div><div class="brief "><p class="paragraph">Request to get a session token for a private video.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="9295378%2FClasslikes%2F766909139" anchor-label="SessionTokenResult" id="9295378%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-session-token-result/index.html"><span>Session</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>Result</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-session-token-result/index.html"><span>Session</span><wbr></wbr><span>Token</span><wbr></wbr><span><span>Result</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="9295378%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token punctuation">(</span>sessionToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-session-token-result/index.html">SessionTokenResult</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>sessionToken<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="-88768113%2FClasslikes%2F766909139" anchor-label="VideoOptions" id="-88768113%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-video-options/index.html"><span>Video</span><wbr></wbr><span><span>Options</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-video-options/index.html"><span>Video</span><wbr></wbr><span><span>Options</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-88768113%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">(</span>videoId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span>videoType<span class="token operator">: </span><a href="-video-type/index.html">VideoType</a><span class="token punctuation">, </span>token<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token punctuation">)</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Description of the video to play.</p></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-video-options/index.html">VideoOptions</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>videoId<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>videoType<span class="token operator">: </span><a href="-video-type/index.html">VideoType</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>token<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Description of the video to play.</p></div></div></div>
                 </div>
+              </div>
+            </div>
+          </div>
 <a data-name="-1891458693%2FClasslikes%2F766909139" anchor-label="VideoType" id="-1891458693%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex">
-                        <div><a href="-video-type/index.html"><span>Video</span><wbr></wbr><span><span>Type</span></span></a></div>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-video-type/index.html"><span>Video</span><wbr></wbr><span><span>Type</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1891458693%2FClasslikes%2F766909139"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-video-type/index.html">VideoType</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-video-type/index.html">VideoType</a><span class="token operator">&gt; </span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-video-type/index.html">VideoType</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="-video-type/index.html">VideoType</a><span class="token operator">&gt; </span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
       </div>
     </div>
-  </body>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
 </html>
-
