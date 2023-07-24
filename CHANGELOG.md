@@ -2,6 +2,11 @@
 
 All changes to this project will be documented in this file.
 
+## [1.3.1] - 2023-07-24
+
+- Upgrade dependencies
+- Fix obfuscation on release builds by updating Kotlin serialization plugin
+
 ## [1.3.0] - 2023-06-05
 
 - Add API to set playback speed
