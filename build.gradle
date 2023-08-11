@@ -3,6 +3,8 @@ buildscript {
     ext {
         kotlinVersion = '1.8.0'
         dokkaVersion = '1.8.20'
+        exoPlayerVersion = '1.1.0'
+        analyticsVersion = '1.4.0'
     }
 
     dependencies {
@@ -15,6 +17,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version "$kotlinVersion" apply false
 }
 
-task clean(type: Delete) {
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }

@@ -4,10 +4,12 @@ import android.content.Context
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.OptIn
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerNotificationManager
 import video.api.player.models.ApiVideoMediaDescriptionAdapter
 
 
@@ -17,11 +19,13 @@ import video.api.player.models.ApiVideoMediaDescriptionAdapter
  * @param context the application context
  */
 class ApiVideoPlayerNotificationController
+@OptIn(UnstableApi::class)
 constructor(
     private val context: Context,
     private val playerNotificationManager: PlayerNotificationManager,
     private val mediaSession: MediaSessionCompat = MediaSessionCompat(context, TAG),
 ) {
+    @OptIn(UnstableApi::class)
     constructor(
         context: Context,
         mediaSession: MediaSessionCompat = MediaSessionCompat(context, TAG),
@@ -57,10 +61,12 @@ constructor(
             mediaSession.isActive = value
         }
 
+    @OptIn(UnstableApi::class)
     fun hideNotification() {
         playerNotificationManager.setPlayer(null)
     }
 
+    @OptIn(UnstableApi::class)
     fun showNotification(player: ExoPlayer) {
         playerNotificationManager.setPlayer(player)
     }

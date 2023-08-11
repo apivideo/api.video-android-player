@@ -1,11 +1,13 @@
 package video.api.player.extensions
 
 import android.util.Log
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.Player
+import androidx.annotation.OptIn
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.MediaSource
 import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 
@@ -34,6 +36,7 @@ fun ExoPlayer.setMediaSource(
  *
  * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
+@OptIn(UnstableApi::class)
 fun ExoPlayer.setMediaSource(
     mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
@@ -65,6 +68,7 @@ fun ExoPlayer.setMp4MediaSource(
  *
  * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
+@OptIn(UnstableApi::class)
 fun ExoPlayer.setMp4MediaSource(
     mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
@@ -96,6 +100,7 @@ fun ExoPlayer.addMediaSource(
  *
  * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
+@OptIn(UnstableApi::class)
 fun ExoPlayer.addMediaSource(
     mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {
@@ -127,6 +132,7 @@ fun ExoPlayer.addMp4MediaSource(
  *
  * @param mediaSourceFactory The [ApiVideoExoPlayerMediaFactory] to play
  */
+@OptIn(UnstableApi::class)
 fun ExoPlayer.addMp4MediaSource(
     mediaSourceFactory: ApiVideoExoPlayerMediaFactory,
 ) {

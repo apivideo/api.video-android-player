@@ -1,15 +1,17 @@
 package video.api.player.models
 
 import android.net.Uri
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.MediaMetadata
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.util.MimeTypes.APPLICATION_M3U8
-import com.google.android.exoplayer2.util.MimeTypes.VIDEO_MP4
+import androidx.annotation.OptIn
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.MimeTypes.APPLICATION_M3U8
+import androidx.media3.common.MimeTypes.VIDEO_MP4
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.exoplayer.source.MediaSource
 import video.api.player.extensions.appendTokenSession
 import java.security.InvalidParameterException
 
@@ -112,6 +114,7 @@ class ApiVideoExoPlayerMediaFactory(
             .build()
     }
 
+    @OptIn(UnstableApi::class)
     private fun createMediaSource(
         request: PlayerMediaRequest,
         videoOptions: VideoOptions,

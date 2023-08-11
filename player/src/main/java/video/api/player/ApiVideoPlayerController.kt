@@ -7,14 +7,24 @@ import android.util.Log
 import android.util.Size
 import android.view.Surface
 import android.view.SurfaceView
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.Player.*
-import com.google.android.exoplayer2.analytics.AnalyticsListener
-import com.google.android.exoplayer2.analytics.AnalyticsListener.EventTime
-import com.google.android.exoplayer2.source.LoadEventInfo
-import com.google.android.exoplayer2.source.MediaLoadData
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import com.google.android.exoplayer2.video.VideoSize
+import androidx.annotation.OptIn
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.Player.DISCONTINUITY_REASON_SEEK
+import androidx.media3.common.Player.REPEAT_MODE_ALL
+import androidx.media3.common.Player.REPEAT_MODE_OFF
+import androidx.media3.common.Player.STATE_ENDED
+import androidx.media3.common.Player.STATE_READY
+import androidx.media3.common.Player.TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED
+import androidx.media3.common.VideoSize
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.analytics.AnalyticsListener
+import androidx.media3.exoplayer.source.LoadEventInfo
+import androidx.media3.exoplayer.source.MediaLoadData
+import androidx.media3.ui.PlayerView
 import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
 import video.api.player.extensions.currentVideoOptions
 import video.api.player.extensions.setMediaSource
@@ -31,7 +41,7 @@ import java.io.IOException
  *
  * @param context the application context
  * @param initialVideoOptions initial video options
- * @param listener a [Player.Listener] to listen to player events
+ * @param listener a [ApiVideoPlayerController.Listener] to listen to player events
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
  */
 class ApiVideoPlayerController
@@ -46,8 +56,8 @@ internal constructor(
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
-     * @param listener the [Player.Listener] to listen to player events
-     * @param playerView the [IExoPlayerBasedPlayerView] interface for ExoPlayer [StyledPlayerView] based player view
+     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+     * @param playerView the [IExoPlayerBasedPlayerView] interface for ExoPlayer [PlayerView] based player view
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
@@ -65,7 +75,7 @@ internal constructor(
         initialVideoOptions,
         initialAutoplay,
         listener,
-        playerView.styledPlayerView,
+        playerView.playerView,
         looper,
         notificationController
     ) {
@@ -75,7 +85,7 @@ internal constructor(
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
-     * @param listener the [Player.Listener] to listen to player events
+     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param playerView the [ISurfaceViewBasedPlayerView] interface for [SurfaceView] based player view
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
@@ -104,8 +114,8 @@ internal constructor(
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
-     * @param listener the [Player.Listener] to listen to player events
-     * @param styledPlayerView the [StyledPlayerView] to use to display the player
+     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+     * @param playerView the [PlayerView] to use to display the player
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
@@ -113,7 +123,7 @@ internal constructor(
         initialVideoOptions: VideoOptions? = null,
         initialAutoplay: Boolean = false,
         listener: Listener? = null,
-        styledPlayerView: StyledPlayerView,
+        playerView: PlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
         notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
             context
@@ -126,13 +136,13 @@ internal constructor(
         looper,
         notificationController
     ) {
-        styledPlayerView.player = exoplayer
+        playerView.player = exoplayer
     }
 
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
-     * @param listener the [Player.Listener] to listen to player events
+     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surfaceView the [SurfaceView] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
@@ -160,7 +170,7 @@ internal constructor(
     /**
      * @param context the application context
      * @param initialVideoOptions initial video options
-     * @param listener the [Player.Listener] to listen to player events
+     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surface the [Surface] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
@@ -212,12 +222,17 @@ internal constructor(
         }
 
     private val exoplayerListener: AnalyticsListener = object : AnalyticsListener {
-        override fun onPlayerError(eventTime: EventTime, error: PlaybackException) {
+        @OptIn(UnstableApi::class)
+        override fun onPlayerError(
+            eventTime: AnalyticsListener.EventTime,
+            error: PlaybackException
+        ) {
             listeners.forEach { listener -> listener.onError(error) }
         }
 
+        @OptIn(UnstableApi::class)
         override fun onMediaItemTransition(
-            eventTime: EventTime,
+            eventTime: AnalyticsListener.EventTime,
             mediaItem: MediaItem?,
             reason: Int
         ) {
@@ -231,15 +246,17 @@ internal constructor(
             }
         }
 
-        override fun onTimelineChanged(eventTime: EventTime, reason: Int) {
+        @OptIn(UnstableApi::class)
+        override fun onTimelineChanged(eventTime: AnalyticsListener.EventTime, reason: Int) {
             if (reason == TIMELINE_CHANGE_REASON_PLAYLIST_CHANGED) {
                 firstPlay = true
                 isReady = false
             }
         }
 
+        @OptIn(UnstableApi::class)
         override fun onLoadError(
-            eventTime: EventTime,
+            eventTime: AnalyticsListener.EventTime,
             loadEventInfo: LoadEventInfo,
             mediaLoadData: MediaLoadData,
             error: IOException,
@@ -255,7 +272,11 @@ internal constructor(
             } ?: listeners.forEach { listener -> listener.onError(error) }
         }
 
-        override fun onIsPlayingChanged(eventTime: EventTime, isPlaying: Boolean) {
+        @OptIn(UnstableApi::class)
+        override fun onIsPlayingChanged(
+            eventTime: AnalyticsListener.EventTime,
+            isPlaying: Boolean
+        ) {
             if (isPlaying) {
                 if (firstPlay) {
                     firstPlay = false
@@ -269,7 +290,8 @@ internal constructor(
             }
         }
 
-        override fun onPlaybackStateChanged(eventTime: EventTime, state: Int) {
+        @OptIn(UnstableApi::class)
+        override fun onPlaybackStateChanged(eventTime: AnalyticsListener.EventTime, state: Int) {
             if (state == STATE_READY) {
                 if (!isReady) {
                     isReady = true
@@ -280,10 +302,11 @@ internal constructor(
             }
         }
 
+        @OptIn(UnstableApi::class)
         override fun onPositionDiscontinuity(
-            eventTime: EventTime,
-            oldPosition: PositionInfo,
-            newPosition: PositionInfo,
+            eventTime: AnalyticsListener.EventTime,
+            oldPosition: Player.PositionInfo,
+            newPosition: Player.PositionInfo,
             reason: Int
         ) {
             if (reason == DISCONTINUITY_REASON_SEEK) {
@@ -291,7 +314,11 @@ internal constructor(
             }
         }
 
-        override fun onVideoSizeChanged(eventTime: EventTime, videoSize: VideoSize) {
+        @OptIn(UnstableApi::class)
+        override fun onVideoSizeChanged(
+            eventTime: AnalyticsListener.EventTime,
+            videoSize: VideoSize
+        ) {
             listeners.forEach { listener ->
                 listener.onVideoSizeChanged(
                     Size(
@@ -303,6 +330,7 @@ internal constructor(
         }
     }
 
+    @OptIn(UnstableApi::class)
     private val exoplayer =
         ExoPlayer.Builder(context).setLooper(looper).build().apply {
             addAnalyticsListener(exoplayerListener)
@@ -399,6 +427,7 @@ internal constructor(
      * @return the video size
      */
     val videoSize: Size?
+        @OptIn(UnstableApi::class)
         get() = exoplayer.videoFormat?.let { Size(it.width, it.height) }
 
     /**
@@ -442,7 +471,7 @@ internal constructor(
                 exoplayer.repeatMode = REPEAT_MODE_OFF
             }
         }
-    
+
     var playbackSpeed: Float
         /**
          * Get the playback speed

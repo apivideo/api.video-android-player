@@ -6,15 +6,17 @@ import android.graphics.BitmapFactory
 import android.text.TextUtils
 import android.util.Log
 import android.widget.ImageView
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.ui.PlayerNotificationManager.BitmapCallback
-import com.google.android.exoplayer2.ui.PlayerNotificationManager.MediaDescriptionAdapter
+import androidx.annotation.OptIn
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.PlayerNotificationManager
 import video.api.player.utils.RequestManager
 
 /**
- * Creates a default [MediaDescriptionAdapter] to populate the notification from api.video.
+ * Creates a default [PlayerNotificationManager.MediaDescriptionAdapter] to populate the notification from api.video.
  */
-class ApiVideoMediaDescriptionAdapter : MediaDescriptionAdapter {
+class ApiVideoMediaDescriptionAdapter : PlayerNotificationManager.MediaDescriptionAdapter {
+    @OptIn(UnstableApi::class)
     override fun getCurrentContentTitle(player: Player): CharSequence {
         val displayTitle = player.mediaMetadata.displayTitle
         if (!TextUtils.isEmpty(displayTitle)) {
@@ -24,18 +26,26 @@ class ApiVideoMediaDescriptionAdapter : MediaDescriptionAdapter {
         return title ?: ""
     }
 
+    @OptIn(UnstableApi::class)
     override fun createCurrentContentIntent(player: Player): PendingIntent? {
         return null
     }
 
-    override fun getCurrentContentText(player: Player): CharSequence? {
+    @OptIn(UnstableApi::class)
+    override fun getCurrentContentText(player: Player): CharSequence {
         val artist = player.mediaMetadata.artist
+        val albumArtist = player.mediaMetadata.albumArtist
         return if (!TextUtils.isEmpty(artist)) {
-            artist
-        } else player.mediaMetadata.albumArtist
+            artist!!
+        } else if (!TextUtils.isEmpty(albumArtist)) {
+            albumArtist!!
+        } else {
+            ""
+        }
     }
 
-    override fun getCurrentLargeIcon(player: Player, callback: BitmapCallback): Bitmap? {
+    @OptIn(UnstableApi::class)
+    override fun getCurrentLargeIcon(player: Player, callback: PlayerNotificationManager.BitmapCallback): Bitmap? {
         val data = player.mediaMetadata.artworkData
         if (data != null) {
             return BitmapFactory.decodeByteArray(data,  /* offset = */0, data.size)

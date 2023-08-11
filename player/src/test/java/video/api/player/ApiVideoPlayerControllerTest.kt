@@ -3,16 +3,22 @@ package video.api.player
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.ui.PlayerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HttpResponse
 import com.android.volley.toolbox.NoCache
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.ui.StyledPlayerView
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkClass
+import io.mockk.mockkConstructor
+import io.mockk.mockkStatic
+import io.mockk.spyk
+import io.mockk.verify
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +33,7 @@ import java.util.concurrent.CountDownLatch
 class ApiVideoPlayerControllerTest {
     private val context = mockk<Context>(relaxed = true)
     private val mockHttpStack = MockHttpStack()
-    private val playerView = mockk<StyledPlayerView>(relaxed = true)
+    private val playerView = mockk<PlayerView>(relaxed = true)
     private val exoplayer = spyk<ExoPlayer>()
     private val mediaSource = mockk<MediaSource>()
     private val looper = mockk<Looper> {
@@ -46,7 +52,12 @@ class ApiVideoPlayerControllerTest {
 
         // Mock RequestQueue
         val queue =
-            RequestQueue(NoCache(), BasicNetwork(mockHttpStack), 2, ImmediateResponseDelivery()).apply {
+            RequestQueue(
+                NoCache(),
+                BasicNetwork(mockHttpStack),
+                2,
+                ImmediateResponseDelivery()
+            ).apply {
                 start()
             }
         mockkConstructor(RequestQueue::class)
@@ -134,7 +145,7 @@ class ApiVideoPlayerControllerTest {
             ApiVideoPlayerController(
                 context,
                 VideoOptions("test", VideoType.VOD),
-                styledPlayerView = playerView,
+                playerView = playerView,
                 notificationController = null
             )
         player.play()

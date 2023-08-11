@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.google.android.exoplayer2.ui.StyledPlayerView
+import androidx.annotation.OptIn
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.ui.PlayerView
 import video.api.player.R
 import video.api.player.databinding.ExoPlayerLayoutBinding
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
@@ -24,7 +26,7 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr), IExoPlayerBasedPlayerView {
     private val binding = ExoPlayerLayoutBinding.inflate(LayoutInflater.from(context), this)
 
-    override val styledPlayerView: StyledPlayerView
+    override val playerView: PlayerView
         get() = binding.playerView
 
     var listener: Listener? = null
@@ -33,13 +35,14 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
      * Shows or hides the full screen button
      */
     var showFullScreenButton: Boolean = true
+        @OptIn(UnstableApi::class)
         set(value) {
             if (value) {
-                styledPlayerView.setFullscreenButtonClickListener {
+                playerView.setFullscreenButtonClickListener {
                     listener?.onFullScreenModeChanged(it)
                 }
             } else {
-                styledPlayerView.setControllerOnFullScreenModeChangedListener(null)
+                playerView.setControllerOnFullScreenModeChangedListener(null)
             }
             field = value
         }
@@ -48,22 +51,23 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
      * Shows or hides the control buttons
      */
     var showControls: Boolean
-        get() = styledPlayerView.useController
+        get() = playerView.useController
         set(value) {
-            styledPlayerView.useController = value
+            playerView.useController = value
         }
 
     /**
      * Shows or hides the subtitles
      */
     var showSubtitles: Boolean = true
+        @OptIn(UnstableApi::class)
         set(value) {
             if (value) {
-                styledPlayerView.subtitleView?.visibility = VISIBLE
-                styledPlayerView.setShowSubtitleButton(true)
+                playerView.subtitleView?.visibility = VISIBLE
+                playerView.setShowSubtitleButton(true)
             } else {
-                styledPlayerView.subtitleView?.visibility = INVISIBLE
-                styledPlayerView.setShowSubtitleButton(false)
+                playerView.subtitleView?.visibility = INVISIBLE
+                playerView.setShowSubtitleButton(false)
             }
             field = value
         }
