@@ -7,6 +7,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.OptIn
 import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerNotificationManager
@@ -45,7 +46,7 @@ constructor(
                 setUseChronometer(true)
                 if (notificationStyle.colorResourceId != 0) {
                     setColorized(true)
-                    setColor(context.getColor(notificationStyle.colorResourceId))
+                    setColor(ContextCompat.getColor(context, notificationStyle.colorResourceId))
                 }
             },
         mediaSession
@@ -72,7 +73,7 @@ constructor(
     }
 
     companion object {
-        private const val TAG = "ApiVideoPlayerNotificationController"
+        private const val TAG = "PlayerNotificationController"
         private const val DEFAULT_NOTIFICATION_ID = 3333
         private const val DEFAULT_NOTIFICATION_CHANNEL_ID = "api.video.player.notification.channel"
     }

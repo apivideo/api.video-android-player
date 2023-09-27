@@ -67,6 +67,6 @@ class ApiVideoMediaDescriptionAdapter : PlayerNotificationManager.MediaDescripti
     }
 
     companion object {
-        private const val TAG = "ApiVideoMediaDescriptionAdapter"
+        private const val TAG = "MediaDescriptionAdapter"
     }
 }

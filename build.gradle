@@ -3,8 +3,8 @@ buildscript {
     ext {
         kotlinVersion = '1.8.0'
         dokkaVersion = '1.8.20'
-        exoPlayerVersion = '1.1.0'
-        analyticsVersion = '1.4.0'
+        exoPlayerVersion = '1.1.1'
+        analyticsVersion = '2.0.0'
     }
 
     dependencies {
