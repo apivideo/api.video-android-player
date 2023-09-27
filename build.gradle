@@ -4,7 +4,7 @@ buildscript {
         kotlinVersion = '1.8.0'
         dokkaVersion = '1.8.20'
         exoPlayerVersion = '1.1.1'
-        analyticsVersion = '2.0.0'
+        analyticsVersion = '2.0.1'
     }
 
     dependencies {

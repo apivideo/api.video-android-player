@@ -18,7 +18,11 @@ object Utils {
     fun parseMediaUrl(
         mediaUrl: URL
     ): VideoOptions {
-        val regex = "https://[^/]+/(?>(?<type>vod|live)/)?(?>.*/)?(?<id>(vi|li)[^/^.]*).*"
+        /**
+         * Group naming is not supported before Android API 26 and crashes
+         * on very old version such as Android API 21
+         */
+        val regex = "https://[^/]+/(?>(vod|live)/)?(?>.*/)?((vi|li)[^/^.]*).*"
         val pattern = Pattern.compile(regex)
         val matcher = pattern.matcher(mediaUrl.toString())
 

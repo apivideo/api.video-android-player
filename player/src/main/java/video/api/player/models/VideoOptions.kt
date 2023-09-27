@@ -1,7 +1,6 @@
 package video.api.player.models
 
 import video.api.player.extensions.parseAsVideoOptions
-import video.api.player.utils.Utils
 import java.net.URL
 
 /**
