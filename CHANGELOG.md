@@ -2,6 +2,10 @@
 
 All changes to this project will be documented in this file.
 
+## [1.4.1] - 2023-09-27
+
+- Fix a crash with parsing of URL on old Android versions due to group named capture
+
 ## [1.4.0] - 2023-09-27
 
 - Add support for Android 21 to 34
