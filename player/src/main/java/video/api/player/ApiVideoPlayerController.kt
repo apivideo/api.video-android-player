@@ -34,6 +34,8 @@ import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 import java.io.IOException
+import kotlin.math.max
+import kotlin.math.min
 
 
 /**
@@ -361,7 +363,8 @@ internal constructor(
          * @param value video position in seconds
          */
         set(value) {
-            exoplayer.seekTo((value * 1000.0).toLong())
+            val nextCurrentTime = value.coerceIn(0.0f, duration)
+            exoplayer.seekTo((nextCurrentTime * 1000.0).toLong())
         }
 
     /**
