@@ -342,10 +342,16 @@ internal constructor(
         }
 
     /**
-     * Checks if player is playing
+     * Gets if player is playing
      */
     val isPlaying: Boolean
         get() = exoplayer.isPlaying
+
+    /**
+     * Gets if the current playing video is a live stream
+     */
+    val isLive: Boolean
+        get() = exoplayer.isCurrentMediaItemLive
 
     /**
      * Gets/sets the current video position in seconds
