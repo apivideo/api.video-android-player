@@ -229,6 +229,11 @@ internal constructor(
             eventTime: AnalyticsListener.EventTime,
             error: PlaybackException
         ) {
+            if (error.errorCode == PlaybackException.ERROR_CODE_BEHIND_LIVE_WINDOW) {
+                // Re-initialize player at the current live window default position.
+                exoplayer.seekToDefaultPosition()
+                exoplayer.prepare()
+            }
             listeners.forEach { listener -> listener.onError(error) }
         }
 
