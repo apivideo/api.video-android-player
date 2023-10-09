@@ -127,6 +127,7 @@ $dokka.location:video.api.player/ApiVideoPlayerController/addListener/#video.api
 $dokka.location:video.api.player/ApiVideoPlayerController/autoplay/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/autoplay.html
 $dokka.location:video.api.player/ApiVideoPlayerController/currentTime/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/current-time.html
 $dokka.location:video.api.player/ApiVideoPlayerController/duration/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/duration.html
+$dokka.location:video.api.player/ApiVideoPlayerController/isLive/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-live.html
 $dokka.location:video.api.player/ApiVideoPlayerController/isLooping/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-looping.html
 $dokka.location:video.api.player/ApiVideoPlayerController/isMuted/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-muted.html
 $dokka.location:video.api.player/ApiVideoPlayerController/isPlaying/#/PointingToDeclaration/api.video -android player library/video.api.player/-api-video-player-controller/is-playing.html
