@@ -59,7 +59,7 @@ class ApiVideoMediaDescriptionAdapter : PlayerNotificationManager.MediaDescripti
             RequestManager.getImage(uri.toString(), maxWidth, maxHeight, scaleType, { bitmap ->
                 callback.onBitmap(bitmap)
             }, { error ->
-                Log.e(TAG, "Failed to load thumbnail", error)
+                Log.w(TAG, "Failed to load thumbnail", error)
             })
         }
 
