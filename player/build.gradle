@@ -6,11 +6,10 @@ plugins {
 apply from: 'maven-push.gradle'
 
 android {
-    compileSdk 34
-
     defaultConfig {
-        minSdk 21
-        targetSdk 34
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
+        compileSdk rootProject.compileSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArgument "INTEGRATION_TESTS_API_KEY", "${System.getenv("INTEGRATION_TESTS_API_KEY")}"
@@ -62,7 +61,7 @@ dokkaHtml {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     api 'com.android.volley:volley:1.2.1'
     implementation "video.api:android-player-analytics-exoplayer:${analyticsVersion}"
     implementation "androidx.media3:media3-ui:${exoPlayerVersion}"
@@ -70,7 +69,7 @@ dependencies {
     implementation "androidx.media3:media3-exoplayer-hls:${exoPlayerVersion}"
     implementation "androidx.media:media:1.6.0"
 
-    testImplementation 'org.robolectric:robolectric:4.8.1'
+    testImplementation 'org.robolectric:robolectric:4.10.3'
     testImplementation 'org.robolectric:shadows-httpclient:4.5.1'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'io.mockk:mockk:1.12.2'

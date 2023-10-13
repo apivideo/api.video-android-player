@@ -1,8 +1,20 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        kotlinVersion = '1.8.0'
-        dokkaVersion = '1.8.20'
+        // SDK and tools
+        minSdk = 21
+        compileSdk = 34
+        targetSdk = 34
+
+        // Kotlin
+        kotlinVersion = "1.8.22"
+        dokkaVersion = "1.8.20"
+
+        // Example
+        versionCode = properties['VERSION_CODE'].toInteger()
+        versionName = "${properties['VERSION_NAME']}"
+
+        // Libraries
         exoPlayerVersion = '1.1.1'
         analyticsVersion = '2.0.2'
     }
