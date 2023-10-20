@@ -34,9 +34,6 @@ import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 import java.io.IOException
-import kotlin.math.max
-import kotlin.math.min
-
 
 /**
  * The api.video player controller class.
