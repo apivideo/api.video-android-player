@@ -15,9 +15,14 @@ import video.api.player.models.ApiVideoMediaDescriptionAdapter
 
 
 /**
- * The api.video player controller class.
+ * The api.video player notification controller class.
+ *
+ * The `ApiVideoPlayerController` uses the `ApiVideoPlayerNotificationController` to display a
+ * notification when the player is launched.
  *
  * @param context the application context
+ * @param playerNotificationManager the [PlayerNotificationManager] to use
+ * @param mediaSession the [MediaSessionCompat] to use
  */
 class ApiVideoPlayerNotificationController
 @OptIn(UnstableApi::class)

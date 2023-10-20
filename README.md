@@ -41,15 +41,6 @@ dependencies {
 }
 ```
 
-## Permissions
-
-In your `AndroidManifest.xml`, add the following code in `<manifest>`:
-
-```xml
-
-<uses-permission android:name="android.permission.INTERNET" />
-```
-
 ## Retrieve your video Id
 
 At this point, you must have uploaded a least one video to your account. If you haven't
@@ -71,7 +62,10 @@ a video Id to use this component and play a video from api.video. To get yours, 
 Alternatively, you can find your video Id in the video details of
 your [dashboard](https://dashboard.api.video).
 
-## Code sample
+## Usage
+
+The api.video Android player will help you to play the HLS video from api.video. It also generates 
+analytics of [your viewers usage](https://api.video/product/video-analytics/). 
 
 1. Add a `ApiVideoExoPlayerView` to your Activity/Fragment layout:
 
@@ -119,6 +113,24 @@ val player = ApiVideoPlayerController(
 If you requires a fullscreen video. You will have to implement the `ApiVideoPlayerController.ViewListener` interface.
 Check out for the implementation in the [Sample application](#sample-application).
 
+## Play your api.video video with ExoPlayer
+
+If you want to use the ExoPlayer directly, you can use the api.video Android extensions:
+
+1. Create a video
+```kotlin
+val videoOptions = VideoOptions("YOUR_VIDEO_ID", VideoType.VOD)
+```
+
+2. Pass it to ExoPlayer
+
+```kotlin
+val exoplayer = ExoPlayer.Builder(context).build() // You already have that in your code
+exoplayer.addMediaSource(videoOptions)
+// Or
+exoplayer.setMediaSource(videoOptions)
+```
+
 # Sample application
 
 A demo application demonstrates how to use player.
@@ -127,11 +139,11 @@ folder.
 
 On the first run, you will have to set your video Id:
 1. Click on the FloatingActionButton -> Settings
-2. Replace "YOUR_VIDEO_ID" by your video Id
+2. Replace the video Id with your own video Id
 
 # Documentation
 
-* [API documentation](https://apivideo.github.io/api.video-android-player/)
+* [Player documentation](https://apivideo.github.io/api.video-android-player/)
 * [api.video documentation](https://docs.api.video)
 
 # Dependencies
