@@ -64,8 +64,8 @@ your [dashboard](https://dashboard.api.video).
 
 ## Usage
 
-The api.video Android player will help you to play the HLS video from api.video. It also generates 
-analytics of [your viewers usage](https://api.video/product/video-analytics/). 
+The api.video Android player will help you to play the HLS video from api.video. It also generates
+analytics of [your viewers usage](https://api.video/product/video-analytics/).
 
 1. Add a `ApiVideoExoPlayerView` to your Activity/Fragment layout:
 
@@ -80,7 +80,8 @@ analytics of [your viewers usage](https://api.video/product/video-analytics/).
     app:show_subtitles="true" />
 ```
 
-You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your customisation level.
+You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your customisation
+level.
 
 2. Implements the `ApiVideoPlayerController.Listener` interface:
 
@@ -102,7 +103,10 @@ val playerView = findViewById<ApiVideoExoPlayerView>(R.id.playerView)
 
 val player = ApiVideoPlayerController(
     applicationContext,
-    VideoOptions("YOUR_VIDEO_ID", VideoType.VOD), // For private video: VideoOptions("YOUR_VIDEO_ID", VideoType.VOD, "YOUR_PRIVATE_VIDEO_TOKEN")
+    VideoOptions(
+        "YOUR_VIDEO_ID",
+        VideoType.VOD
+    ), // For private video: VideoOptions("YOUR_VIDEO_ID", VideoType.VOD, "YOUR_PRIVATE_VIDEO_TOKEN")
     playerListener,
     playerView
 )
@@ -110,7 +114,8 @@ val player = ApiVideoPlayerController(
 
 4. Fullscreen video
 
-If you requires a fullscreen video. You will have to implement the `ApiVideoPlayerController.ViewListener` interface.
+If you requires a fullscreen video. You will have to implement
+the `ApiVideoPlayerController.ViewListener` interface.
 Check out for the implementation in the [Sample application](#sample-application).
 
 ## Play your api.video video with ExoPlayer
@@ -118,6 +123,7 @@ Check out for the implementation in the [Sample application](#sample-application
 If you want to use the ExoPlayer directly, you can use the api.video Android extensions:
 
 1. Create a video
+
 ```kotlin
 val videoOptions = VideoOptions("YOUR_VIDEO_ID", VideoType.VOD)
 ```
@@ -131,6 +137,18 @@ exoplayer.addMediaSource(videoOptions)
 exoplayer.setMediaSource(videoOptions)
 ```
 
+## Player views
+
+The api.video Android player comes with a specific view `ApiVideoExoPlayerView` to display the video
+and its controller. If you require a customization of the view such as changing a button color,...,
+you can contact [us](https://github.com/apivideo/api.video-android-player/issues).
+Otherwise, you can also directly use the ExoPlayer views
+from `media3`: [`PlayerView`](https://developer.android.com/reference/androidx/media3/ui/PlayerView).
+The `ApiVideoPlayerController` also supports other type of views such
+as [`SurfaceView`](https://developer.android.com/reference/android/view/SurfaceView)
+and [`Surface`](https://developer.android.com/reference/android/view/Surface) but it requires far
+more work.
+
 # Sample application
 
 A demo application demonstrates how to use player.
@@ -138,6 +156,7 @@ See [`/example`](https://github.com/apivideo/api.video-android-player/tree/main/
 folder.
 
 On the first run, you will have to set your video Id:
+
 1. Click on the FloatingActionButton -> Settings
 2. Replace the video Id with your own video Id
 
@@ -156,5 +175,5 @@ We are using external library
 
 # FAQ
 
-If you have any questions, ask us here: [https://community.api.video](https://community.api.video).
-Or use [Issues].
+If you have any questions, ask us in the [community](https://community.api.video) or
+use [issues](https://github.com/apivideo/api.video-android-player/issues).
