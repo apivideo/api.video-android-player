@@ -1,4 +1,4 @@
-package video.api.player
+package video.api.player.notifications
 
 import android.content.Context
 import android.support.v4.media.session.MediaSessionCompat
@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerNotificationManager
+import video.api.player.R
 import video.api.player.models.ApiVideoMediaDescriptionAdapter
 
 

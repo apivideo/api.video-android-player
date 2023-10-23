@@ -33,6 +33,7 @@ import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
+import video.api.player.notifications.ApiVideoPlayerNotificationController
 import java.io.IOException
 
 /**
