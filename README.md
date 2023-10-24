@@ -18,6 +18,9 @@ your app.
     - [Permissions](#permissions)
     - [Permissions](#permissions)
     - [Retrieve your video Id](#retrieve-your-video-id)
+    - [Usage](#usage)
+    - [Play your api.video video with ExoPlayer, MediaPlayer and VideoView](#play-your-apivideo-video-with-exoplayer-mediaplayer-and-videoview)
+    - [Player views](#player-views)
 - [Sample application](#sample-application)
 - [Documentation](#documentation)
 - [Dependencies](#dependencies)
@@ -80,8 +83,8 @@ analytics of [your viewers usage](https://api.video/product/video-analytics/).
     app:show_subtitles="true" />
 ```
 
-You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your customisation
-level.
+You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your requirements.
+See [Player views](#player-views) for more details.
 
 2. Implements the `ApiVideoPlayerController.Listener` interface:
 
@@ -118,7 +121,7 @@ If you requires a fullscreen video. You will have to implement
 the `ApiVideoPlayerController.ViewListener` interface.
 Check out for the implementation in the [Sample application](#sample-application).
 
-## Play your api.video video with ExoPlayer
+## Play your api.video video with ExoPlayer, MediaPlayer and VideoView
 
 If you want to use the ExoPlayer directly, you can use the api.video Android extensions:
 
@@ -126,15 +129,32 @@ If you want to use the ExoPlayer directly, you can use the api.video Android ext
 
 ```kotlin
 val videoOptions = VideoOptions("YOUR_VIDEO_ID", VideoType.VOD)
+// For private video: VideoOptions("YOUR_VIDEO_ID", VideoType.VOD, "YOUR_PRIVATE_VIDEO_TOKEN")
 ```
 
-2. Pass it to ExoPlayer
+2. Pass it to your player
+
+For ExoPlayer:
 
 ```kotlin
 val exoplayer = ExoPlayer.Builder(context).build() // You already have that in your code
 exoplayer.addMediaSource(videoOptions)
 // Or
 exoplayer.setMediaSource(videoOptions)
+```
+
+For MediaPlayer:
+
+```kotlin
+val mediaPlayer = MediaPlayer() // You already have that in your code
+mediaPlayer.setDataSource(context, videoOptions)
+```
+
+For VideoView:
+
+```kotlin
+val videoView = binding.videoView // You already have that in your code
+videoView.setVideo(videoOptions)
 ```
 
 ## Player views
