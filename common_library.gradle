@@ -1,0 +1,34 @@
+android {
+    defaultConfig {
+        minSdk rootProject.minSdk
+        targetSdk rootProject.targetSdk
+        compileSdk rootProject.compileSdk
+
+        consumerProguardFiles 'proguard-rules.txt'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dokkaHtmlPartial {
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+            skipDeprecated.set(true)
+            includeNonPublic.set(false)
+            skipEmptyPackages.set(true)
+        }
+    }
+}

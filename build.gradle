@@ -28,7 +28,22 @@ plugins {
     id 'com.android.library' version '7.4.2' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlinVersion" apply false
 }
+apply plugin: 'org.jetbrains.dokka'
 
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
+}
+
+tasks.dokkaHtmlMultiModule {
+    moduleName.set("api.video Android $project.name library")
+    suppressInheritedMembers.set(true)
+
+    pluginsMapConfiguration.set(
+            ["org.jetbrains.dokka.base.DokkaBase": """{ 
+                "customAssets" : [
+                    "${file("$rootDir/docs/docs_logo.svg")}",
+                    "${file("$rootDir/docs/logo-icon.svg")}"
+                ] 
+        }"""]
+    )
 }

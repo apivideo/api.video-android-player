@@ -3,60 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.dokka'
 }
-apply from: 'maven-push.gradle'
+apply from: "${project.rootDir}/common_library.gradle"
+apply from: "${project.rootDir}/publish.gradle"
 
-android {
-    defaultConfig {
-        minSdk rootProject.minSdk
-        targetSdk rootProject.targetSdk
-        compileSdk rootProject.compileSdk
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArgument "INTEGRATION_TESTS_API_KEY", "${System.getenv("INTEGRATION_TESTS_API_KEY")}"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-    buildFeatures {
-        viewBinding true
-    }
-    testOptions {
-        unitTests.returnDefaultValues = true
-    }
-}
-
-dokkaHtml {
-    moduleName.set("api.video Android $project.name library")
-    suppressInheritedMembers.set(true)
-
-    dokkaSourceSets {
-        named("main") {
-            noAndroidSdkLink.set(false)
-            skipDeprecated.set(true)
-            includeNonPublic.set(false)
-            skipEmptyPackages.set(true)
-        }
-    }
-    pluginsMapConfiguration.set(
-            ["org.jetbrains.dokka.base.DokkaBase": """{ 
-                "customAssets" : [
-                    "${file("$rootDir/docs/docs_logo.svg")}",
-                    "${file("$rootDir/docs/logo-icon.svg")}"
-                ] 
-        }"""]
-    )
+ext {
+    artifactName = 'android-player'
+    artifactDescription = 'Android player for api.video delivery.'
 }
 
 dependencies {

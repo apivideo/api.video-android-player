@@ -46,13 +46,13 @@ afterEvaluate { project ->
                 from components.release
 
                 groupId = GROUP
-                artifactId = POM_ARTIFACT_ID
-                version = VERSION_NAME
+                artifactId = artifactName
+                version = versionName
 
                 pom {
-                    name = POM_NAME
+                    name = artifactName
                     packaging = POM_PACKAGING
-                    description = POM_DESCRIPTION
+                    description = artifactDescription
                     url = POM_URL
 
 
