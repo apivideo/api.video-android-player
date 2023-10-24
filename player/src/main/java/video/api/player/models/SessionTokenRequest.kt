@@ -6,7 +6,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 /**
  * Request to get a session token for a private video.
  */
-class SessionTokenRequest(
+internal class SessionTokenRequest(
     url: String,
     listener: Response.Listener<SessionTokenResult>,
     errorListener: Response.ErrorListener

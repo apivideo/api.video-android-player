@@ -62,6 +62,9 @@ constructor(
         playerNotificationManager.setMediaSessionToken(mediaSession.sessionToken)
     }
 
+    /**
+     * Whether the notification is active.
+     */
     var isActive: Boolean
         get() = mediaSession.isActive
         set(value) {

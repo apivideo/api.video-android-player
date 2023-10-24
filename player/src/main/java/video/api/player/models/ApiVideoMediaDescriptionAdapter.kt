@@ -15,7 +15,7 @@ import video.api.player.utils.RequestManager
 /**
  * Creates a default [PlayerNotificationManager.MediaDescriptionAdapter] to populate the notification from api.video.
  */
-class ApiVideoMediaDescriptionAdapter : PlayerNotificationManager.MediaDescriptionAdapter {
+internal class ApiVideoMediaDescriptionAdapter : PlayerNotificationManager.MediaDescriptionAdapter {
     @OptIn(UnstableApi::class)
     override fun getCurrentContentTitle(player: Player): CharSequence {
         val displayTitle = player.mediaMetadata.displayTitle

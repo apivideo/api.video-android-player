@@ -5,7 +5,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.HttpHeaderParser
 
-class PlayerJsonRequest(
+internal class PlayerJsonRequest(
     url: String,
     private val listener: Response.Listener<SessionTokenResult>,
     errorListener: Response.ErrorListener? = null
