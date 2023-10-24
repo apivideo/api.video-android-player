@@ -6,6 +6,10 @@ plugins {
 apply from: "${project.rootDir}/common_library.gradle"
 apply from: "${project.rootDir}/publish.gradle"
 
+android {
+    namespace 'video.api.player'
+}
+
 ext {
     artifactName = 'android-player'
     artifactDescription = 'Android player for api.video delivery.'
