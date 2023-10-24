@@ -13,7 +13,7 @@ import video.api.player.interfaces.IExoPlayerBasedPlayerView
 
 
 /**
- * The api.video player view class based on an ExoPlayer [StyledPlayerView].
+ * The api.video player view class based on an ExoPlayer [PlayerView].
  *
  * @param context the application context
  * @param attrs the attributes of the XML tag that is inflating the view.

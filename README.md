@@ -15,12 +15,10 @@ your app.
 - [Getting started](#getting-started)
     - [Installation](#installation)
         - [Gradle](#gradle)
-    - [Permissions](#permissions)
-    - [Permissions](#permissions)
     - [Retrieve your video Id](#retrieve-your-video-id)
     - [Usage](#usage)
+        - [Supported player views](#supported-player-views)
     - [Play your api.video video with ExoPlayer, MediaPlayer and VideoView](#play-your-apivideo-video-with-exoplayer-mediaplayer-and-videoview)
-    - [Player views](#player-views)
 - [Sample application](#sample-application)
 - [Documentation](#documentation)
 - [Dependencies](#dependencies)
@@ -83,8 +81,8 @@ analytics of [your viewers usage](https://api.video/product/video-analytics/).
     app:show_subtitles="true" />
 ```
 
-You can also use an ExoPlayer `StyledPlayerView` or a `SurfaceView` according to your requirements.
-See [Player views](#player-views) for more details.
+You can also use an ExoPlayer `PlayerView` or a `SurfaceView` according to your requirements.
+See [Supported player views](#supported-player-views) for more details.
 
 2. Implements the `ApiVideoPlayerController.Listener` interface:
 
@@ -121,6 +119,21 @@ If you requires a fullscreen video. You will have to implement
 the `ApiVideoPlayerController.ViewListener` interface.
 Check out for the implementation in the [Sample application](#sample-application).
 
+### Supported player views
+
+The api.video Android player comes with a specific view `ApiVideoExoPlayerView` to display the video
+and its controller. If you require a customization of this view such as changing a button color,...,
+you can contact [us](https://github.com/apivideo/api.video-android-player/issues).
+
+Otherwise, in the `ApiVideoPlayerController`, you can also use the following views:
+
+* [`PlayerView`](https://developer.android.com/reference/androidx/media3/ui/PlayerView): ExoPlayer
+  views from `media3`
+* [`SurfaceView`](https://developer.android.com/reference/android/view/SurfaceView)
+* [`Surface`](https://developer.android.com/reference/android/view/Surface)
+
+The `SurfaceView` and the `Surface` require more work to be used.
+
 ## Play your api.video video with ExoPlayer, MediaPlayer and VideoView
 
 If you want to use the ExoPlayer directly, you can use the api.video Android extensions:
@@ -156,18 +169,6 @@ For VideoView:
 val videoView = binding.videoView // You already have that in your code
 videoView.setVideo(videoOptions)
 ```
-
-## Player views
-
-The api.video Android player comes with a specific view `ApiVideoExoPlayerView` to display the video
-and its controller. If you require a customization of the view such as changing a button color,...,
-you can contact [us](https://github.com/apivideo/api.video-android-player/issues).
-Otherwise, you can also directly use the ExoPlayer views
-from `media3`: [`PlayerView`](https://developer.android.com/reference/androidx/media3/ui/PlayerView).
-The `ApiVideoPlayerController` also supports other type of views such
-as [`SurfaceView`](https://developer.android.com/reference/android/view/SurfaceView)
-and [`Surface`](https://developer.android.com/reference/android/view/Surface) but it requires far
-more work.
 
 # Sample application
 
