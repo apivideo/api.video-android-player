@@ -34,6 +34,7 @@ import video.api.player.interfaces.ISurfaceViewBasedPlayerView
 import video.api.player.models.ApiVideoExoPlayerMediaFactory
 import video.api.player.models.VideoOptions
 import video.api.player.notifications.ApiVideoPlayerNotificationController
+import video.api.player.views.ApiVideoExoPlayerView
 import java.io.IOException
 
 /**
@@ -41,21 +42,28 @@ import java.io.IOException
  *
  * @param context the application context
  * @param initialVideoOptions initial video options
+ * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
  * @param listener a [ApiVideoPlayerController.Listener] to listen to player events
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @constructor Creates a new controller without a view.
  */
 class ApiVideoPlayerController
-internal constructor(
+constructor(
     private val context: Context,
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
     listener: Listener? = null,
     looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
-    private val notificationController: ApiVideoPlayerNotificationController? = null
+    private val notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
 ) {
     /**
+     * Creates a new controller with an [IExoPlayerBasedPlayerView].
+     *
      * @param context the application context
      * @param initialVideoOptions initial video options
+     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
      * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param playerView the [IExoPlayerBasedPlayerView] interface for ExoPlayer [PlayerView] based player view
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
@@ -83,8 +91,11 @@ internal constructor(
     }
 
     /**
+     * Creates a new controller with an [ISurfaceViewBasedPlayerView].
+     *
      * @param context the application context
      * @param initialVideoOptions initial video options
+     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
      * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param playerView the [ISurfaceViewBasedPlayerView] interface for [SurfaceView] based player view
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
@@ -112,8 +123,11 @@ internal constructor(
     }
 
     /**
+     * Creates a new controller with a `media3` [PlayerView].
+     *
      * @param context the application context
      * @param initialVideoOptions initial video options
+     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
      * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param playerView the [PlayerView] to use to display the player
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
@@ -140,8 +154,11 @@ internal constructor(
     }
 
     /**
+     * Creates a new controller with a [SurfaceView].
+     *
      * @param context the application context
      * @param initialVideoOptions initial video options
+     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
      * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surfaceView the [SurfaceView] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
@@ -168,8 +185,11 @@ internal constructor(
     }
 
     /**
+     * Creates a new controller with a [Surface].
+     *
      * @param context the application context
      * @param initialVideoOptions initial video options
+     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
      * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surface the [Surface] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
@@ -410,7 +430,7 @@ internal constructor(
          * @param value true if the device is muted, false otherwise
          */
         set(value) {
-            exoplayer.isDeviceMuted = value
+            exoplayer.setDeviceMuted(value, 0)
         }
 
     /**
@@ -429,8 +449,10 @@ internal constructor(
          * @param value volume between 0 and 1.0
          */
         set(value) {
-            exoplayer.deviceVolume =
-                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt()
+            exoplayer.setDeviceVolume(
+                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt(),
+                0
+            )
         }
 
     /**
@@ -568,6 +590,51 @@ internal constructor(
         exoplayer.removeAnalyticsListener(exoplayerListener)
         analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
         exoplayer.release()
+    }
+
+    /**
+     * Sets the player view
+     *
+     * @param view the player view. An [ApiVideoExoPlayerView] for example.
+     */
+    fun setPlayerView(view: IExoPlayerBasedPlayerView) {
+        view.playerView.player = exoplayer
+    }
+
+    /**
+     * Sets the player view
+     *
+     * @param playerView the [PlayerView]
+     */
+    fun setPlayerView(playerView: PlayerView) {
+        playerView.player = exoplayer
+    }
+
+    /**
+     * Sets the player view
+     *
+     * @param view the [ISurfaceViewBasedPlayerView]
+     */
+    fun setSurfaceView(view: ISurfaceViewBasedPlayerView) {
+        exoplayer.setVideoSurfaceView(view.surfaceView)
+    }
+
+    /**
+     * Sets the player view
+     *
+     * @param surfaceView the [SurfaceView]
+     */
+    fun setSurfaceView(surfaceView: SurfaceView) {
+        exoplayer.setVideoSurfaceView(surfaceView)
+    }
+
+    /**
+     * Sets the player view
+     *
+     * @param surface the [Surface]
+     */
+    fun setSurface(surface: Surface) {
+        exoplayer.setVideoSurface(surface)
     }
 
     companion object {
