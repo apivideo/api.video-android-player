@@ -7,8 +7,8 @@ buildscript {
         targetSdk = 34
 
         // Kotlin
-        kotlinVersion = "1.8.22"
-        dokkaVersion = "1.8.20"
+        kotlinVersion = "1.9.10"
+        dokkaVersion = "1.9.10"
 
         // Example
         versionCode = properties['VERSION_CODE'].toInteger()
