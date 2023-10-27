@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "ApiVideoPlayer"
 include ':examples:view'
 include ':player'
+include ':compose-player'
