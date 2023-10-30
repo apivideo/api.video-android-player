@@ -82,7 +82,7 @@ fun ApiVideoPlayer(
             factory = {
                 playerView.apply {
                     controller.setPlayerView(this)
-                    showFullScreenButton = false
+                    this.fullScreenListener = null
                     this.showControls = showControls
                     this.showSubtitles = showSubtitles
                 }

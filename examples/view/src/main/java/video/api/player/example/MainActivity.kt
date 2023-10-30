@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-    private val playerViewListener = object : ApiVideoExoPlayerView.Listener {
+    private val fullScreenListener = object : ApiVideoExoPlayerView.FullScreenListener {
         override fun onFullScreenModeChanged(isFullScreen: Boolean) {
             /**
              * For fullscreen video, hides every views and forces orientation in landscape.
@@ -84,9 +84,11 @@ class MainActivity : AppCompatActivity() {
                 error.message != null -> {
                     error.message
                 }
+
                 error is ClientError -> {
                     error.networkResponse.statusCode.toString()
                 }
+
                 else -> {
                     error.toString()
                 }
@@ -124,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val playerController: ApiVideoPlayerController by lazy {
-        binding.playerView.listener = playerViewListener
+        binding.playerView.fullScreenListener = fullScreenListener
         ApiVideoPlayerController(
             applicationContext,
             null,
@@ -186,10 +188,10 @@ class MainActivity : AppCompatActivity() {
         binding.unmute.setOnClickListener { playerController.isMuted = false }
 
         binding.showFullScreenButton.setOnClickListener {
-            binding.playerView.showFullScreenButton = true
+            binding.playerView.fullScreenListener = fullScreenListener
         }
         binding.hideFullScreenButton.setOnClickListener {
-            binding.playerView.showFullScreenButton = false
+            binding.playerView.fullScreenListener = null
         }
 
         binding.showControls.setOnClickListener { binding.playerView.showControls = true }

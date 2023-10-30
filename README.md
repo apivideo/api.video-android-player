@@ -76,7 +76,6 @@ analytics of [your viewers usage](https://api.video/product/video-analytics/).
     android:id="@+id/playerView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:show_fullscreen_button="true"
     app:show_controls="true"
     app:show_subtitles="true" />
 ```

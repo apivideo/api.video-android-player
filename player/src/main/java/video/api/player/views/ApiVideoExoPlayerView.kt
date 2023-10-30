@@ -32,17 +32,16 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
     override val playerView: PlayerView
         get() = binding.playerView
 
-    var listener: Listener? = null
-
     /**
-     * Shows or hides the full screen button
+     * Sets or gets the full screen listener.
+     * If set to null, the full screen button is hidden.
      */
-    var showFullScreenButton: Boolean = true
+    var fullScreenListener: FullScreenListener? = null
         @SuppressLint("UnsafeOptInUsageError")
         set(value) {
-            if (value) {
+            if (value != null) {
                 playerView.setFullscreenButtonClickListener {
-                    listener?.onFullScreenModeChanged(it)
+                    value.onFullScreenModeChanged(it)
                 }
             } else {
                 playerView.setControllerOnFullScreenModeChangedListener(null)
@@ -89,8 +88,6 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.ApiVideoExoPlayerView)
         try {
-            showFullScreenButton =
-                a.getBoolean(R.styleable.ApiVideoExoPlayerView_show_fullscreen_button, true)
             showControls = a.getBoolean(R.styleable.ApiVideoExoPlayerView_show_controls, true)
             showSubtitles = a.getBoolean(R.styleable.ApiVideoExoPlayerView_show_subtitles, true)
         } finally {
@@ -98,7 +95,7 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         }
     }
 
-    interface Listener {
+    interface FullScreenListener {
         /**
          * Called when the full screen button has been clicked
          *
