@@ -1,0 +1,22 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.ApiVideoPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/orangePrimary</item>
+        <item name="colorPrimaryVariant">@color/orangePrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/orangePrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorAccent">@color/greenPrimary</item>
+        <item name="colorButtonNormal">@color/greyDarker</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="Theme.ApiVideoPlayer.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ApiVideoPlayer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>
