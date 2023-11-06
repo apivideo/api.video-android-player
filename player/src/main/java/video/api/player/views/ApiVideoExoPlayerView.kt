@@ -14,6 +14,7 @@ import androidx.media3.ui.PlayerView
 import video.api.player.R
 import video.api.player.databinding.ExoPlayerLayoutBinding
 import video.api.player.interfaces.IExoPlayerBasedPlayerView
+import video.api.player.models.ApiVideoPlayerFullScreenController
 
 /**
  * The api.video player view class based on an ExoPlayer [PlayerView].
@@ -23,9 +24,7 @@ import video.api.player.interfaces.IExoPlayerBasedPlayerView
  * @param defStyleAttr an attribute in the current theme that contains a reference to a style resource that supplies default values for the view. Can be 0 to not look for defaults.
  */
 class ApiVideoExoPlayerView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), IExoPlayerBasedPlayerView {
     private val binding = ExoPlayerLayoutBinding.inflate(LayoutInflater.from(context), this)
 
@@ -35,10 +34,11 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
     /**
      * Sets or gets the full screen listener.
      * If set to null, the full screen button is hidden.
+     *
+     * To simplify full screen management, you can use [ApiVideoPlayerFullScreenController].
      */
     var fullScreenListener: FullScreenListener? = null
-        @SuppressLint("UnsafeOptInUsageError")
-        set(value) {
+        @SuppressLint("UnsafeOptInUsageError") set(value) {
             if (value != null) {
                 playerView.setFullscreenButtonClickListener {
                     value.onFullScreenModeChanged(it)
@@ -62,8 +62,7 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
      * Shows or hides the subtitles
      */
     var showSubtitles: Boolean = true
-        @SuppressLint("UnsafeOptInUsageError")
-        set(value) {
+        @SuppressLint("UnsafeOptInUsageError") set(value) {
             if (value) {
                 playerView.subtitleView?.visibility = VISIBLE
                 playerView.setShowSubtitleButton(true)
@@ -78,10 +77,8 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
      * Sets or gets how the video is fitted in its parent view
      */
     var viewFit: ViewFit
-        @SuppressLint("UnsafeOptInUsageError")
-        get() = ViewFit.fromValue(playerView.resizeMode)
-        @SuppressLint("UnsafeOptInUsageError")
-        set(value) {
+        @SuppressLint("UnsafeOptInUsageError") get() = ViewFit.fromValue(playerView.resizeMode)
+        @SuppressLint("UnsafeOptInUsageError") set(value) {
             playerView.resizeMode = value.value
         }
 
@@ -93,6 +90,15 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         } finally {
             a.recycle()
         }
+    }
+
+    fun duplicate(): ApiVideoExoPlayerView {
+        val view = ApiVideoExoPlayerView(context)
+        view.showControls = showControls
+        view.showSubtitles = showSubtitles
+        view.viewFit = viewFit
+        view.fullScreenListener = fullScreenListener
+        return view
     }
 
     interface FullScreenListener {

@@ -24,6 +24,8 @@ dependencies {
     implementation "androidx.media3:media3-exoplayer:${exoPlayerVersion}"
     implementation "androidx.media3:media3-exoplayer-hls:${exoPlayerVersion}"
     implementation "androidx.media:media:1.6.0"
+    implementation "androidx.fragment:fragment-ktx:1.6.2"
+    implementation "com.google.android.material:material:1.10.0"
 
     testImplementation 'org.robolectric:robolectric:4.10.3'
     testImplementation 'org.robolectric:shadows-httpclient:4.5.1'

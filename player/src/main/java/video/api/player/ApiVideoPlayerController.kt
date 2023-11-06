@@ -1,5 +1,6 @@
 package video.api.player
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -597,9 +598,7 @@ constructor(
      *
      * @param view the player view. An [ApiVideoExoPlayerView] for example.
      */
-    fun setPlayerView(view: IExoPlayerBasedPlayerView) {
-        view.playerView.player = exoplayer
-    }
+    fun setPlayerView(view: IExoPlayerBasedPlayerView) = setPlayerView(view.playerView)
 
     /**
      * Sets the player view
@@ -636,6 +635,17 @@ constructor(
     fun setSurface(surface: Surface) {
         exoplayer.setVideoSurface(surface)
     }
+
+    @SuppressLint("UnsafeOptInUsageError")
+    fun switchTargetView(oldPlayerView: PlayerView, newPlayerView: PlayerView) {
+        PlayerView.switchTargetView(exoplayer, oldPlayerView, newPlayerView)
+    }
+
+    @SuppressLint("UnsafeOptInUsageError")
+    fun switchTargetView(
+        oldPlayerView: IExoPlayerBasedPlayerView,
+        newPlayerView: IExoPlayerBasedPlayerView
+    ) = switchTargetView(oldPlayerView.playerView, newPlayerView.playerView)
 
     companion object {
         private const val TAG = "ApiVideoPlayer"

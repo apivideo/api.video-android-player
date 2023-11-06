@@ -7,17 +7,14 @@ import android.os.Bundle
 import android.util.Log
 import android.util.Size
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.android.volley.ClientError
 import com.google.android.material.snackbar.Snackbar
 import video.api.player.ApiVideoPlayerController
 import video.api.player.example.databinding.ActivityMainBinding
+import video.api.player.models.ApiVideoPlayerFullScreenController
 import video.api.player.models.VideoOptions
 import video.api.player.models.VideoType
 import video.api.player.views.ApiVideoExoPlayerView
@@ -50,33 +47,6 @@ class MainActivity : AppCompatActivity() {
                 null
             }
         }
-
-    private val fullScreenListener = object : ApiVideoExoPlayerView.FullScreenListener {
-        override fun onFullScreenModeChanged(isFullScreen: Boolean) {
-            /**
-             * For fullscreen video, hides every views and forces orientation in landscape.
-             */
-            if (isFullScreen) {
-                supportActionBar?.hide()
-                hideSystemUI()
-                binding.fab.hide()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                binding.playerView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.MATCH_PARENT
-                    height = ViewGroup.LayoutParams.MATCH_PARENT
-                }
-            } else {
-                supportActionBar?.show()
-                showSystemUI()
-                binding.fab.show()
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
-                binding.playerView.layoutParams.apply {
-                    width = ViewGroup.LayoutParams.WRAP_CONTENT
-                    height = ViewGroup.LayoutParams.WRAP_CONTENT
-                }
-            }
-        }
-    }
 
     private val playerControllerListener = object : ApiVideoPlayerController.Listener {
         override fun onError(error: Exception) {
@@ -125,8 +95,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val fullScreenController: ApiVideoPlayerFullScreenController by lazy {
+        ApiVideoPlayerFullScreenController(
+            supportFragmentManager,
+            binding.playerView,
+            playerController,
+            object : ApiVideoExoPlayerView.FullScreenListener {
+                override fun onFullScreenModeChanged(isFullScreen: Boolean) {
+                    requestedOrientation = if (isFullScreen) {
+                        ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                    } else {
+                        ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                    }
+                }
+            }
+        )
+    }
     private val playerController: ApiVideoPlayerController by lazy {
-        binding.playerView.fullScreenListener = fullScreenListener
         ApiVideoPlayerController(
             applicationContext,
             null,
@@ -138,23 +123,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun displayMessage(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
-    }
-
-    private fun hideSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
-            controller.hide(WindowInsetsCompat.Type.systemBars())
-            controller.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    private fun showSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowInsetsControllerCompat(
-            window,
-            window.decorView
-        ).show(WindowInsetsCompat.Type.systemBars())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -187,8 +155,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.unmute.setOnClickListener { playerController.isMuted = false }
 
+        binding.playerView.fullScreenListener = fullScreenController
         binding.showFullScreenButton.setOnClickListener {
-            binding.playerView.fullScreenListener = fullScreenListener
+            binding.playerView.fullScreenListener = fullScreenController
         }
         binding.hideFullScreenButton.setOnClickListener {
             binding.playerView.fullScreenListener = null

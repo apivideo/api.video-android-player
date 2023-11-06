@@ -72,11 +72,11 @@ analytics of [your viewers usage](https://api.video/product/video-analytics/).
 
 ```xml
 
-<video.api.player.ApiVideoExoPlayerView
+<video.api.player.ApiVideoExoPlayerView 
     android:id="@+id/playerView"
-    android:layout_width="wrap_content"
+    android:layout_width="wrap_content" 
     android:layout_height="wrap_content"
-    app:show_controls="true"
+    app:show_controls="true" 
     app:show_subtitles="true" />
 ```
 
@@ -101,7 +101,7 @@ val playerControllerListener = object : ApiVideoPlayerController.Listener {
 ```kotlin
 val playerView = findViewById<ApiVideoExoPlayerView>(R.id.playerView)
 
-val player = ApiVideoPlayerController(
+val playerController = ApiVideoPlayerController(
     applicationContext,
     VideoOptions(
         "YOUR_VIDEO_ID",
@@ -114,8 +114,20 @@ val player = ApiVideoPlayerController(
 
 4. Fullscreen video
 
-If you requires a fullscreen video. You will have to implement
-the `ApiVideoPlayerController.ViewListener` interface.
+If you require a fullscreen video. You will have to implement
+the `ApiVideoExoPlayerView.FullScreenListener` interface.
+To help you, you can use the `ApiVideoPlayerFullScreenController` that will handle the fullscreen.
+As it implements the `ApiVideoExoPlayerView.FullScreenListener` interface, you can pass it to
+your `ApiVideoExoPlayerView` instance.
+
+```kotlin
+playerView.fullScreenListener = ApiVideoExoPlayerView(
+    supportFragmentManager,
+    playerView,
+    playerController
+)
+```
+
 Check out for the implementation in the [Sample application](#sample-application).
 
 ### Supported player views
