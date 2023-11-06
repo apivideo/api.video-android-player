@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
@@ -18,7 +19,8 @@ import video.api.player.views.ApiVideoExoPlayerView
  * [ApiVideoPlayer] is a composable that displays an api.video video.
  *
  * @param videoOptions The video options
- * @param modifier The modifier to be applied to the view.
+ * @param modifier The modifier to be applied to the view
+ * @param viewFit Sets how the video is fitted in its parent view
  * @param showControls Shows or hides the control buttons
  * @param showSubtitles Shows or hides the subtitles and the subtitle button
  * @param autoplay True to play the video immediately, false otherwise
@@ -28,6 +30,7 @@ import video.api.player.views.ApiVideoExoPlayerView
 fun ApiVideoPlayer(
     videoOptions: VideoOptions,
     modifier: Modifier = Modifier,
+    viewFit: ApiVideoExoPlayerView.ViewFit = ApiVideoExoPlayerView.ViewFit.Contains,
     showControls: Boolean = true,
     showSubtitles: Boolean = true,
     autoplay: Boolean = true,
@@ -48,6 +51,7 @@ fun ApiVideoPlayer(
     ApiVideoPlayer(
         controller = controller,
         modifier = modifier,
+        viewFit = viewFit,
         showControls = showControls,
         showSubtitles = showSubtitles
     )
@@ -58,7 +62,8 @@ fun ApiVideoPlayer(
  * [ApiVideoPlayer] is a composable that displays an api.video video from the player controller.
  *
  * @param controller The player controller
- * @param modifier The modifier to be applied to the view.
+ * @param modifier The modifier to be applied to the view
+ * @param viewFit Sets how the video is fitted in its parent view
  * @param showControls Shows or hides the control buttons
  * @param showSubtitles Shows or hides the subtitles and the subtitle button
  */
@@ -66,25 +71,24 @@ fun ApiVideoPlayer(
 fun ApiVideoPlayer(
     controller: ApiVideoPlayerController,
     modifier: Modifier = Modifier,
+    viewFit: ApiVideoExoPlayerView.ViewFit = ApiVideoExoPlayerView.ViewFit.Contains,
     showControls: Boolean = true,
     showSubtitles: Boolean = true
 ) {
     val context = LocalContext.current
-
-    val playerView = remember {
-        ApiVideoExoPlayerView(context)
-    }
 
     // player view
     DisposableEffect(
         AndroidView(
             modifier = modifier,
             factory = {
-                playerView.apply {
-                    controller.setPlayerView(this)
+                ApiVideoExoPlayerView(context).apply {
                     this.fullScreenListener = null
+                    this.viewFit = viewFit
                     this.showControls = showControls
                     this.showSubtitles = showSubtitles
+
+                    controller.setPlayerView(this)
                 }
             }
         )
