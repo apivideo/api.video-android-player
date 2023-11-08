@@ -16,8 +16,9 @@ your app.
     - [Installation](#installation)
         - [Gradle](#gradle)
     - [Retrieve your video Id](#retrieve-your-video-id)
-    - [Usage](#usage)
+    - [View-based usage](#view-based-usage)
         - [Supported player views](#supported-player-views)
+    - [Jetpack Compose usage](#jetpack-compose-usage)
     - [Play your api.video video with ExoPlayer, MediaPlayer and VideoView](#play-your-apivideo-video-with-exoplayer-mediaplayer-and-videoview)
 - [Sample application](#sample-application)
 - [Documentation](#documentation)
@@ -27,6 +28,8 @@ your app.
 
 Easily integrate a video player for videos from [api.video](https://api.video) in your Android
 application.
+The api.video Android player will help you to play the HLS video from api.video. It also generates
+analytics of [your viewers usage](https://api.video/product/video-analytics/).
 
 # Getting started
 
@@ -39,6 +42,14 @@ In your module `build.gradle`, add the following code in `dependencies`:
 ```groovy
 dependencies {
     implementation 'video.api:android-player:1.4.2'
+}
+```
+
+For Jetpack Compose, also add the following code in `dependencies`:
+
+```groovy
+dependencies {
+    implementation 'video.api:android-compose-player:1.4.2'
 }
 ```
 
@@ -63,10 +74,10 @@ a video Id to use this component and play a video from api.video. To get yours, 
 Alternatively, you can find your video Id in the video details of
 your [dashboard](https://dashboard.api.video).
 
-## Usage
+## View-based usage
 
-The api.video Android player will help you to play the HLS video from api.video. It also generates
-analytics of [your viewers usage](https://api.video/product/video-analytics/).
+The api.video Android player comes with a view `ApiVideoExoPlayerView` to display the video and its
+controller `ApiVideoPlayerController`.
 
 1. Add a `ApiVideoExoPlayerView` to your Activity/Fragment layout:
 
@@ -144,6 +155,17 @@ Otherwise, in the `ApiVideoPlayerController`, you can also use the following vie
 * [`Surface`](https://developer.android.com/reference/android/view/Surface)
 
 The `SurfaceView` and the `Surface` require more work to be used.
+
+## Jetpack compose usage
+
+The api.video Android player comes with a composable `ApiVideoPlayer` to display the video from a
+compose application. In your application, you can add:
+
+```kotlin
+ApiVideoPlayer(
+    videoOptions = VideoOptions("YOUR_VIDEO_ID", VideoType.VOD),
+)
+```
 
 ## Play your api.video video with ExoPlayer, MediaPlayer and VideoView
 
