@@ -83,12 +83,9 @@ controller `ApiVideoPlayerController`.
 
 ```xml
 
-<video.api.player.ApiVideoExoPlayerView 
-    android:id="@+id/playerView"
-    android:layout_width="wrap_content" 
-    android:layout_height="wrap_content"
-    app:show_controls="true" 
-    app:show_subtitles="true" />
+<video.api.player.ApiVideoExoPlayerView android:id="@+id/playerView"
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    app:show_controls="true" app:show_subtitles="true" />
 ```
 
 You can also use an ExoPlayer `PlayerView` or a `SurfaceView` according to your requirements.
@@ -166,6 +163,9 @@ ApiVideoPlayer(
     videoOptions = VideoOptions("YOUR_VIDEO_ID", VideoType.VOD),
 )
 ```
+
+In Fullscreen, you have to hide the background of your activity. For this, you can use a `Surface`
+such as in the example.
 
 ## Play your api.video video with ExoPlayer, MediaPlayer and VideoView
 
