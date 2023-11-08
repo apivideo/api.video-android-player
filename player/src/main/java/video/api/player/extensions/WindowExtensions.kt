@@ -12,9 +12,19 @@ fun Window.hideSystemUI() {
     WindowCompat.setDecorFitsSystemWindows(this, false)
     WindowInsetsControllerCompat(this, this.decorView).let { controller ->
         controller.hide(WindowInsetsCompat.Type.systemBars())
-        controller.hide(WindowInsetsCompat.Type.navigationBars())
-        controller.hide(WindowInsetsCompat.Type.statusBars())
         controller.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+    }
+}
+
+/**
+ * Hides the system UI: status bar, navigation bar and system bars.
+ */
+fun Window.showSystemUI() {
+    WindowCompat.setDecorFitsSystemWindows(this, true)
+    WindowInsetsControllerCompat(this, this.decorView).let { controller ->
+        controller.show(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_DEFAULT
     }
 }
