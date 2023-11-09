@@ -231,15 +231,17 @@ constructor(
     var videoOptions: VideoOptions?
         get() = exoplayer.currentVideoOptions
         set(value) {
-            value?.let {
-                mediaSourceFactory = ApiVideoExoPlayerMediaFactory(it) { error ->
+            if (value != null) {
+                mediaSourceFactory = ApiVideoExoPlayerMediaFactory(value) { error ->
                     listeners.forEach { listener ->
                         listener.onError(error)
                     }
                 }.apply {
                     exoplayer.setMediaSource(this)
                 }
-            } ?: throw IllegalArgumentException("VideoOptions cannot be null")
+            } else {
+                exoplayer.clearMediaItems()
+            }
         }
 
     private val exoplayerListener: AnalyticsListener = object : AnalyticsListener {
