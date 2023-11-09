@@ -206,7 +206,7 @@ videoView.setVideo(videoOptions)
 # Sample application
 
 A demo application demonstrates how to use player.
-See [`/example`](https://github.com/apivideo/api.video-android-player/tree/main/example)
+See [`/examples`](https://github.com/apivideo/api.video-android-player/tree/main/examples)
 folder.
 
 On the first run, you will have to set your video Id:
