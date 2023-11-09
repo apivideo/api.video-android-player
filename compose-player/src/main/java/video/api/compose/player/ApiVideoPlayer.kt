@@ -21,7 +21,7 @@ import video.api.player.views.ApiVideoExoPlayerView
  * @param modifier The modifier to be applied to the view
  * @param viewFit Sets how the video is fitted in its parent view
  * @param showControls Shows or hides the control buttons
- * @param showSubtitleButton Shows or hides the subtitle button
+ * @param showSubtitles Shows or hides the subtitles and the subtitles button
  * @param autoplay True to play the video immediately, false otherwise
  * @param notificationController The notification controller. Set to null to disable the notification.
  */
@@ -31,7 +31,7 @@ fun ApiVideoPlayer(
     modifier: Modifier = Modifier,
     viewFit: ApiVideoExoPlayerView.ViewFit = ApiVideoExoPlayerView.ViewFit.Contains,
     showControls: Boolean = true,
-    showSubtitleButton: Boolean = true,
+    showSubtitles: Boolean = true,
     autoplay: Boolean = true,
     notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
         LocalContext.current
@@ -52,7 +52,7 @@ fun ApiVideoPlayer(
         modifier = modifier,
         viewFit = viewFit,
         showControls = showControls,
-        showSubtitleButton = showSubtitleButton
+        showSubtitles = showSubtitles
     )
 }
 
@@ -64,7 +64,7 @@ fun ApiVideoPlayer(
  * @param modifier The modifier to be applied to the view
  * @param viewFit Sets how the video is fitted in its parent view
  * @param showControls Shows or hides the control buttons
- * @param showSubtitleButton Shows or hides the subtitle button
+ * @param showSubtitles Shows or hides the subtitles and the subtitles button
  */
 @Composable
 fun ApiVideoPlayer(
@@ -72,7 +72,7 @@ fun ApiVideoPlayer(
     modifier: Modifier = Modifier,
     viewFit: ApiVideoExoPlayerView.ViewFit = ApiVideoExoPlayerView.ViewFit.Contains,
     showControls: Boolean = true,
-    showSubtitleButton: Boolean = true
+    showSubtitles: Boolean = true
 ) {
     val context = LocalContext.current
 
@@ -85,7 +85,7 @@ fun ApiVideoPlayer(
                     this.fullScreenListener = null
                     this.viewFit = viewFit
                     this.showControls = showControls
-                    this.showSubtitles = showSubtitleButton
+                    this.showSubtitles = showSubtitles
 
                     controller.setPlayerView(this)
                 }

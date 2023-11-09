@@ -60,7 +60,7 @@ class ApiVideoExoPlayerView @JvmOverloads constructor(
         }
 
     /**
-     * Shows or hides the subtitles
+     * Shows or hides the subtitles and the subtitles button
      */
     var showSubtitles: Boolean = true
         @SuppressLint("UnsafeOptInUsageError") set(value) {
