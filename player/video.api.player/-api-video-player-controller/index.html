@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ApiVideoPlayerController</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            player
+                    </a>
+            </div>
+            <div class="library-version">
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":player:dokkaHtml/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="player::video.api.player/ApiVideoPlayerController///PointingToDeclaration//766909139">
+  <div class="breadcrumbs"><a href="../../../index.html">player</a><span class="delimiter">/</span><a href="../index.html">video.api.player</a><span class="delimiter">/</span><span class="current">ApiVideoPlayerController</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Player</span><wbr></wbr><span><span>Controller</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">ApiVideoPlayerController</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+        context
+    )</span></span><span class="token punctuation">)</span></div><p class="paragraph">The api.video player controller class.</p><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>context</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the application context</p></div></div></div></div><div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>initial</span><wbr></wbr><span>Video</span><wbr></wbr><span><span>Options</span></span></u></div></span></div><div><div class="title"><p class="paragraph">initial video options</p></div></div></div></div><div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span>initial</span><wbr></wbr><span><span>Autoplay</span></span></u></div></span></div><div><div class="title"><p class="paragraph">initial autoplay: true to play the video immediately, false otherwise</p></div></div></div></div><div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>listener</span></span></u></div></span></div><div><div class="title"><p class="paragraph">a <a href="-listener/index.html">ApiVideoPlayerController.Listener</a> to listen to player events</p></div></div></div></div><div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>looper</span></span></u></div></span></div><div><div class="title"><p class="paragraph">the looper where call to the player are executed. By default, it is the current looper or the main looper.</p></div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1247827285%2FConstructors%2F766909139" anchor-label="ApiVideoPlayerController" id="-1247827285%2FConstructors%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-api-video-player-controller.html"><span>Api</span><wbr></wbr><span>Video</span><wbr></wbr><span>Player</span><wbr></wbr><span><span>Controller</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1247827285%2FConstructors%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">playerView<span class="token operator">: </span><a href="../../video.api.player.views/-api-video-exo-player-view/index.html">ApiVideoExoPlayerView</a><span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+            context
+        )</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a new controller with an <a href="../../video.api.player.views/-api-video-exo-player-view/index.html">ApiVideoExoPlayerView</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">playerView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/media3/ui/PlayerView.html">PlayerView</a><span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+            context
+        )</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a new controller with a <code class="lang-kotlin">media3</code> <a href="https://developer.android.com/reference/kotlin/androidx/media3/ui/PlayerView.html">PlayerView</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">surfaceView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/SurfaceView.html">SurfaceView</a><span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+            context
+        )</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a new controller with a <a href="https://developer.android.com/reference/kotlin/android/view/SurfaceView.html">SurfaceView</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">surface<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/Surface.html">Surface</a><span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+            context
+        )</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a new controller with a <a href="https://developer.android.com/reference/kotlin/android/view/Surface.html">Surface</a>.</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">context<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/content/Context.html">Context</a><span class="token punctuation">, </span></span><span class="parameter ">initialVideoOptions<span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">initialAutoplay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">looper<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/os/Looper.html">Looper</a><span class="token operator"> = </span>Looper.myLooper() ?: Looper.getMainLooper()<span class="token punctuation">, </span></span><span class="parameter ">notificationController<span class="token operator">: </span><a href="../../video.api.player.notifications/-api-video-player-notification-controller/index.html">ApiVideoPlayerNotificationController</a><span class="token operator">?</span><span class="token operator"> = </span>ApiVideoPlayerNotificationController(
+        context
+    )</span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates a new controller without a view.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-2082042482%2FClasslikes%2F766909139" anchor-label="Companion" id="-2082042482%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2082042482%2FClasslikes%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-663949836%2FClasslikes%2F766909139" anchor-label="Listener" id="-663949836%2FClasslikes%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-listener/index.html"><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-663949836%2FClasslikes%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-listener/index.html">Listener</a></div><div class="brief "><p class="paragraph">Listener for player events</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="410164720%2FProperties%2F766909139" anchor-label="autoplay" id="410164720%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="autoplay.html"><span><span>autoplay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="410164720%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="autoplay.html">autoplay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Gets/Sets the autoplay state</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1837027167%2FProperties%2F766909139" anchor-label="currentTime" id="-1837027167%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="current-time.html"><span>current</span><wbr></wbr><span><span>Time</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1837027167%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="current-time.html">currentTime</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">Gets/sets the current video position in seconds</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1067168479%2FProperties%2F766909139" anchor-label="duration" id="1067168479%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="duration.html"><span><span>duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1067168479%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="duration.html">duration</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">Gets/sets the video duration in seconds</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1874330365%2FProperties%2F766909139" anchor-label="isLive" id="1874330365%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-live.html"><span>is</span><wbr></wbr><span><span>Live</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1874330365%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="is-live.html">isLive</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Gets if the current playing video is a live stream</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1754236781%2FProperties%2F766909139" anchor-label="isLooping" id="-1754236781%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-looping.html"><span>is</span><wbr></wbr><span><span>Looping</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1754236781%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="is-looping.html">isLooping</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Gets/Sets the looping state</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-676268154%2FProperties%2F766909139" anchor-label="isMuted" id="-676268154%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-muted.html"><span>is</span><wbr></wbr><span><span>Muted</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-676268154%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="is-muted.html">isMuted</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Mutes/unmutes the device</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-472595165%2FProperties%2F766909139" anchor-label="isPlaying" id="-472595165%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-playing.html"><span>is</span><wbr></wbr><span><span>Playing</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-472595165%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="is-playing.html">isPlaying</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Gets if player is playing</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-474843685%2FProperties%2F766909139" anchor-label="playbackSpeed" id="-474843685%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="playback-speed.html"><span>playback</span><wbr></wbr><span><span>Speed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-474843685%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="playback-speed.html">playbackSpeed</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1997159088%2FProperties%2F766909139" anchor-label="videoOptions" id="1997159088%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="video-options.html"><span>video</span><wbr></wbr><span><span>Options</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1997159088%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="video-options.html">videoOptions</a><span class="token operator">: </span><a href="../../video.api.player.models/-video-options/index.html">VideoOptions</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Set/get the video options.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1189379925%2FProperties%2F766909139" anchor-label="videoSize" id="-1189379925%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="video-size.html"><span>video</span><wbr></wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1189379925%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="video-size.html">videoSize</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/Size.html">Size</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Gets the video size</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-322514535%2FProperties%2F766909139" anchor-label="volume" id="-322514535%2FProperties%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="volume.html"><span><span>volume</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-322514535%2FProperties%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">var </span><a href="volume.html">volume</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></div><div class="brief "><p class="paragraph">Gets/Sets the audio volume</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-281569228%2FFunctions%2F766909139" anchor-label="addListener" id="-281569228%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-listener.html"><span>add</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-281569228%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="add-listener.html"><span class="token function">addListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Add a listener to the player</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="403762193%2FFunctions%2F766909139" anchor-label="pause" id="403762193%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pause.html"><span><span>pause</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="403762193%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="pause.html"><span class="token function">pause</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Pauses the video</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-258370497%2FFunctions%2F766909139" anchor-label="play" id="-258370497%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="play.html"><span><span>play</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-258370497%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="play.html"><span class="token function">play</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Plays the video</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1096250528%2FFunctions%2F766909139" anchor-label="release" id="1096250528%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="release.html"><span><span>release</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1096250528%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="release.html"><span class="token function">release</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Releases the player</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-370002915%2FFunctions%2F766909139" anchor-label="removeListener" id="-370002915%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="remove-listener.html"><span>remove</span><wbr></wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-370002915%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="remove-listener.html"><span class="token function">removeListener</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">listener<span class="token operator">: </span><a href="-listener/index.html">ApiVideoPlayerController.Listener</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Remove a listener</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="96617100%2FFunctions%2F766909139" anchor-label="seek" id="96617100%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="seek.html"><span><span>seek</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="96617100%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="seek.html"><span class="token function">seek</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html">Float</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the video position to a time in milliseconds from the current time.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="927828277%2FFunctions%2F766909139" anchor-label="setPlayerView" id="927828277%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-player-view.html"><span>set</span><wbr></wbr><span>Player</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="927828277%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-player-view.html"><span class="token function">setPlayerView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">playerView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/media3/ui/PlayerView.html">PlayerView</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-player-view.html"><span class="token function">setPlayerView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">view<span class="token operator">: </span><a href="../../video.api.player.views/-api-video-exo-player-view/index.html">ApiVideoExoPlayerView</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div><div class="brief "><p class="paragraph">Sets the player view</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1060722523%2FFunctions%2F766909139" anchor-label="setSurface" id="-1060722523%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-surface.html"><span>set</span><wbr></wbr><span><span>Surface</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1060722523%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-surface.html"><span class="token function">setSurface</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">surface<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/Surface.html">Surface</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the player view</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1112105829%2FFunctions%2F766909139" anchor-label="setSurfaceView" id="-1112105829%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-surface-view.html"><span>set</span><wbr></wbr><span>Surface</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1112105829%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="set-surface-view.html"><span class="token function">setSurfaceView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">surfaceView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/view/SurfaceView.html">SurfaceView</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the player view</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="81558321%2FFunctions%2F766909139" anchor-label="stop" id="81558321%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="stop.html"><span><span>stop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="81558321%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="stop.html"><span class="token function">stop</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Stops the video</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-411528550%2FFunctions%2F766909139" anchor-label="switchTargetView" id="-411528550%2FFunctions%2F766909139" data-filterable-set=":player:dokkaHtml/release"></a>
+          <div class="table-row" data-filterable-current=":player:dokkaHtml/release" data-filterable-set=":player:dokkaHtml/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="switch-target-view.html"><span>switch</span><wbr></wbr><span>Target</span><wbr></wbr><span><span>View</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-411528550%2FFunctions%2F766909139"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":player:dokkaHtml/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="switch-target-view.html"><span class="token function">switchTargetView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">oldPlayerView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/media3/ui/PlayerView.html">PlayerView</a><span class="token punctuation">, </span></span><span class="parameter ">newPlayerView<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/androidx/media3/ui/PlayerView.html">PlayerView</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="switch-target-view.html"><span class="token function">switchTargetView</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">oldPlayerView<span class="token operator">: </span><a href="../../video.api.player.views/-api-video-exo-player-view/index.html">ApiVideoExoPlayerView</a><span class="token punctuation">, </span></span><span class="parameter ">newPlayerView<span class="token operator">: </span><a href="../../video.api.player.views/-api-video-exo-player-view/index.html">ApiVideoExoPlayerView</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span
+                class="pull-right"><span>Generated by </span><a
+                href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
