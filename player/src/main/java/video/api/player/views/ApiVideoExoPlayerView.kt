@@ -13,7 +13,6 @@ import androidx.media3.ui.AspectRatioFrameLayout.RESIZE_MODE_ZOOM
 import androidx.media3.ui.PlayerView
 import video.api.player.R
 import video.api.player.databinding.ExoPlayerLayoutBinding
-import video.api.player.interfaces.IExoPlayerBasedPlayerView
 import video.api.player.models.ApiVideoPlayerFullScreenController
 
 /**
@@ -25,11 +24,13 @@ import video.api.player.models.ApiVideoPlayerFullScreenController
  */
 class ApiVideoExoPlayerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr), IExoPlayerBasedPlayerView {
+) : FrameLayout(context, attrs, defStyleAttr) {
     private val binding = ExoPlayerLayoutBinding.inflate(LayoutInflater.from(context), this)
 
-    override val playerView: PlayerView
-        get() = binding.playerView
+    /**
+     * The ExoPlayer player view.
+     */
+    internal val playerView = binding.playerView
 
     /**
      * Sets or gets the full screen listener.
