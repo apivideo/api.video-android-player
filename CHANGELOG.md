@@ -2,6 +2,15 @@
 
 All changes to this project will be documented in this file.
 
+## [1.5.0] - 2023-11-09
+
+- Add a `compose-player` module to use the player with Jetpack Compose
+- Add a specific component to hande full screen for view-based usage:
+  see `ApiVideoPlayerFullScreenController`.
+- Add an API to set/get how the video is displayed in its parent view: see `viewFit`.
+- Move to gradle 8
+- Upgrade to Kotlin 1.9
+
 ## [1.4.2] - 2023-10-09
 
 - Add `isLive` API
