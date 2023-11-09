@@ -7,8 +7,8 @@ buildscript {
         targetSdk = 34
 
         // Kotlin
-        kotlinVersion = "1.8.22"
-        dokkaVersion = "1.8.20"
+        kotlinVersion = "1.9.10"
+        dokkaVersion = "1.9.10"
 
         // Example
         versionCode = properties['VERSION_CODE'].toInteger()
@@ -18,17 +18,28 @@ buildscript {
         exoPlayerVersion = '1.1.1'
         analyticsVersion = '2.0.2'
     }
-
-    dependencies {
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
-    }
 }
 plugins {
-    id 'com.android.application' version '7.4.2' apply false
-    id 'com.android.library' version '7.4.2' apply false
+    id 'com.android.application' version '8.1.2' apply false
+    id 'com.android.library' version '8.1.2' apply false
     id 'org.jetbrains.kotlin.android' version "$kotlinVersion" apply false
+    id 'org.jetbrains.dokka' version "$dokkaVersion"
 }
 
 tasks.register('clean', Delete) {
     delete rootProject.buildDir
+}
+
+tasks.dokkaHtmlMultiModule {
+    moduleName.set("api.video Android $project.name library")
+    suppressInheritedMembers.set(true)
+
+    pluginsMapConfiguration.set(
+            ["org.jetbrains.dokka.base.DokkaBase": """{ 
+                "customAssets" : [
+                    "${file("$rootDir/docs/docs_logo.svg")}",
+                    "${file("$rootDir/docs/logo-icon.svg")}"
+                ] 
+        }"""]
+    )
 }

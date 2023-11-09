@@ -8,6 +8,7 @@
     <style name="ExoStyledControls.Button.Center.Next">
         <item name="android:visibility">gone</item>
     </style>
+
     <style name="ExoStyledControls.Button.Center.FfwdWithAmount">
         <item name="android:foreground">@drawable/exo_styled_controls_fastforward</item>
         <item name="android:gravity">center</item>
@@ -17,6 +18,7 @@
         <!-- Needed for https://github.com/google/ExoPlayer/issues/7898 -->
         <item name="backgroundTint">@color/exo_white</item>
     </style>
+
     <style name="ExoStyledControls.Button.Center.RewWithAmount">
         <item name="android:foreground">@drawable/exo_styled_controls_rewind</item>
         <item name="android:gravity">center</item>
@@ -26,4 +28,13 @@
         <!-- Needed for https://github.com/google/ExoPlayer/issues/7898 -->
         <item name="backgroundTint">@color/exo_white</item>
     </style>
+
+    <style name="AppTheme.FullScreenDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

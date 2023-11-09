@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ApiVideoPlayer"
-include ':example'
+include ':examples:view'
+include ':examples:compose'
 include ':player'
+include ':compose-player'

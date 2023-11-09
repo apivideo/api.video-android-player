@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ApiVideoExoPlayerView">
-        <attr name="show_fullscreen_button" format="boolean" />
         <attr name="show_controls" format="boolean" />
         <attr name="show_subtitles" format="boolean" />
     </declare-styleable>
