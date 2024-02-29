@@ -10,7 +10,7 @@ import com.android.volley.toolbox.NoCache
 import video.api.player.models.SessionTokenRequest
 
 
-object RequestManager {
+internal object RequestManager {
     private val queue = RequestQueue(NoCache(), BasicNetwork(HurlStack())).apply { start() }
 
     fun getSessionToken(
