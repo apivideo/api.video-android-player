@@ -7,9 +7,7 @@ import com.android.volley.toolbox.BasicNetwork
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.NoCache
-import video.api.player.models.PlayerJsonRequest
 import video.api.player.models.SessionTokenRequest
-import video.api.player.models.VideoType
 
 
 object RequestManager {
@@ -17,11 +15,10 @@ object RequestManager {
 
     fun getSessionToken(
         url: String,
-        videoType: VideoType,
         onSuccess: (String?) -> Unit,
         onError: (Exception) -> Unit
     ) {
-        val sessionTokenRequest = if (videoType == VideoType.VOD) {
+        val sessionTokenRequest =
             SessionTokenRequest(url,
                 { sessionTokenResult ->
                     onSuccess(sessionTokenResult.sessionToken)
@@ -30,16 +27,6 @@ object RequestManager {
                     onError(error)
                 }
             )
-        } else {
-            PlayerJsonRequest(url,
-                { sessionTokenResult ->
-                    onSuccess(sessionTokenResult.sessionToken)
-                },
-                { error ->
-                    onError(error)
-                }
-            )
-        }
 
         queue.add(sessionTokenRequest)
     }

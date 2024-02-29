@@ -48,7 +48,7 @@ data class VideoOptions(
     internal val sessionTokenUrl = if (videoType == VideoType.VOD) {
         "$vodUrl/session"
     } else {
-        hlsManifestUrl // Temp: return the same url as hlsManifestUrl for live
+        "$liveUrl/session"
     }
 
     /**

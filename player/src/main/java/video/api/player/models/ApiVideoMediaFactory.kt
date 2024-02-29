@@ -62,7 +62,6 @@ class ApiVideoMediaFactory(
             } else {
                 RequestManager.getSessionToken(
                     videoOptions.sessionTokenUrl,
-                    videoOptions.videoType,
                     {
                         xTokenSession = it
                         onSuccess(PlayerMediaRequest(uri, xTokenSession))
