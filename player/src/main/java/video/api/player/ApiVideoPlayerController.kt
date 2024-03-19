@@ -36,48 +36,61 @@ import video.api.player.notifications.ApiVideoPlayerNotificationController
 import video.api.player.views.ApiVideoExoPlayerView
 import java.io.IOException
 
+
 /**
- * The api.video player controller class.
+ * Creates a new controller without a view.
  *
  * @param context the application context
  * @param initialVideoOptions initial video options
  * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
  * @param listener a [ApiVideoPlayerController.Listener] to listen to player events
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
- * @constructor Creates a new controller without a view.
  */
-class ApiVideoPlayerController
-constructor(
-    private val context: Context,
+fun ApiVideoPlayerController(
+    context: Context,
     initialVideoOptions: VideoOptions? = null,
     initialAutoplay: Boolean = false,
-    listener: Listener? = null,
+    listener: ApiVideoPlayerController.Listener? = null,
     looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
-    private val notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+    notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
         context
     )
-) {
-    /**
-     * Creates a new controller with an [ApiVideoExoPlayerView].
-     *
-     * @param context the application context
-     * @param initialVideoOptions initial video options
-     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
-     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
-     * @param playerView the player view
-     * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
-     */
-    constructor(
-        context: Context,
-        initialVideoOptions: VideoOptions? = null,
-        initialAutoplay: Boolean = false,
-        listener: Listener? = null,
-        playerView: ApiVideoExoPlayerView,
-        looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
-        notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
-            context
-        )
-    ) : this(
+): ApiVideoPlayerController {
+    return ApiVideoPlayerController(
+        context,
+        looper,
+        notificationController
+    ).apply {
+        Handler(looper).post {
+            autoplay = initialAutoplay
+            listener?.let { addListener(it) }
+            initialVideoOptions?.let { videoOptions = it }
+        }
+    }
+}
+
+/**
+ * Creates a new controller with an [ApiVideoExoPlayerView].
+ *
+ * @param context the application context
+ * @param initialVideoOptions initial video options
+ * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
+ * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+ * @param playerView the player view
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ */
+fun ApiVideoPlayerController(
+    context: Context,
+    initialVideoOptions: VideoOptions? = null,
+    initialAutoplay: Boolean = false,
+    listener: ApiVideoPlayerController.Listener? = null,
+    playerView: ApiVideoExoPlayerView,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
+): ApiVideoPlayerController {
+    return ApiVideoPlayerController(
         context,
         initialVideoOptions,
         initialAutoplay,
@@ -86,22 +99,136 @@ constructor(
         looper,
         notificationController
     )
+}
 
+/**
+ * Creates a new controller with a `media3` [PlayerView].
+ *
+ * @param context the application context
+ * @param initialVideoOptions initial video options
+ * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
+ * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+ * @param playerView the [PlayerView] to use to display the player
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ */
+fun ApiVideoPlayerController(
+    context: Context,
+    initialVideoOptions: VideoOptions? = null,
+    initialAutoplay: Boolean = false,
+    listener: ApiVideoPlayerController.Listener? = null,
+    playerView: PlayerView,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
+): ApiVideoPlayerController {
+    return ApiVideoPlayerController(
+        context,
+        playerView,
+        looper,
+        notificationController
+    ).apply {
+        Handler(looper).post {
+            autoplay = initialAutoplay
+            listener?.let { addListener(it) }
+            initialVideoOptions?.let { videoOptions = it }
+        }
+    }
+}
+
+/**
+ * Creates a new controller with a [SurfaceView].
+ *
+ * @param context the application context
+ * @param initialVideoOptions initial video options
+ * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
+ * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+ * @param surfaceView the [SurfaceView] to use to display the video
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ */
+fun ApiVideoPlayerController(
+    context: Context,
+    initialVideoOptions: VideoOptions? = null,
+    initialAutoplay: Boolean = false,
+    listener: ApiVideoPlayerController.Listener? = null,
+    surfaceView: SurfaceView,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
+): ApiVideoPlayerController {
+    return ApiVideoPlayerController(
+        context,
+        surfaceView,
+        looper,
+        notificationController
+    ).apply {
+        Handler(looper).post {
+            autoplay = initialAutoplay
+            listener?.let { addListener(it) }
+            initialVideoOptions?.let { videoOptions = it }
+        }
+    }
+}
+
+/**
+ * Creates a new controller with a [Surface].
+ *
+ * @param context the application context
+ * @param initialVideoOptions initial video options
+ * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
+ * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
+ * @param surface the [Surface] to use to display the video
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ */
+fun ApiVideoPlayerController(
+    context: Context,
+    initialVideoOptions: VideoOptions? = null,
+    initialAutoplay: Boolean = false,
+    listener: ApiVideoPlayerController.Listener? = null,
+    surface: Surface,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
+): ApiVideoPlayerController {
+    return ApiVideoPlayerController(
+        context,
+        surface,
+        looper,
+        notificationController
+    ).apply {
+        Handler(looper).post {
+            autoplay = initialAutoplay
+            listener?.let { addListener(it) }
+            initialVideoOptions?.let { videoOptions = it }
+        }
+    }
+}
+
+/**
+ * The api.video player controller class.
+ *
+ * @param context the application context
+ * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @constructor Creates a new controller without a view.
+ */
+class ApiVideoPlayerController(
+    private val context: Context,
+    looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
+    private val notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
+        context
+    )
+) {
     /**
      * Creates a new controller with a `media3` [PlayerView].
      *
      * @param context the application context
-     * @param initialVideoOptions initial video options
-     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
-     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param playerView the [PlayerView] to use to display the player
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
-        initialVideoOptions: VideoOptions? = null,
-        initialAutoplay: Boolean = false,
-        listener: Listener? = null,
         playerView: PlayerView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
         notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
@@ -109,9 +236,6 @@ constructor(
         )
     ) : this(
         context,
-        initialVideoOptions,
-        initialAutoplay,
-        listener,
         looper,
         notificationController
     ) {
@@ -122,17 +246,11 @@ constructor(
      * Creates a new controller with a [SurfaceView].
      *
      * @param context the application context
-     * @param initialVideoOptions initial video options
-     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
-     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surfaceView the [SurfaceView] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
-        initialVideoOptions: VideoOptions? = null,
-        initialAutoplay: Boolean = false,
-        listener: Listener? = null,
         surfaceView: SurfaceView,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
         notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
@@ -140,9 +258,6 @@ constructor(
         )
     ) : this(
         context,
-        initialVideoOptions,
-        initialAutoplay,
-        listener,
         looper,
         notificationController
     ) {
@@ -153,17 +268,11 @@ constructor(
      * Creates a new controller with a [Surface].
      *
      * @param context the application context
-     * @param initialVideoOptions initial video options
-     * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
-     * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
      * @param surface the [Surface] to use to display the video
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
      */
     constructor(
         context: Context,
-        initialVideoOptions: VideoOptions? = null,
-        initialAutoplay: Boolean = false,
-        listener: Listener? = null,
         surface: Surface,
         looper: Looper = Looper.myLooper() ?: Looper.getMainLooper(),
         notificationController: ApiVideoPlayerNotificationController? = ApiVideoPlayerNotificationController(
@@ -171,9 +280,6 @@ constructor(
         )
     ) : this(
         context,
-        initialVideoOptions,
-        initialAutoplay,
-        listener,
         looper,
         notificationController
     ) {
@@ -326,8 +432,9 @@ constructor(
     private val exoplayer =
         ExoPlayer.Builder(context).setLooper(looper).build().apply {
             addAnalyticsListener(exoplayerListener)
-            Handler(context.mainLooper).post {
+            handler.post {
                 notificationController?.showNotification(this)
+                prepare()
             }
         }
 
@@ -488,18 +595,6 @@ constructor(
         set(value) {
             exoplayer.setPlaybackSpeed(value)
         }
-
-    init {
-        listener?.let { addListener(it) }
-
-        handler.post {
-            initialVideoOptions?.let {
-                videoOptions = it
-            }
-            autoplay = initialAutoplay
-            exoplayer.prepare()
-        }
-    }
 
     /**
      * Add a listener to the player
