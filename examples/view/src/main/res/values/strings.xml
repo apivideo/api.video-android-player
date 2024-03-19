@@ -3,9 +3,9 @@
     <string name="settings">Settings</string>
 
     <!--Settings-->
-    <string name="default_video_id">vi77Dgk0F8eLwaFOtC5870yn</string>
-    <string name="video_id_key">video_id_key</string>
-    <string name="video_id">VideoId</string>
+    <string name="default_media_id">vi77Dgk0F8eLwaFOtC5870yn</string>
+    <string name="media_id_key">media_id_key</string>
+    <string name="media_id">MediaId</string>
     <string name="video_type_key">video_type_key</string>
     <string name="video_type_vod">VOD</string>
     <string name="video_type_live">Live</string>

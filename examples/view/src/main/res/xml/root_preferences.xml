@@ -2,9 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
-        app:defaultValue="@string/default_video_id"
-        app:key="@string/video_id_key"
-        app:title="@string/video_id"
+        app:defaultValue="@string/default_media_id"
+        app:key="@string/media_id_key"
+        app:title="@string/media_id"
         app:useSimpleSummaryProvider="true" />
 
     <SwitchPreference

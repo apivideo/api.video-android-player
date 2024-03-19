@@ -33,12 +33,12 @@ object Utils {
         try {
             matcher.find()
             // Group naming is not supported before Android API 26
-            val videoId = matcher.group(2) ?: throw IOException("Failed to get videoId")
+            val mediaId = matcher.group(2) ?: throw IOException("Failed to get mediaId")
 
             // For live, we might not have a type for now because there isn't any `/live/` in the URL.
             val firstGroup = matcher.group(1)
             val videoType = firstGroup?.toVideoType()
-                ?: if (videoId.startsWith("li")) VideoType.LIVE else throw IOException(
+                ?: if (mediaId.startsWith("li")) VideoType.LIVE else throw IOException(
                     "Failed to get videoType"
                 )
 
@@ -52,7 +52,7 @@ object Utils {
                 }
 
             return VideoOptions(
-                videoId,
+                mediaId,
                 videoType,
                 token
             )

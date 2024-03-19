@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity() {
     private val sharedPref: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
-    private val videoId: String
-        get() = sharedPref.getString(getString(R.string.video_id_key), null)
-            ?: throw IllegalArgumentException("Video ID is not set")
+    private val mediaId: String
+        get() = sharedPref.getString(getString(R.string.media_id_key), null)
+            ?: throw IllegalArgumentException("MediaID is not set")
     private val videoType: VideoType
         get() {
             val videoType =
@@ -190,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadVideo() {
         try {
-            playerController.videoOptions = VideoOptions(videoId, videoType, privateVideoToken)
+            playerController.videoOptions = VideoOptions(mediaId, videoType, privateVideoToken)
         } catch (e: Exception) {
             Log.e(TAG, "Error while loading video", e)
             displayMessage("Error while loading video: ${e.message}")

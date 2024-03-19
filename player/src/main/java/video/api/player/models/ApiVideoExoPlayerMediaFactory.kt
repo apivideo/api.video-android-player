@@ -99,7 +99,7 @@ class ApiVideoExoPlayerMediaFactory(
             .build()
         return MediaItem.Builder()
             .setUri(request.uri)
-            .setMediaId(videoOptions.videoId)
+            .setMediaId(videoOptions.mediaId)
             .setTag(videoOptions)
             .setMediaMetadata(mediaMetadata)
             .setMimeType(

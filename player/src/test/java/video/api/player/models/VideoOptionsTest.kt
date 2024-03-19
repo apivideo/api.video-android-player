@@ -72,7 +72,7 @@ class VideoOptionsTest {
     fun `test parse embed vod url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://embed.api.video/vod/vi5oNqxkifcXkT4auGNsvgZB")
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertNull(videoOptions.token)
     }
@@ -81,7 +81,7 @@ class VideoOptionsTest {
     fun `test parse vod url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://vod.api.video/vod/vi5oNqxkifcXkT4auGNsvgZB/hls/manifest.m3u8")
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertNull(videoOptions.token)
     }
@@ -90,7 +90,7 @@ class VideoOptionsTest {
     fun `test parse private vod url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://vod.api.video/vod/vi5oNqxkifcXkT4auGNsvgZB/token/PRIVATE_TOKEN/hls/manifest.m3u8")
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertEquals(videoOptions.token, "PRIVATE_TOKEN")
     }
@@ -99,7 +99,7 @@ class VideoOptionsTest {
     fun `test parse MP4 vod url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://vod.api.video/vod/vi5oNqxkifcXkT4auGNsvgZB/mp4/source.mp4")
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertNull(videoOptions.token)
     }
@@ -108,7 +108,7 @@ class VideoOptionsTest {
     fun `test parse private MP4 vod url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://vod.api.video/vod/vi5oNqxkifcXkT4auGNsvgZB/token/PRIVATE_TOKEN/mp4/source.mp4")
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertEquals(videoOptions.token, "PRIVATE_TOKEN")
     }
@@ -117,7 +117,7 @@ class VideoOptionsTest {
     fun `test parse embed live url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://embed.api.video/live/li77ACbZjzEJgmr8d0tm4xFt")
-        assertEquals(videoOptions.videoId, "li77ACbZjzEJgmr8d0tm4xFt")
+        assertEquals(videoOptions.mediaId, "li77ACbZjzEJgmr8d0tm4xFt")
         assertEquals(videoOptions.videoType, VideoType.LIVE)
         assertNull(videoOptions.token)
     }
@@ -126,7 +126,7 @@ class VideoOptionsTest {
     fun `test parse live url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://live.api.video/li77ACbZjzEJgmr8d0tm4xFt.m3u8")
-        assertEquals(videoOptions.videoId, "li77ACbZjzEJgmr8d0tm4xFt")
+        assertEquals(videoOptions.mediaId, "li77ACbZjzEJgmr8d0tm4xFt")
         assertEquals(videoOptions.videoType, VideoType.LIVE)
         assertNull(videoOptions.token)
     }
@@ -135,7 +135,7 @@ class VideoOptionsTest {
     fun `test parse private live url`() {
         val videoOptions =
             VideoOptions.fromUrl("https://live.api.video/private/PRIVATE_TOKEN/li77ACbZjzEJgmr8d0tm4xFt.m3u8")
-        assertEquals(videoOptions.videoId, "li77ACbZjzEJgmr8d0tm4xFt")
+        assertEquals(videoOptions.mediaId, "li77ACbZjzEJgmr8d0tm4xFt")
         assertEquals(videoOptions.videoType, VideoType.LIVE)
         assertEquals(videoOptions.token, "PRIVATE_TOKEN")
     }
@@ -146,7 +146,7 @@ class VideoOptionsTest {
             VideoOptions.fromUrl(
                 "https://mycustom.vod.domain/vod/vi5oNqxkifcXkT4auGNsvgZB/hls/manifest.m3u8"
             )
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertNull(videoOptions.token)
     }
@@ -157,7 +157,7 @@ class VideoOptionsTest {
             VideoOptions.fromUrl(
                 "https://mycustom.vod.domain/vod/vi5oNqxkifcXkT4auGNsvgZB/token/PRIVATE_TOKEN/hls/manifest.m3u8"
             )
-        assertEquals(videoOptions.videoId, "vi5oNqxkifcXkT4auGNsvgZB")
+        assertEquals(videoOptions.mediaId, "vi5oNqxkifcXkT4auGNsvgZB")
         assertEquals(videoOptions.videoType, VideoType.VOD)
         assertEquals(videoOptions.token, "PRIVATE_TOKEN")
     }
@@ -167,7 +167,7 @@ class VideoOptionsTest {
         val videoOptions = VideoOptions.fromUrl(
             "https://mycustom.live.domain/li77ACbZjzEJgmr8d0tm4xFt.m3u8"
         )
-        assertEquals(videoOptions.videoId, "li77ACbZjzEJgmr8d0tm4xFt")
+        assertEquals(videoOptions.mediaId, "li77ACbZjzEJgmr8d0tm4xFt")
         assertEquals(videoOptions.videoType, VideoType.LIVE)
         assertNull(videoOptions.token)
     }
@@ -178,7 +178,7 @@ class VideoOptionsTest {
             VideoOptions.fromUrl(
                 "https://mycustom.live.domain/private/PRIVATE_TOKEN/li77ACbZjzEJgmr8d0tm4xFt.m3u8"
             )
-        assertEquals(videoOptions.videoId, "li77ACbZjzEJgmr8d0tm4xFt")
+        assertEquals(videoOptions.mediaId, "li77ACbZjzEJgmr8d0tm4xFt")
         assertEquals(videoOptions.videoType, VideoType.LIVE)
         assertEquals(videoOptions.token, "PRIVATE_TOKEN")
     }
