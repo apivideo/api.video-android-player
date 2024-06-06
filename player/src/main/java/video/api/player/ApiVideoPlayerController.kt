@@ -488,27 +488,34 @@ class ApiVideoPlayerController(
             }
         }
 
+    private var previousVolume = 1.0f
+
     /**
-     * Mutes/unmutes the device
+     * Mutes/unmutes the video
      */
     var isMuted: Boolean
         /**
-         * Get the device mute states
+         * Get the mute states
          *
-         * @return true if the device is muted, false otherwise
+         * @return true if the video is muted, false otherwise
          */
-        get() = exoplayer.isDeviceMuted
+        get() = volume == 0.0f
         /**
-         * Set the device mute states
+         * Set the mute states
          *
-         * @param value true if the device is muted, false otherwise
+         * @param value true if the video is muted, false otherwise
          */
         set(value) {
-            exoplayer.setDeviceMuted(value, 0)
+            volume = if (value) {
+                previousVolume = volume
+                0.0f
+            } else {
+                previousVolume
+            }
         }
 
     /**
-     * Gets/Sets the audio volume
+     * Gets/Sets the video volume
      */
     var volume: Float
         /**
@@ -516,17 +523,14 @@ class ApiVideoPlayerController(
          *
          * @return volume between 0 and 1.0
          */
-        get() = exoplayer.deviceVolume.toFloat() / (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) - exoplayer.deviceInfo.minVolume
+        get() = exoplayer.volume
         /**
          * Set audio volume
          *
          * @param value volume between 0 and 1.0
          */
         set(value) {
-            exoplayer.setDeviceVolume(
-                (value * (exoplayer.deviceInfo.maxVolume - exoplayer.deviceInfo.minVolume) + exoplayer.deviceInfo.minVolume).toInt(),
-                0
-            )
+            exoplayer.volume = value
         }
 
     /**
