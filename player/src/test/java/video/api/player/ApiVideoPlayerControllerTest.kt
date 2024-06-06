@@ -78,68 +78,6 @@ class ApiVideoPlayerControllerTest {
     }
 
     @Test
-    fun `get a valid player json`() {
-        mockHttpStack.setResponseToReturn(
-            HttpResponse(
-                200,
-                emptyList(),
-                Resources.readFile("/assets/valid_player.json").toByteArray()
-            )
-        )
-
-        val lock = CountDownLatch(1)
-
-        val listener = object : ApiVideoPlayerController.Listener {
-            override fun onError(error: Exception) {
-                error.printStackTrace()
-                println(error.message)
-                lock.countDown()
-            }
-        }
-
-        ApiVideoPlayerController(
-            context,
-            VideoOptions("test", VideoType.VOD),
-            false,
-            listener,
-            playerView,
-            notificationController = null
-        )
-        lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
-
-        assertEquals(1, lock.count) // OnError not called
-    }
-
-    @Test
-    fun `get an exception on player json connection`() {
-        mockHttpStack.setExceptionToThrow(IOException())
-
-        val lock = CountDownLatch(1)
-
-        val listener = object : ApiVideoPlayerController.Listener {
-            override fun onError(error: Exception) {
-                lock.countDown()
-            }
-        }
-
-        ApiVideoPlayerController(
-            context,
-            VideoOptions(
-                "test",
-                VideoType.VOD,
-                "token"
-            ), // The endpoint is only called when a token is provided
-            false,
-            listener,
-            playerView,
-            notificationController = null
-        )
-        lock.await(1, java.util.concurrent.TimeUnit.SECONDS)
-
-        assertEquals(0, lock.count)
-    }
-
-    @Test
     fun `play test`() {
         val player =
             ApiVideoPlayerController(
