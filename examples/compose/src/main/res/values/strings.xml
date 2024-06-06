@@ -1,26 +1,4 @@
 <resources>
     <string name="app_name">ComposePlayer</string>
     <string name="settings">Settings</string>
-
-    <!--Settings-->
-    <string name="default_video_id">vi77Dgk0F8eLwaFOtC5870yn</string>
-    <string name="video_id_key">video_id_key</string>
-    <string name="video_id">VideoId</string>
-    <string name="video_type_key">video_type_key</string>
-    <string name="video_type_vod">VOD</string>
-    <string name="video_type_live">Live</string>
-    <string name="endpoint_type">Video type</string>
-    <string name="show_controls">ShowControls</string>
-    <string name="hide_controls">HideControls</string>
-    <string name="private_video_token_key">private_video_token_key</string>
-    <string name="private_video_token">Private video token</string>
-    <string name="show_subtitles">ShowSubtitles</string>
-    <string name="hide_subtitles">HideSubtitles</string>
-    <string name="show_full_screen_button">ShowFullScreen</string>
-    <string name="hide_full_screen_button">HideFullScreen</string>
-    <string name="play">Play</string>
-    <string name="pause">Pause</string>
-    <string name="stop">Stop</string>
-    <string name="mute">Mute</string>
-    <string name="unmute">Unmute</string>
 </resources>
