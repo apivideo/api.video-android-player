@@ -81,6 +81,10 @@ constructor(
         playerNotificationManager.setPlayer(player)
     }
 
+    fun release() {
+        mediaSession.release()
+    }
+
     companion object {
         private const val TAG = "PlayerNotificationController"
         private const val DEFAULT_NOTIFICATION_ID = 3333

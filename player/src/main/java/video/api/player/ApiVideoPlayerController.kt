@@ -45,6 +45,7 @@ import java.io.IOException
  * @param initialAutoplay initial autoplay: true to play the video immediately, false otherwise
  * @param listener a [ApiVideoPlayerController.Listener] to listen to player events
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  */
 fun ApiVideoPlayerController(
     context: Context,
@@ -78,6 +79,7 @@ fun ApiVideoPlayerController(
  * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
  * @param playerView the player view
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  */
 fun ApiVideoPlayerController(
     context: Context,
@@ -110,6 +112,7 @@ fun ApiVideoPlayerController(
  * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
  * @param playerView the [PlayerView] to use to display the player
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  */
 fun ApiVideoPlayerController(
     context: Context,
@@ -145,6 +148,7 @@ fun ApiVideoPlayerController(
  * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
  * @param surfaceView the [SurfaceView] to use to display the video
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  */
 fun ApiVideoPlayerController(
     context: Context,
@@ -180,6 +184,7 @@ fun ApiVideoPlayerController(
  * @param listener the [ApiVideoPlayerController.Listener] to listen to player events
  * @param surface the [Surface] to use to display the video
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  */
 fun ApiVideoPlayerController(
     context: Context,
@@ -211,6 +216,7 @@ fun ApiVideoPlayerController(
  *
  * @param context the application context
  * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+ * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
  * @constructor Creates a new controller without a view.
  */
 class ApiVideoPlayerController(
@@ -226,6 +232,7 @@ class ApiVideoPlayerController(
      * @param context the application context
      * @param playerView the [PlayerView] to use to display the player
      * @param looper the looper where call to the player are executed. By default, it is the current looper or the main looper.
+     * @param notificationController the [ApiVideoPlayerNotificationController] to use. It will be released when calling [release].
      */
     constructor(
         context: Context,
@@ -655,6 +662,7 @@ class ApiVideoPlayerController(
         notificationController?.hideNotification()
         exoplayer.removeAnalyticsListener(exoplayerListener)
         analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
+        notificationController?.release()
         exoplayer.release()
     }
 
