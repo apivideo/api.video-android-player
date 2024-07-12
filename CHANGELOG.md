@@ -2,6 +2,15 @@
 
 All changes to this project will be documented in this file.
 
+## [1.5.1] - 2024-07-12
+
+- Release `MediaSession` when player is released
+- Fix `isMuted` and `volume` API
+- Rename `videoId` to `mediaId` in `VideoOptions`
+- Simplify controller constructors
+- Use /session endpoint for private live stream
+- Tests: fix failed due to emulator timeout
+
 ## [1.5.0] - 2023-11-09
 
 - Add a `compose-player` module to use the player with Jetpack Compose
