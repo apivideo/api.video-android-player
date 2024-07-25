@@ -10,7 +10,6 @@ import android.view.Surface
 import android.view.SurfaceView
 import androidx.annotation.OptIn
 import androidx.media3.common.C
-import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.Player.DISCONTINUITY_REASON_SEEK
@@ -26,7 +25,7 @@ import androidx.media3.exoplayer.analytics.AnalyticsListener
 import androidx.media3.exoplayer.source.LoadEventInfo
 import androidx.media3.exoplayer.source.MediaLoadData
 import androidx.media3.ui.PlayerView
-import video.api.analytics.exoplayer.ApiVideoAnalyticsListener
+import video.api.player.analytics.exoplayer.extensions.addApiVideoAnalyticsListener
 import video.api.player.extensions.currentVideoOptions
 import video.api.player.extensions.setMediaSource
 import video.api.player.extensions.setMp4MediaSource
@@ -294,7 +293,6 @@ class ApiVideoPlayerController(
     }
 
     private val handler = Handler(looper)
-    private var analyticsListener: ApiVideoAnalyticsListener? = null
     private val listeners = mutableListOf<Listener>()
 
     private var firstPlay = true
@@ -333,22 +331,6 @@ class ApiVideoPlayerController(
                 exoplayer.prepare()
             }
             listeners.forEach { listener -> listener.onError(error) }
-        }
-
-        @OptIn(UnstableApi::class)
-        override fun onMediaItemTransition(
-            eventTime: AnalyticsListener.EventTime,
-            mediaItem: MediaItem?,
-            reason: Int
-        ) {
-            // Reload analytics listener when a new video is loaded
-            analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
-            mediaItem?.localConfiguration?.uri?.toString()?.let { url ->
-                analyticsListener =
-                    ApiVideoAnalyticsListener(exoplayer, url).apply {
-                        exoplayer.addAnalyticsListener(this)
-                    }
-            }
         }
 
         @OptIn(UnstableApi::class)
@@ -444,6 +426,8 @@ class ApiVideoPlayerController(
                 prepare()
             }
         }
+
+    private val analyticsListener = exoplayer.addApiVideoAnalyticsListener()
 
     /**
      * Gets if player is playing
@@ -661,7 +645,7 @@ class ApiVideoPlayerController(
     fun release() {
         notificationController?.hideNotification()
         exoplayer.removeAnalyticsListener(exoplayerListener)
-        analyticsListener?.let { exoplayer.removeAnalyticsListener(it) }
+        exoplayer.removeAnalyticsListener(analyticsListener)
         notificationController?.release()
         exoplayer.release()
     }

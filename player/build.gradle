@@ -19,7 +19,7 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.13.1'
     api 'com.android.volley:volley:1.2.1'
-    implementation "video.api:android-player-analytics-exoplayer:${analyticsVersion}"
+    implementation "video.api.player.analytics:android-player-analytics-exoplayer:${analyticsVersion}"
     implementation "androidx.media3:media3-ui:${exoPlayerVersion}"
     implementation "androidx.media3:media3-exoplayer:${exoPlayerVersion}"
     implementation "androidx.media3:media3-exoplayer-hls:${exoPlayerVersion}"
