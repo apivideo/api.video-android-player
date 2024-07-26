@@ -2,6 +2,12 @@
 
 All changes to this project will be documented in this file.
 
+## [1.6.0] - 2024-07-26
+
+- Use Analytics endpoint v2
+- Upgrade to gradle 8.5
+- Upgrade dependencies
+
 ## [1.5.1] - 2024-07-12
 
 - Release `MediaSession` when player is released
