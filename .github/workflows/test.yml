@@ -49,6 +49,8 @@ jobs:
           disable-animations: true
           emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back emulated -camera-front emulated -gpu swiftshader_indirect
           script: ./gradlew connectedCheck
+        env:
+          INTEGRATION_TESTS_API_KEY: ${{ secrets.INTEGRATION_TESTS_API_KEY }}
       - name: Upload test reports
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
